@@ -1,0 +1,3 @@
+void lexer_test()
+{
+}
