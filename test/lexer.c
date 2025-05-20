@@ -1,3 +1,0 @@
-void lexer_test()
-{
-}
