@@ -3,7 +3,7 @@ include mk/config.mk
 # dev.mk — minishell C test harness with obj dir
 MKFILE       := mk/test.mk
 TEST_BIN_DIR := test_bin
-CFLAGS   += -g
+CFLAGS       := -Iinclude -I$(LIBFTDIR) -g
 
 # -----------------------------------------------------------------------------
 # Test modules
@@ -25,19 +25,15 @@ all:
 # -----------------------------------------------------------------------------
 %_test:
 	@$(MAKE) $(LIBFT)
-	@$(MAKE) $(TEST_OBJS)
+	@$(MAKE) $(TEST_OBJS) CFLAGS="$(CFLAGS)"
 	@mkdir -p $(TEST_BIN_DIR)
 	$(eval TEST_SRC := $(firstword $(wildcard \
 	  $(SRC_DIR)/$*/$*_test.c \
 	  $(SRC_DIR)/$*_test.c)))
 	@$(MAKE) print_compiling TARGET="$(TEST_SRC)"
-	@$(CC) $(CFLAGS) \
-	  $(TEST_SRC) \
-	  $(TEST_OBJS) \
-	  $(LIBFT) \
-	  -o $(TEST_BIN_DIR)/$*_test
+	$(CC) $(CFLAGS) $(TEST_SRC) $(TEST_OBJS) $(LIBFT) -o $(TEST_BIN_DIR)/$*_test
 	@$(MAKE) print_running TARGET="$(TEST_BIN_DIR)/$*_test"
-	@./$(TEST_BIN_DIR)/$*_test
+	@valgrind --leak-check=full --quiet ./$(TEST_BIN_DIR)/$*_test
 
 # -----------------------------------------------------------------------------
 # Cleanup
