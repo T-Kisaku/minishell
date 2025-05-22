@@ -1,27 +1,31 @@
 include mk/config.mk
-
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
-	@(MAKE) print_msg MSG="Build complete"
+	@$(MAKE) print_finished MSG="Minishell build complete"
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFTDIR) > /dev/null
-	@printf "${CLEAR}${GREEN}✔${RESET} [${PURPLE}${BOLD}$(NAME)${RESET}] Libft build complete\n"
+	@$(MAKE) print_finished MSG="Libft build complete"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(MKDIR_P) $(dir $@)
+	@$(MAKE) print_compiling TARGET="${notdir $<}"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@$(MAKE) clean -C $(LIBFTDIR)
 	@$(RM) -r $(OBJ_DIR)
+	@$(MAKE) print_finished MSG="Objects cleaned"
+	
 
 fclean:
 	@$(MAKE) clean > /dev/null
 	@$(MAKE) fclean -C $(LIBFTDIR)
+	@$(MAKE) print_finished MSG="Objects cleaned"
 	@$(RM) $(NAME)
+	@$(MAKE) print_finished MSG="Execution file removed"
 
 re: fclean all
 
@@ -40,4 +44,12 @@ dev:
 dev_%:
 	@$(MAKE) -f $(DEV_MK) $*
 
-.PHONY: all clean fclean re
+print_finished:
+	@printf "${CLEAR}${GREEN}✔${RESET} [${PURPLE}${BOLD}$(NAME)${RESET}] $(MSG)\n"
+print_compiling:
+	@printf "${CLEAR}${GREEN}•${RESET} Compiling $(TARGET)...\n"
+print_running:
+	@printf "${CLEAR}${GREEN}🏃 ${RESET} Running $(TARGET)...\n"
+
+.PHONY: all clean fclean re print_finished
+

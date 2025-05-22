@@ -29,13 +29,13 @@ all:
 	$(eval TEST_SRC := $(firstword $(wildcard \
 	  $(SRC_DIR)/$*/$*_test.c \
 	  $(SRC_DIR)/$*_test.c)))
-	@echo "→ Compiling $(TEST_SRC)"
+	@$(MAKE) print_compiling TARGET="$(TEST_SRC)"
 	@$(CC) $(CFLAGS) \
 	  $(TEST_SRC) \
 	  $(TEST_OBJS) \
 	  $(LIBFT) \
 	  -o $(TEST_BIN_DIR)/$*_test
-	@echo "→ Running $(TEST_BIN_DIR)/$*_test"
+	@$(MAKE) print_running TARGET="$(TEST_BIN_DIR)/$*_test"
 	@./$(TEST_BIN_DIR)/$*_test
 
 # -----------------------------------------------------------------------------
@@ -43,4 +43,4 @@ all:
 # -----------------------------------------------------------------------------
 fclean:
 	rm -rf $(TEST_BIN_DIR)
-
+	@$(MAKE) print_finished MSG="Removed test bins!"

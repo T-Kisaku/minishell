@@ -36,8 +36,6 @@ CFLAGS   = -Wall -Wextra -Werror -Iinclude -I$(LIBFTDIR)
 # -----------------------------------------------------------------------------
 RM       = rm -f
 MKDIR_P  = mkdir -p
-print_msg:
-	@printf "${CLEAR}${GREEN}✔${RESET} [${PURPLE}${BOLD}$(NAME)${RESET}] $(MSG)\n"
 
 # -----------------------------------------------------------------------------
 # Colors
