@@ -1,4 +1,4 @@
-include config.mk
+include mk/config.mk
 norm:
 	@norminette include | grep -v "OK!" || true
 	@norminette $(SRC_DIR) | grep -v "OK!" || true

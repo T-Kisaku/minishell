@@ -3,6 +3,7 @@ include mk/config.mk
 # dev.mk — minishell C test harness with obj dir
 MKFILE       := mk/test.mk
 TEST_BIN_DIR := test_bin
+CFLAGS   += -g
 
 # -----------------------------------------------------------------------------
 # Test modules
