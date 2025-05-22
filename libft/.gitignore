@@ -1,4 +1,5 @@
 libftTester
-libft.a
+obj
+*.a
 *.o
-a.out
+*.out

@@ -1,4 +1,5 @@
 # Colors
+MAKEFLAGS += --no-print-directory
 PURPLE   = \033[38;5;141m
 GREEN    = \033[38;5;46m
 RESET    = \033[0m
@@ -8,7 +9,7 @@ CLEAR    = \r\033[K
 # Project
 NAME     = libft.a
 SRC_DIR  = .
-OBJ_DIR  = objs
+OBJ_DIR  = obj
 
 SOURCES  = \
 	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
@@ -50,7 +51,7 @@ $(OBJ_DIR)/%.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@$(RM) $(OBJECTS) $(BOBJECTS)
+	@$(RM) -r $(OBJ_DIR)
 	@printf "${CLEAR}${GREEN}✔${RESET} [${PURPLE}${BOLD}libft${RESET}] Objects cleaned.\n"
 
 fclean: clean
