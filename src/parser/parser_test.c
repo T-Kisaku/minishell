@@ -73,12 +73,13 @@ void test(t_ast *expected, t_ast *actual) {
 
 void test_normal_cmd() {
   char *argv[] = {"ls", "-l", "/home", NULL};
-  test(&(t_ast){.type = NODE_CMD,
-                .argv = argv,
-                .redirects = NULL,
-                .left = NULL,
-                .right = NULL},
-       parse_tokens(argv));
+  t_ast expected = (t_ast){.type = NODE_CMD,
+                           .argv = argv,
+                           .redirects = NULL,
+                           .left = NULL,
+                           .right = NULL};
+  t_ast *actual = parse_tokens(argv);
+  test(&expected, actual);
 }
 
 void test_pipe() {
@@ -150,9 +151,8 @@ void test_subshell_and_or() {
 
 #include <stdio.h>
 int main() {
-  puts("FIRE");
   /* test_normal_cmd(); */
-  /* test_pipe(); */
+  test_pipe();
   /* test_redirection(); */
   /* test_subshell_and_or(); */
   /**/
