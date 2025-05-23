@@ -12,7 +12,7 @@ TEST_SRCS := $(shell find $(SRC_DIR) -type f -name '*_test.c')
 TEST_MODS := $(patsubst %_test.c,%,$(notdir $(TEST_SRCS)))
 
 TEST_SRCS := $(shell find $(SRC_DIR) -type f -name '*.c' \
-               -not -name '*_test.c' -not -name 'main.c')
+               -not -name '*_test.c' -not -name 'minishell.c')
 TEST_OBJS := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(TEST_SRCS))
 
 .PHONY: all fclean %_test
