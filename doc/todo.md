@@ -59,3 +59,4 @@
 #### tkisaku
 
 - executorのexternalをエラーハンドリングなし
+- error処理について調べる
