@@ -17,7 +17,7 @@ LIBFT    = $(LIBFTDIR)/libft.a
 SRCS = \
 src/parser/parser.c \
 src/lexer/lexer.c \
-src/main.c \
+src/minishell.c \
 src/utils/ast/free.c \
 src/utils/ast/new.c \
 src/utils/token.c 
