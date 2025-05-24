@@ -1,3 +1,9 @@
+重要
+saueda@c1r3s8 ~/t/minishell (main) [2]> make -f mk/test.mk lexer_test
+saueda@c1r3s8 ~/t/minishell (lexer)> make test_parser_test
+p / pull
+shift + p / push
+
 やること
 
 lexer

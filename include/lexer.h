@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:28:31 by saueda            #+#    #+#             */
-/*   Updated: 2025/05/22 17:28:04 by saueda           ###   ########.fr       */
+/*   Updated: 2025/05/24 19:40:15 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "../libft/libft.h"
 //for NULL,
 # include <stddef.h>
+//for bool,
+# include <stdbool.h>
 
 typedef enum
 {
@@ -39,22 +41,35 @@ typedef struct s_token
 
 typedef struct s_lexer_context
 {
+	t_token				**head;
 	t_token				*cur_token;
 	t_token				*prev_token;
 	t_segment			*cur_seg;
 	t_segment			*prev_seg;
 	char				*start_str;
 	char				*cur_str;
+	bool				need_new_token;
+	
 }						t_lexer_context;
 
+//lexer.c
 char	**lexser(char *string);
-int	set_tokens(t_token *head, char *string);
-int	process_unquoted(t_lexer_context *lc);
-int	process_quoted(t_lexer_context *lc, e_segment_type seg_type);
-static int	ft_isspace(int c);
-int	write_error_return_error(char *msg);
+//tokenize.c
+int			tokenize(t_token**head, char *string);
+//ensure_token_segment.c
+int ensure_token_and_segment(t_lexer_context *lc);
+//process_special_char.c
+int	process_special_char(t_lexer_context *lc);
+//process_others.c
+void	process_space(t_lexer_context *lc);
+int		process_quoted(t_lexer_context *lc, e_segment_type seg_type);
+int		process_unquoted(t_lexer_context *lc);
+int	set_segment_value(t_lexer_context *lc, e_segment_type type);
+//utils.c
+int	write_error(char *msg);
+int syntax_error(const char *token, size_t len);
 void	clean_tokens(t_token **head);
-
+int	ft_isspace(int c);
 
 //for test
 void print_tokens(const t_token *head);
