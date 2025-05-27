@@ -1,9 +1,8 @@
 #include "token.h"
-#include "libft.h"
 #include <stdbool.h>
 #include <stdlib.h>
 
 // TODO: think whether it's better to define as pointer for  pos
 bool is_end(char *tokens[], int pos) { return tokens[pos] == NULL; }
-char *peek(char *tokens[], int pos) { return ft_strdup(tokens[pos]); }
-char *eat(char *tokens[], int *pos) { return ft_strdup(tokens[(*pos)++]); }
+char *peek(char *tokens[], int pos) { return tokens[pos]; }
+char *eat(char *tokens[], int *pos) { return tokens[(*pos)++]; }
