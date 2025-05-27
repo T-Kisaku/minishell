@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:28:31 by saueda            #+#    #+#             */
-/*   Updated: 2025/05/24 19:40:15 by saueda           ###   ########.fr       */
+/*   Updated: 2025/05/27 12:25:10 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	process_space(t_lexer_context *lc);
 int		process_quoted(t_lexer_context *lc, e_segment_type seg_type);
 int		process_unquoted(t_lexer_context *lc);
 int	set_segment_value(t_lexer_context *lc, e_segment_type type);
+//set_char_ary.c
+int	set_char_ary(t_token *head, char ***ary);
 //utils.c
 int	write_error(char *msg);
 int syntax_error(const char *token, size_t len);
