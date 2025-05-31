@@ -90,6 +90,3 @@
 #### tkisaku: Executorの実装をやりゴールを作る
 
 #### 参考記事
-
-- [The Architecture of Open Source Applications (Volume 1)
-  The Bourne-Again Shell](https://aosabook.org/en/v1/bash.html)
