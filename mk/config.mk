@@ -15,12 +15,8 @@ LIBFT    = $(LIBFTDIR)/libft.a
 # Sources
 # -----------------------------------------------------------------------------
 SRCS = \
-src/parser/parser.c \
-src/lexer/lexer.c \
-src/minishell.c \
-src/utils/ast/free.c \
-src/utils/ast/new.c \
-src/utils/token.c 
+	src/minishell.c \
+	src/utils/ms_string.c
 
 OBJS = $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(SRCS:.c=.o))
 
@@ -28,7 +24,7 @@ OBJS = $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(SRCS:.c=.o))
 # Compiler
 # -----------------------------------------------------------------------------
 CC       = cc
-CFLAGS   = -Wall -Wextra -Werror -Iinclude -I$(LIBFTDIR)
+CFLAGS   = -Wall -Wextra -Werror -Iinclude -I$(LIBFTDIR) -lreadline
 
 
 # -----------------------------------------------------------------------------
