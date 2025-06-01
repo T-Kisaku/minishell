@@ -29,6 +29,7 @@ fclean:
 
 re: fclean all
 
+include mk/test.mk
 TEST_MK := mk/test.mk
 test:
 	@$(MAKE) -f $(TEST_MK) all

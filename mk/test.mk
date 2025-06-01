@@ -1,23 +1,21 @@
-include mk/config.mk
 
 # dev.mk — minishell C test harness with obj dir
 MKFILE       := mk/test.mk
 TEST_BIN_DIR := test_bin
-CFLAGS       := -Iinclude -I$(LIBFTDIR) -g
+CFLAGS       := -Iinclude -I$(LIBFTDIR) -lreadline -g
 
 # -----------------------------------------------------------------------------
 # Test modules
 # -----------------------------------------------------------------------------
-TEST_SRCS := $(shell find $(SRC_DIR) -type f -name '*_test.c')
 TEST_MODS := $(patsubst %_test.c,%,$(notdir $(TEST_SRCS)))
 
 TEST_SRCS := $(shell find $(SRC_DIR) -type f -name '*.c' \
                -not -name '*_test.c' -not -name 'minishell.c')
 TEST_OBJS := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(TEST_SRCS))
 
-.PHONY: all fclean %_test
+.PHONY: test_all test_fclean %_test
 
-all:
+test_all:
 	$(MAKE) -f $(MKFILE) $(addsuffix _test,$(TEST_MODS))
 
 # -----------------------------------------------------------------------------
@@ -38,6 +36,6 @@ all:
 # -----------------------------------------------------------------------------
 # Cleanup
 # -----------------------------------------------------------------------------
-fclean:
+test_fclean:
 	rm -rf $(TEST_BIN_DIR)
 	@$(MAKE) print_finished MSG="Removed test bins!"
