@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <readline/history.h>
 #include <readline/readline.h>
+#include "ast.h"
 #include "ms_string.h"
 
 static void run_cmd(char *argv);
@@ -27,6 +28,7 @@ int main(int argc, char **argv) {
 
 static void run_cmd(char *input) {
   printf("PROMPTED: %s\n", input);
+  /* t_ast *ast; */
   /* t_ast ast = parse(argv); */
   /* execute_ast(ast); */
   /* free_ast(ast); */
@@ -40,14 +42,6 @@ static bool process_option_c(int argc, char **argv) {
 
 // Return whether it should exit
 static bool prompt(void) {
-  /* t_data data; */
-  /* data.lexered = NULL; */
-  /* data.parsered = NULL; */
-  /* data.lexered = lexer(argv); */
-  /* data.parsered = (data.lexered); */
-  /* executor(data.parsered); */
-  /* cleanup(data); */
-
   char *input;
   input = readline("minishell$");
   if (!input) {

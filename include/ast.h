@@ -1,4 +1,5 @@
 
+// TODO: delete comments
 /*
  * Minimal C 構造体定義 (Executor 用に必要最低限)：
  *
@@ -169,20 +170,6 @@ typedef struct s_list {
   struct s_list *next;    /* 次の ";" 区切り要素 */
 } t_list;
 
-/*-------------------------------------------------------
- * 6. コマンドライン全体 (ルート)
- *-------------------------------------------------------*/
-/*
- * t_command_line:
- *   - list : <list> の先頭を指す。複数の ";", "&&", "||", "|"
- * が組み合わさった構造を保持。
- *
- * grammar:
- *   <command_line> ::= <list> <EOF>
- */
-typedef struct s_command_line {
-  t_list *list; /* 最上位の <list> */
-} t_command_line;
+typedef t_list t_ast;
 
 #endif /* AST_H */
-
