@@ -33,19 +33,19 @@ t_testdata ls(){
 
 t_testdata echo(){
   char *argv[] = {"echo", "hello",NULL};
-  t_token_list token_list = {
-    .token = &(t_token){.token = "echo", .flags = 0},
-    .next = &(t_token_list){
-      .token = &(t_token){
-        .token = "hello",
-        .flags = 0
-      },
-      .next = NULL
-    }
-  };
+  /* t_token_list token_list = { */
+  /*   .token = &(t_token){.token = "echo", .flags = 0}, */
+  /*   .next = &(t_token_list){ */
+  /*     .token = &(t_token){ */
+  /*       .token = "hello", */
+  /*       .flags = 0 */
+  /*     }, */
+  /*     .next = NULL */
+  /*   } */
+  /* }; */
   t_testdata testdata_echo = {
       .input      = "echo hello",
-      .token_list = token_list,
+      .token_list = NULL,
       .ast        = {
         .first_and_or = &(t_and_or){
           .pipeline = {

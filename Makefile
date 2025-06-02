@@ -1,4 +1,26 @@
 include mk/config.mk
+
+# -----------------------------------------------------------------------------
+# Variables
+# -----------------------------------------------------------------------------
+
+NAME     = minishell
+SRC_DIR  = src
+OBJ_DIR  = obj
+LIBFTDIR = libft
+LIBFT    = $(LIBFTDIR)/libft.a
+
+SRCS = \
+	src/minishell.c \
+	src/utils/ms_string.c
+OBJS = $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(SRCS:.c=.o))
+PHONY_TARGETS = all clean fclean re
+
+
+# -----------------------------------------------------------------------------
+# Variables
+# -----------------------------------------------------------------------------
+
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
@@ -13,6 +35,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(MKDIR_P) $(dir $@)
 	@$(MAKE) print_compiling TARGET="${notdir $<}"
 	@$(CC) $(CFLAGS) -c $< -o $@
+
 
 clean:
 	@$(MAKE) clean -C $(LIBFTDIR)
@@ -29,28 +52,9 @@ fclean:
 
 re: fclean all
 
+include mk/testdata.mk
 include mk/test.mk
-TEST_MK := mk/test.mk
-test:
-	@$(MAKE) -f $(TEST_MK) all
+include mk/dev.mk
+include mk/print.mk
 
-test_%:
-	@$(MAKE) -f $(TEST_MK) $*
-
-
-DEV_MK := mk/dev.mk
-dev:
-	@$(MAKE) -f $(DEV_MK) all
-
-dev_%:
-	@$(MAKE) -f $(DEV_MK) $*
-
-print_finished:
-	@printf "${CLEAR}${GREEN}✔${RESET} [${PURPLE}${BOLD}$(NAME)${RESET}] $(MSG)\n"
-print_compiling:
-	@printf "${CLEAR}${GREEN}•${RESET} Compiling $(TARGET)...\n"
-print_running:
-	@printf "${CLEAR}${GREEN}🏃 ${RESET} Running $(TARGET)...\n"
-
-.PHONY: all clean fclean re print_finished
-
+.PHONY: $(PHONY_TARGETS)
