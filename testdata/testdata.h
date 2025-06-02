@@ -18,4 +18,6 @@ typedef struct s_testdata {
   t_ast ast;
 } t_testdata;
 
+t_testdata ls();
+
 #endif // !TESTDATA_H

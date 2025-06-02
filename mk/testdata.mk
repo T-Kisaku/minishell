@@ -9,7 +9,7 @@ testdata: testdata_all
 testdata_all: $(TESTDATA_OBJS)
 
 $(TESTDATA_OBJ_DIR)/%.o: $(TESTDATA_DIR)/%.c | $(TESTDATA_OBJ_DIR)
-	@$(CC) $(INCLUDE_FLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@$(MAKE) print_compiling TARGET="${notdir $<}"
 
 $(TESTDATA_OBJ_DIR):
@@ -17,7 +17,7 @@ $(TESTDATA_OBJ_DIR):
 	
 testdata_clean:
 	@$(RM) -rf $(TESTDATA_OBJ_DIR)
-	@$(MAKE) print_finished MSG="Objects cleaned"
+	@$(MAKE) print_finished MSG="Test data objects cleaned"
 
 testdata_re: testdata_clean testdata_all
 
