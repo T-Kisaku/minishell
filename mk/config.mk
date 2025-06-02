@@ -2,29 +2,13 @@
 # Make commands settings
 # -----------------------------------------------------------------------------
 MAKEFLAGS += --silent --no-print-directory
-# -----------------------------------------------------------------------------
-# Project
-# -----------------------------------------------------------------------------
-NAME     = minishell
-SRC_DIR  = src
-OBJ_DIR  = obj
-LIBFTDIR = libft
-LIBFT    = $(LIBFTDIR)/libft.a
-
-# -----------------------------------------------------------------------------
-# Sources
-# -----------------------------------------------------------------------------
-SRCS = \
-	src/minishell.c \
-	src/utils/ms_string.c
-
-OBJS = $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(SRCS:.c=.o))
 
 # -----------------------------------------------------------------------------
 # Compiler
 # -----------------------------------------------------------------------------
 CC       = cc
-CFLAGS   = -Wall -Wextra -Werror -Iinclude -I$(LIBFTDIR) -lreadline
+INCLUDE_FLAGS = -Iinclude -I$(LIBFTDIR) -lreadline
+CFLAGS   = -Wall -Wextra -Werror $(INCLUDE_FLAGS)
 
 
 # -----------------------------------------------------------------------------

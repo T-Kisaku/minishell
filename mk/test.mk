@@ -1,43 +1,34 @@
-include mk/config.mk
-
 # dev.mk — minishell C test harness with obj dir
-MKFILE       := mk/test.mk
-TEST_BIN_DIR := test_bin
-CFLAGS       := -Iinclude -I$(LIBFTDIR) -g
+TEST_BIN_DIR 			:= test_bin
+TEST_CFLAGS				:= $(INCLUDE_FLAGS) -Itestdata -g
 
-# -----------------------------------------------------------------------------
-# Test modules
-# -----------------------------------------------------------------------------
-TEST_SRCS := $(shell find $(SRC_DIR) -type f -name '*_test.c')
-TEST_MODS := $(patsubst %_test.c,%,$(notdir $(TEST_SRCS)))
+TEST_SRCS := $(filter-out src/minishell.c,$(SRCS))
+TEST_OBJS := $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(TEST_SRCS:.c=.o))
+TEST_MODS := $(basename $(notdir $(wildcard src/**/*_test.c)))
 
-TEST_SRCS := $(shell find $(SRC_DIR) -type f -name '*.c' \
-               -not -name '*_test.c' -not -name 'minishell.c')
-TEST_OBJS := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(TEST_SRCS))
+PHONY_TARGETS += test_all test_fclean %_test
 
-.PHONY: all fclean %_test
+test: test_all
+test_all:
+	$(MAKE) $(TEST_MODS)
 
-all:
-	$(MAKE) -f $(MKFILE) $(addsuffix _test,$(TEST_MODS))
-
-# -----------------------------------------------------------------------------
-# Build & run a single test (supports both src/mod/mod_test.c and src/mod_test.c)
-# -----------------------------------------------------------------------------
-%_test:
+%_test: | $(TEST_BIN_DIR)
 	@$(MAKE) $(LIBFT)
-	@$(MAKE) $(TEST_OBJS) CFLAGS="$(CFLAGS)"
-	@mkdir -p $(TEST_BIN_DIR)
-	$(eval TEST_SRC := $(firstword $(wildcard \
-	  $(SRC_DIR)/$*/$*_test.c \
-	  $(SRC_DIR)/$*_test.c)))
+	@$(MAKE) $(TEST_OBJS) CFLAGS="$(TEST_CFLAGS)"
+	@$(MAKE) $(TESTDATA_OBJS) CFLAGS="$(TEST_CFLAGS)"
+	$(eval TEST_SRC := $(shell find src -type f -name "$*_test.c" | head -n 1))
 	@$(MAKE) print_compiling TARGET="$(TEST_SRC)"
-	$(CC) $(CFLAGS) $(TEST_SRC) $(TEST_OBJS) $(LIBFT) -o $(TEST_BIN_DIR)/$*_test
+	$(CC) $(TEST_CFLAGS) $(TEST_SRC) $(TEST_OBJS) $(TESTDATA_OBJS) $(LIBFT) -o $(TEST_BIN_DIR)/$*_test
 	@$(MAKE) print_running TARGET="$(TEST_BIN_DIR)/$*_test"
 	@valgrind --leak-check=full --quiet ./$(TEST_BIN_DIR)/$*_test
 
-# -----------------------------------------------------------------------------
-# Cleanup
-# -----------------------------------------------------------------------------
-fclean:
+$(TEST_BIN_DIR):
+	@$(MKDIR_P) $@
+
+test_clean: clean testdata_clean
+
+test_fclean: test_clean
 	rm -rf $(TEST_BIN_DIR)
 	@$(MAKE) print_finished MSG="Removed test bins!"
+
+test_re: test_fclean test_all
