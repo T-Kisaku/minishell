@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../../include/tokenizer.h"
+#include "tokenizer.h"
 
 //現状libft.aを作成後に
 //% cc -Wall -Wextra -Werror tokenizer_test.c tokenizer.c processes.c utils.c process_special_char.c -L../../libft -lft -o test_tokenizer

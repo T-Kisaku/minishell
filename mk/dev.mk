@@ -10,7 +10,10 @@ lsp-setup:
 	@printf "${GREEN}✔${RESET} compile_flags.txt generated.\n"
 
 get-src-files:
-	@find ./src -not -type d -name '*.c' | sed 's|^\./||' | sed '$$!s|$$| \\\\|' | while read line; do echo $$line; done
+	@find ./src -not -type d -name '*.c' ! -name '*_test.c' \
+		| sed 's|^\./||' \
+		| sed '$$!s|$$| \\\\|' \
+		| while read line; do echo $$line; done
 format:
 	@c_formatter_42 $(wildcard include/*.h) $(wildcard include/**/*.h)
 	@c_formatter_42 $(SRCS)

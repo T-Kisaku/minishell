@@ -1,4 +1,4 @@
-#include "../../include/tokenizer.h"
+#include "tokenizer.h"
 
 int		write_error(char *msg);
 void	clean_tokens(t_token **head);

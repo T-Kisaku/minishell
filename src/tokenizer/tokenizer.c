@@ -1,4 +1,4 @@
-#include "../../include/tokenizer.h"
+#include "tokenizer.h"
 
 t_token		*tokenizer(char *string);
 static int	tokenize(t_token **head, char *string);

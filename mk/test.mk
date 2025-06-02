@@ -4,7 +4,7 @@ TEST_CFLAGS				:= $(INCLUDE_FLAGS) -Itestdata -g
 
 TEST_SRCS := $(filter-out src/minishell.c,$(SRCS))
 TEST_OBJS := $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(TEST_SRCS:.c=.o))
-TEST_MODS := $(basename $(notdir $(wildcard src/**/*_test.c)))
+TEST_MODS := $(basename $(notdir $(shell find src -name '*_test.c')))
 
 PHONY_TARGETS += test_all test_fclean %_test
 

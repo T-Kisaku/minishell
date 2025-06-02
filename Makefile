@@ -11,8 +11,13 @@ LIBFTDIR = libft
 LIBFT    = $(LIBFTDIR)/libft.a
 
 SRCS = \
-	src/minishell.c \
-	src/utils/ms_string.c
+src/utils/ms_string.c \
+src/syntax_processor/tokenizer/process_special_char.c \
+src/syntax_processor/tokenizer/processes.c \
+src/syntax_processor/tokenizer/utils.c \
+src/syntax_processor/tokenizer/tokenizer.c \
+src/executor/executor.c \
+src/minishell.c
 OBJS = $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(SRCS:.c=.o))
 PHONY_TARGETS = all clean fclean re
 

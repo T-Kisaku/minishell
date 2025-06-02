@@ -1,4 +1,4 @@
-#include "../../include/tokenizer.h"
+#include "tokenizer.h"
 
 int		create_token(t_token_context *tc);
 int		set_token(t_token_context *tc, e_token_type type);
