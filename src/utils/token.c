@@ -1,8 +1,18 @@
-#include "token.h"
-#include <stdbool.h>
-#include <stdlib.h>
 
-// TODO: think whether it's better to define as pointer for  pos
-bool is_end(char *tokens[], int pos) { return tokens[pos] == NULL; }
-char *peek(char *tokens[], int pos) { return tokens[pos]; }
-char *eat(char *tokens[], int *pos) { return tokens[(*pos)++]; }
+// void				ft_lstclear(t_list **lst, void (*del)(void *));
+// void				ft_lstiter(t_list *lst, void (*f)(void *));
+// t_list				*ft_lstmap(t_list *lst, void *(*f)(void
+// *),
+// 削除用
+// 繰り返し処理用
+// 新たな連結リストを作る用の関数が必要！(map関数を調べればよき！！)
+// #include "libft.h"
+// #include "token.h"
+// #include <unistd.h>
+
+// int main() {
+// int *i = malloc(sizeof(int));
+
+// t_token_list *lst = (t_token_list *)ft_lstnew(i);
+
+// }
