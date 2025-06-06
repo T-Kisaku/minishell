@@ -32,3 +32,6 @@ test_fclean: test_clean
 	@$(MAKE) print_finished MSG="Removed test bins!"
 
 test_re: test_fclean test_all
+
+test_compile:
+	@$(MAKE) all CFLAGS="$(INCLUDE_FLAGS) -Itestdata -g"

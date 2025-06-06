@@ -12,12 +12,13 @@ LIBFT    = $(LIBFTDIR)/libft.a
 
 SRCS = \
 src/utils/ms_string.c \
-src/syntax_processor/tokenizer/process_special_char.c \
-src/syntax_processor/tokenizer/processes.c \
-src/syntax_processor/tokenizer/utils.c \
-src/syntax_processor/tokenizer/tokenizer.c \
-src/executor/executor.c \
-src/minishell.c
+src/minishell.c \
+src/executor/run_command.c \
+src/executor/exec_ast.c \
+src/executor/buildin/pwd.c \
+src/executor/pipeline/wait_pids.c \
+src/executor/pipeline/run_pipes.c \
+src/executor/pipeline/run_pipeline.c
 OBJS = $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(SRCS:.c=.o))
 PHONY_TARGETS = all clean fclean re
 

@@ -1,7 +1,7 @@
 test_bin
 obj
-compile_flags.txt
 *.o
 *.out
+*.txt
 minishell
 .clang-format

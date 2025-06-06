@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:11:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/05/22 14:55:57 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/06 11:58:10 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct data {
 
 char **lexer(char **argv);
 t_ast *parse_tokens(char *tokens[]);
-void executor();
+int exec_ast(t_ast *ast);
 
 void cleanup(t_data data);
 void error();
