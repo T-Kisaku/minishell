@@ -1,5 +1,6 @@
-#include "../../include/token.h"
-#include "../../libft/libft.h"
+#include <stdlib.h>
+#include "token.h"
+/* #include "libft.h" */
 
 // void				ft_lstclear(t_list **lst, void (*del)(void *));
 // void				ft_lstiter(t_list *lst, void (*f)(void *));
@@ -7,21 +8,20 @@
 // *),
 
 // 削除用
-void	del(void *token_content)
-{
-	t_token_content	*tc;
+void del(void *token_content) {
+  t_token_content *tc;
 
-	tc = (t_token_content *)token_content;
-	if (!tc)
-		return ;
-	free(tc->value);
-	free(tc);
+  tc = (t_token_content *)token_content;
+  if (!tc)
+    return;
+  free(tc->value);
+  free(tc);
 }
 
-//　t_token_content構造体作成用に作ったが、そもそもvalueの長さがわからないとmallocし直す必要があるから意味がない用に思う。
-// void	*create_token_content(void *content)
-// {
-// 	t_token_content	*new_tc;
+// 　t_token_content構造体作成用に作ったが、そもそもvalueの長さがわからないとmallocし直す必要があるから意味がない用に思う。
+//  void	*create_token_content(void *content)
+//  {
+//  	t_token_content	*new_tc;
 
 // 	(void)content;
 // 	new_tc = malloc(sizeof(t_token_content));

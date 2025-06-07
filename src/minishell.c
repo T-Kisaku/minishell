@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include <readline/history.h>
 #include <readline/readline.h>
-#include "ast.h"
-#include "ms_string.h"
+#include "utils/ms_string.h"
 
 static void run_cmd(char *argv);
 static bool process_option_c(int argc, char **argv);
