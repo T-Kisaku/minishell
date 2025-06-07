@@ -2,9 +2,9 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include "executor.h"
+#include "executor/executor.h"
 #include "ast.h"
-#include "pipeline.h"
+#include "executor/pipeline/pipeline.h"
 
 int run_pipeline(t_pipeline *pipeline) {
   int status;

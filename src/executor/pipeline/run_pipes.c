@@ -2,7 +2,7 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include "executor.h"
+#include "executor/executor.h"
 #include "ast.h"
 
 static pid_t spawn_command(t_command *cmd, int in_fd, int out_fd);

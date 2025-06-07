@@ -1,12 +1,6 @@
 SRCS = \
 src/utils/ms_string.c \
 src/utils/token.c \
-src/syntax_processor/ast_builder/ast_builder.c \
-src/syntax_processor/expander/expander.c \
-src/syntax_processor/tokenizer/processes.c \
-src/syntax_processor/tokenizer/tokenizer.c \
-src/syntax_processor/tokenizer/utils.c \
-src/syntax_processor/tokenizer/process_special_char.c \
 src/minishell.c \
 src/executor/buildin/cd.c \
 src/executor/buildin/echo.c \
