@@ -5,15 +5,9 @@ norm:
 	@$(MAKE) norm -C $(LIBFTDIR)
 
 lsp-setup:
-	@echo "-Iinclude" > compile_flags.txt
-	@echo "-I$(LIBFTDIR)" >> compile_flags.txt
+	@echo "$(TEST_CFLAGS)" | tr ' ' '\n' > compile_flags.txt
 	@printf "${GREEN}✔${RESET} compile_flags.txt generated.\n"
 
-get-src-files:
-	@find ./src -not -type d -name '*.c' ! -name '*_test.c' \
-		| sed 's|^\./||' \
-		| sed '$$!s|$$| \\\\|' \
-		| while read line; do echo $$line; done
 format:
 	@c_formatter_42 $(wildcard include/*.h) $(wildcard include/**/*.h)
 	@c_formatter_42 $(SRCS)
@@ -22,3 +16,12 @@ format:
 stdheader:
 	@stdheader $(wildcard include/*.h) $(wildcard include/**/*.h)
 	@stdheader $(SRCS)
+
+set-src-files:
+	@echo 'SRCS = \ ' > mk/srcs.mk
+	@$(MAKE) get-src-files >> mk/srcs.mk
+get-src-files:
+	@find ./src -not -type d -name '*.c' ! -name '*_test.c' \
+		| sed 's|^\./||' \
+		| sed '$$!s|$$| \\\\|' \
+		| while read line; do echo $$line; done
