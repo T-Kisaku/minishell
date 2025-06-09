@@ -1,15 +1,16 @@
 #include "tokenizer.h"
+#include "token.h"
 
-t_token		*tokenizer(char *string);
-static int	tokenize(t_token **head, char *string);
-static void	init_token_context(t_token_context *tc, t_token **head,
+t_token_list	*tokenizer(char *string);
+static int	tokenize(t_token_list **head, char *string);
+static void	init_token_context(t_token_context *tc, t_token_list **head,
 				char *string);
 static int	tokenize_loop(t_token_context *tc);
 static int	add_eof_token(t_token_context *tc);
 
-t_token	*tokenizer(char *string)
+t_token_list	*tokenizer(char *string)
 {
-	t_token	*head;
+	t_token_list	*head;
 
 	head = NULL;
 	if (string == NULL)
@@ -19,13 +20,13 @@ t_token	*tokenizer(char *string)
 	}
 	if (tokenize(&head, string) != 0)
 	{
-		clean_tokens(&head);
+		clean_token_list(&head);
 		return (NULL);
 	}
 	return (head);
 }
 
-static int	tokenize(t_token **head, char *string)
+static int	tokenize(t_token_list **head, char *string)
 {
 	t_token_context	tc;
 
@@ -37,7 +38,7 @@ static int	tokenize(t_token **head, char *string)
 	return (0);
 }
 
-static void	init_token_context(t_token_context *tc, t_token **head,
+static void	init_token_context(t_token_context *tc, t_token_list **head,
 		char *string)
 {
 	tc->head = head;

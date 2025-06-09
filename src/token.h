@@ -11,7 +11,6 @@ typedef enum {
   TOKEN_REDIR_OUTPUT,   /* ">"   */
   TOKEN_REDIR_HERE_DOC, /* "<<"  */
   TOKEN_REDIR_APPEND,   /* ">>" */
-  TOKEN_EOF //"\0", これがあればparserのwhileループの条件式がやりやすいらしい
 } e_token_type;
 
 typedef struct s_token_content {

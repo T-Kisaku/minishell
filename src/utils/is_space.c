@@ -1,0 +1,9 @@
+//space is return (true(1));
+int	ft_isspace(int c)
+{
+	if (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
+		|| c == ' ')
+		return (1);
+	else
+		return (0);
+}

@@ -56,9 +56,9 @@ typedef struct s_redir {
 
 typedef enum e_cmd_type { CMD_SIMPLE, CMD_SUBSHELL } t_cmd_type;
 
-typedef struct s_list t_list;
+typedef struct s_a_list t_a_list;
 
-typedef struct s_command {
+typedef struct s_command {	
   t_cmd_type type;
   t_redir *redirs;
   int redir_count;
@@ -71,7 +71,7 @@ typedef struct s_command {
     } simple;
 
     struct {
-      t_list *list;
+      t_a_list *list;
     } subshell;
   } u;
 } t_command;
@@ -89,11 +89,11 @@ typedef struct s_and_or {
   struct s_and_or *next;
 } t_and_or;
 
-typedef struct s_list {
+typedef struct s_a_list {
   t_and_or *first_and_or;
-  struct s_list *next;
-} t_list;
+  struct s_a_list *next;
+} t_a_list;
 
-typedef t_list t_ast;
+typedef t_a_list t_ast;
 
 #endif /* AST_H */

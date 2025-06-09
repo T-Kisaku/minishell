@@ -1,8 +1,7 @@
 #include "tokenizer.h"
 
 int		write_error(char *msg);
-void	clean_tokens(t_token **head);
-int		ft_isspace(int c);
+void	clean_token_list(t_token_list **head);
 
 //always return (1);
 int	write_error(char *msg)
@@ -16,34 +15,24 @@ int	write_error(char *msg)
 	return (1);
 }
 
-void	clean_tokens(t_token **head)
+void	clean_token_list(t_token_list **head)
 {
-	t_token	*cur_token;
-	t_token	*next_token;
+	t_token_list	*cur_token;
+	t_token_list	*next_token;
 
 	if (!head || !*head) // 追加の安全性チェック
 		return ;
 	cur_token = *head;
-	if (cur_token)
+	while (cur_token)
 	{
-		while (cur_token)
+		next_token = cur_token->next;
+		if (cur_token->content)
 		{
-			next_token = cur_token->next;
-			if (cur_token->value)
-				free(cur_token->value);
-			free(cur_token);
-			cur_token = next_token;
+			free(cur_token->content->value);
+			free(cur_token->content);
 		}
-		*head = NULL;
+		free(cur_token);
+		cur_token = next_token;
 	}
-}
-
-//space is return (true(1));
-int	ft_isspace(int c)
-{
-	if (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
-		|| c == ' ')
-		return (1);
-	else
-		return (0);
+	*head = NULL;
 }
