@@ -1,6 +1,4 @@
-#include "../../../libft/libft.h"
-#include "../../../include/ast.h"
-#include "../../../include/token.h"
+#include "expander.h"
 
 int			generate_argv_handler(t_command *cmd);
 static int	process_simple(t_command *cmd);
@@ -24,7 +22,8 @@ int	generate_argv_handler(t_command *cmd)
 
 static int	process_simple(t_command *cmd)
 {
-	t_token_list	*cur_token;
+	t_list	*cur_token;
+	t_token_content *cur_token_content;
 	size_t			index;
 
 	cmd->u.simple.argv = malloc(sizeof(char *) * (cmd->u.simple.argc + 1));
@@ -34,7 +33,8 @@ static int	process_simple(t_command *cmd)
 	index = 0;
 	while (index < cmd->u.simple.argc)
 	{
-		cmd->u.simple.argv[index] = ft_strdup(cur_token->content->value);
+		cur_token_content = cur_token->content;
+		cmd->u.simple.argv[index] = ft_strdup(cur_token_content->value);
 		if (!cmd->u.simple.argv[index])
 		{
 			free_argv(&cmd->u.simple.argv, index);

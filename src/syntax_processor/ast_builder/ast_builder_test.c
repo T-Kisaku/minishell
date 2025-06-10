@@ -6,8 +6,8 @@
 
 int main(void) {
     // 例: "ls -l /tmp" を手動でトークンリストにする
-    t_token_list *tokens =  tokenizer("ls -l");
-    t_token_list *cur = tokens;
+    t_list *tokens =  tokenizer("ls lss");
+    t_list *cur = tokens;
     t_command *cmd = parse_simple_command(&cur);
 
     // 結果を表示

@@ -1,9 +1,10 @@
 #include "ast_builder.h"
 
 //subshell, &&, ||については未実装
-t_ast	*ast_builder(t_token_list *tokens)
+t_ast	*ast_builder(t_list *tokens)
 {
 	t_ast	*ast;
+	
 
 	ast = malloc(sizeof(t_ast));
 	if (!ast)

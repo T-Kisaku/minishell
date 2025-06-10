@@ -1,5 +1,4 @@
 #include "tokenizer.h"
-#include "token.h"
 
 t_list	*tokenizer(char *string);
 static int	tokenize(t_list **head, char *string);

@@ -1,7 +1,4 @@
-#include <stddef.h> //for size_t,
-#include <stdlib.h> //for malloc,
-#include "../../libft/libft.h"
-#include "../../include/utils.h"
+#include "utils.h"
 
 char *ft_strndup(const char *s, size_t n)
 {

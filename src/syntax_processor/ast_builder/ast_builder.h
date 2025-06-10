@@ -8,7 +8,7 @@
 // # include "../../utils/utils.h"
 
 
-t_command *parse_simple_command(t_token_list **cur) ;
+t_command *parse_simple_command(t_list **cur) ;
 
 //test
 int main(void);

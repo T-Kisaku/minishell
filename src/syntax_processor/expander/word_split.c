@@ -1,11 +1,7 @@
-#include "../../../include/ast.h"
-#include "../../../include/expander.h"
-#include "../../../include/token.h"
-#include "../../../include/utils.h"
-#include "../../../libft/libft.h"
+#include "expander.h"
 
 int	word_split_handler(t_command *cmd);
-static int	process_simple(t_token_list *head);
+static int	process_simple(t_list *head);
 static int	count_words(char *str);
 
 int	word_split_handler(t_command *cmd)
@@ -19,19 +15,21 @@ int	word_split_handler(t_command *cmd)
 	return (0);
 }
 
-int	process_simple(t_token_list *head)
+int	process_simple(t_list *head)
 {
-	t_token_list	*cur;
-	t_token_list	*prev;
+	t_list	*cur;
+	t_list	*prev;
+	t_token_content *cur_token_content;
 	char			*start;
 	int				word_count;
 
 	cur = head;
 	while (cur)
 	{
-		if (cur->content->type == TOKEN_UNQUOTED_WORD)
+		cur_token_content = cur->content;
+		if (cur_token_content->type == TOKEN_UNQUOTED_WORD)
 		{
-			word_count = count_words(cur->content->value);
+			word_count = count_words(cur_token_content->value);
 			if (word_count > 1)
 			{
 				if (split_token(cur, word_count) != 0)

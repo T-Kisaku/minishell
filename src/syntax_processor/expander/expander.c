@@ -1,9 +1,8 @@
-#include "../../../include/ast.h"
-#include "../../../include/expander.h"
+#include "expander.h"
 
 int			process_expansion(t_ast *ast);
-int			expand_tokens_handler(t_command *cmd);
-static int	expand_token_list(t_token_list **tokens);
+int			expand_handler(t_command *cmd);
+static int	expand_token_list(t_list **tokens);
 
 int	process_expansion(t_ast *ast)
 {
@@ -20,7 +19,7 @@ int	process_expansion(t_ast *ast)
 	return (0);
 }
 
-int	expand_tokens_handler(t_command *cmd)
+int	expand_handler(t_command *cmd)
 {
 	if (cmd->type == CMD_SIMPLE)
 	{
@@ -29,23 +28,28 @@ int	expand_tokens_handler(t_command *cmd)
 	}
 	else if (cmd->type == CMD_SUBSHELL)
 	{
-		if (process_expansion(cmd->u.subshell.list) != 0)
+		if (process_expansion(cmd->u.subshell.and_or_list) != 0)
 			return (1);
 	}
 	return (0);
 }
 
-static int	expand_token_list(t_token_list **tokens)
+static int	expand_token_list(t_list **tokens)
 {
-	while (*tokens)
+	t_list *cur_token;
+	t_token_content *cur_token_content;
+
+	cur_token = *tokens;
+	while (cur_token)
 	{
-		if ((*tokens)->content->type == TOKEN_UNQUOTED_WORD
-			|| (*tokens)->content->type == TOKEN_DOUBLE_QUOTED_WORD)
+		cur_token_content = (t_token_content*)cur_token->content;
+		if (cur_token_content->type == TOKEN_UNQUOTED_WORD
+			|| cur_token_content->type == TOKEN_DOUBLE_QUOTED_WORD)
 		{
-			if (expand_single_token(tokens) != 0)
+			if (expand_single_token(&cur_token) != 0)
 				return (1);
 		}
-		tokens = &(*tokens)->next;
+		cur_token = cur_token->next;
 	}
 	return (0);
 }
