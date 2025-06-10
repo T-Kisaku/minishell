@@ -2,8 +2,9 @@
 #include "tokenizer.h"
 
 //現状libft.aを作成後に
-//% cc -Wall -Wextra -Werror tokenizer_test.c tokenizer.c processes.c utils.c process_special_char.c -L../../libft -lft -o test_tokenizer
+//% cc -Wall -Wextra -Werror tokenizer_test.c tokenizer.c processes.c utils.c process_special_char.c -L../../libft -lft -o test_token_listizer
 //とすれば実行ファイルを作成できます。
+//もしくは cc *.c ../../utils/is_space.c -L../../../libft -lft     
 
 // トークンタイプを文字列に変換する関数
 const char *token_type_to_string(e_token_type type) 
@@ -17,24 +18,26 @@ const char *token_type_to_string(e_token_type type)
         case TOKEN_REDIR_OUTPUT: return "REDIR_OUTPUT";
         case TOKEN_REDIR_HERE_DOC: return "REDIR_HERE_DOC";
         case TOKEN_REDIR_APPEND: return "REDIR_APPEND";
-        case TOKEN_EOF: return "EOF";
+        case TOKEN_EOF: return "EOF"; //for parser revive!
         default: return "UNKNOWN";
     }
 }
 
 // テスト用の出力関数
-void print_tokens(t_token *tokens)
+void print_token_lists(t_list *tokens)
 {
-    t_token *current = tokens;
+    t_list *current = tokens;
+	t_token_content *token;
     int token_count = 0;
     
     printf("=== Tokenization Results ===\n");
     while (current)
     {
+		token = (t_token_content*)(current->content);
         printf("Token %d: '%s' -> %s\n", 
                ++token_count, 
-               current->value, 
-               token_type_to_string(current->type));
+				token->value,
+               token_type_to_string(token->type));
         current = current->next;
     }
     printf("Total tokens: %d\n\n", token_count);
@@ -46,11 +49,11 @@ void test_case(const char *description, const char *input)
     printf("=== Test: %s ===\n", description);
     printf("Input: \"%s\"\n", input);
     
-    t_token *tokens = tokenizer((char *)input);
+    t_list *tokens = tokenizer((char *)input);
     if (tokens)
     {
-        print_tokens(tokens);
-        clean_tokens(&tokens);
+        print_token_lists(tokens);
+        clean_token_list(&tokens);
     }
     else
     {
@@ -64,7 +67,7 @@ int main()
     printf("==============================\n\n");
     
     // テストケース1: 基本的なコマンド
-    test_case("Basic command", "echo hello world");
+    test_case("Basic command", "\"echo\" hello world");
     
     // テストケース2: シングルクォート
     test_case("Single quoted string", "echo 'hello world'");

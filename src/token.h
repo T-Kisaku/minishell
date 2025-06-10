@@ -11,6 +11,7 @@ typedef enum {
   TOKEN_REDIR_OUTPUT,   /* ">"   */
   TOKEN_REDIR_HERE_DOC, /* "<<"  */
   TOKEN_REDIR_APPEND,   /* ">>" */
+  TOKEN_EOF
 } e_token_type;
 
 typedef struct s_token_content {

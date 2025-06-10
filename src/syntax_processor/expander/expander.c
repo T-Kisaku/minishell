@@ -7,9 +7,7 @@ static int	expand_token_list(t_token_list **tokens);
 
 int	process_expansion(t_ast *ast)
 {
-	// if (cmd_loop(ast, heredoc_handler) != 0)
-	// 	return (1);
-	if (cmd_loop(ast, expand_tokens_handler) != 0)
+	if (cmd_loop(ast, expand_handler) != 0) //４つのうち上３つの関数でredirsのchar*にも同様のことを行う。
 		return (1);
 	if (cmd_loop(ast, word_split_handler) != 0)
 		return (1);
@@ -17,6 +15,8 @@ int	process_expansion(t_ast *ast)
 		return (1);
 	if (cmd_loop(ast, generate_argv_handler) != 0)
 		return (1);
+	// if (cmd_loop(ast, generate_heredoc_file)!= 0) ここでheredocの１時ファイルを作成する。
+	// 	return (1);
 	return (0);
 }
 
