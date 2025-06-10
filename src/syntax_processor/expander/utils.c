@@ -1,7 +1,6 @@
 #include "expander.h"
 
 int		cmd_loop(t_ast *ast, int (*handler)(t_command *));
-void	free_argv(char ***argv, int num);
 void	copy_and_advance(t_expansion_context *ctx, char *src, size_t count);
 
 int	cmd_loop(t_ast *ast, int (*handler)(t_command *))
@@ -29,33 +28,8 @@ int	cmd_loop(t_ast *ast, int (*handler)(t_command *))
 	}
 	return (0);
 }
+//num == INT_MAX,  free for
 
-void	free_argv(char ***argv, int num)
-{
-	int	i;
-
-	if (!argv || !*argv)
-		return ;
-	i = 0;
-	if (num == INT_MAX)
-		while ((*argv)[i])
-		{
-			free((*argv)[i]);
-			(*argv)[i] = NULL;
-			i++;
-		}
-	else
-	{
-		while (i < num)
-		{
-			free((*argv)[i]);
-			(*argv)[i] = NULL;
-			i++;
-		}
-	}
-	free(*argv);
-	*argv = NULL;
-}
 
 void	copy_and_advance(t_expansion_context *ctx, char *src, size_t count)
 {

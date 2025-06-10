@@ -29,7 +29,6 @@ int process_unquoted_word(t_token_context *ctx);
 int process_special_char(t_token_context *lc);
 // utils.c
 int write_error(char *msg);
-void clean_token_list(t_list **head);
 
 //for test
 int main();

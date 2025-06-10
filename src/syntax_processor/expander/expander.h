@@ -69,7 +69,6 @@ int					quote_removal_handler(t_command *cmd);
 int					generate_argv_handler(t_command *cmd);
 //utils.h
 int					cmd_loop(t_ast *ast, int (*handler)(t_command *));
-void				free_argv(char ***argv, int num);
 void				copy_and_advance(t_expansion_context *ctx, char *src,
 						size_t count);
 #endif
