@@ -1,15 +1,12 @@
 #ifndef AST_BUILDER_H
 # define AST_BUILDER_H
 
-
-# include <stdlib.h> //for getenv,
-#include "libft.h"
 # include "ast.h"
+# include "libft.h"
 // # include "utils/utils.h"
 
-
-t_command *parse_simple_command(t_list **cur) ;
-
+int	handle_token_for_ast(t_list *token,
+							t_list *command_list);
 //test
-int main(void);
+int	main(void);
 #endif

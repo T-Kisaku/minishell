@@ -1,31 +1,48 @@
+#include <stdlib.h> //free
+#include "libft.h" //ft_lstclear
 #include "ast.h"
+#include "token.h"
+#include "utils.h"
 
+void	free_redir_list(t_list **head);
+void	del_redir(void *content);
 void	free_token_list(t_list **head);
+void	del_token_content(void *content);
 void	free_argv(char ***argv, int num);
 
+void	free_redir_list(t_list **head)
+{
+	if (!head || !*head)
+		return ;
+	ft_lstclear(head, del_redir);
+}
+void	del_redir(void *content)
+{
+	t_redir	*redir;
+
+	if (!content)
+		return ;
+	redir = (t_redir *)content;
+	del_token_content((void *)redir->content);
+	free(redir);
+}
 
 void	free_token_list(t_list **head)
 {
-	t_list			*cur_token;
-	t_list			*next_token;
-	t_token_content	*cur_token_content;
-
 	if (!head || !*head)
 		return ;
-	cur_token = *head;
-	while (cur_token)
-	{
-		cur_token_content = (t_token_content*)cur_token->content;
-		if (cur_token_content)
-		{
-			free(cur_token_content->value);
-			free(cur_token_content);
-		}
-		next_token = cur_token->next;
-		free(cur_token);
-		cur_token = next_token;
-	}
-	*head = NULL;
+	ft_lstclear(head, del_token_content);
+}
+
+void	del_token_content(void *content)
+{
+	t_token_content	*token_content;
+
+	if (!content)
+		return ;
+	token_content = (t_token_content *)content;
+	free(token_content->value);
+	free(token_content);
 }
 
 void	free_argv(char ***argv, int num)

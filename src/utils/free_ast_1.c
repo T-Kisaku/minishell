@@ -1,50 +1,51 @@
+#include <stdlib.h> //free,
+#include "libft.h" //ft_lstclear
+#include "ast.h"
+#include "token.h"
 #include "utils.h"
-// #include "libft.h" // TODO: adapt libft's ft_lstclear, just make del function for each struct!!
 
+// #include "libft.h" // TODO: adapt libft's ft_lstclear,
+//	just make del function for each struct!!
 
 void	free_ast(t_ast *ast);
+void	del_and_or(void *content);
 void	free_command_list(t_list **command_list);
+void	del_command(void *content);
 void	free_command(t_command **cmd);
-void	free_redir_list(t_list **head);
 
 void	free_ast(t_ast *ast)
 {
-	t_and_or	*and_or;
-	t_pipeline	*pipeline;
-
 	if (!ast)
 		return ;
-	and_or = (t_and_or *)ast->content;
-	if (and_or)
-	{
-		pipeline = and_or->pipeline;
-		if (pipeline)
-		{
-			free_command_list(&pipeline->command_list);
-			free(pipeline);
-		}
-		free(and_or);
-	}
-	free(ast);
+	ft_lstclear(&ast, del_and_or);	
+}
+
+void	del_and_or(void *content)
+{
+	t_and_or	*and_or;
+
+	if (!content)
+		return ;
+	and_or = (t_and_or *)content;
+	free_command_list(&and_or->pipeline->command_list);
+	free_(and_or->pipeline);
+	free(and_or);
 }
 void	free_command_list(t_list **command_list)
 {
-	t_list		*cur_cmd_list;
-	t_list		*next;
-	t_command	*cmd;
-
 	if (!command_list || !*command_list)
 		return ;
-	cur_cmd_list = *command_list;
-	while (cur_cmd_list)
-	{
-		cmd = (t_command *)cur_cmd_list->content;
-		free_command(&cmd);
-		next = cur_cmd_list->next;
-		free(cur_cmd_list);
-		cur_cmd_list = next;
-	}
-	*command_list = NULL;
+	ft_lstclear(command_list, del_command);
+}
+
+void	del_command(void *content)
+{
+	t_command	*cmd;
+
+	if (!content)
+		return ;
+	cmd = (t_command *)content;
+	free_command(&cmd);
 }
 
 void	free_command(t_command **cmd)
@@ -67,25 +68,4 @@ void	free_command(t_command **cmd)
 	}
 	free(*cmd);
 	*cmd = NULL;
-}
-
-void	free_redir_list(t_list **head)
-{
-	t_list			*cur_redir;
-	t_list			*next;
-	t_redir_content	*redir_content;
-
-	if (!head || !*head)
-		return ;
-	cur_redir = *head;
-	while (cur_redir)
-	{
-		redir_content = (t_redir_content *)cur_redir->content;
-		if (redir_content)
-			free(redir_content->target);
-		next = cur_redir->next;
-		free(cur_redir);
-		cur_redir = next;
-	}
-	*head = NULL;
 }
