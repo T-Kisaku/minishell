@@ -11,24 +11,6 @@ int		quote_removal_handler(t_command *cmd);
 int		word_split_handler(t_command *cmd);
 void	free_argv(char ***argv, int num);
 
-// テスト用free関数
-void	free_token_list(t_list *list)
-{
-	t_list			*tmp;
-	t_token_content	*token_content;
-	while (list)
-	{
-		tmp = list;
-		token_content = tmp->content;
-		free(token_content->value);
-		free(token_content);
-		list = list->next;
-		free(tmp);
-		tmp = NULL;
-		
-	}
-}
-
 int	main(void)
 {
 	t_list			*tok1;
@@ -83,7 +65,7 @@ int	main(void)
 	if (generate_argv_handler(&cmd) != 0)
 	{
 		printf("argv生成に失敗しました\n");
-		free_token_list(tok1);
+		free_token_list(&tok1);
 		return (1);
 	}
 	// 4. 結果確認
@@ -98,6 +80,6 @@ int	main(void)
 	for (int i = 0; i < cmd.u.simple.argc; ++i)
 		free(cmd.u.simple.argv[i]);
 	free(cmd.u.simple.argv);
-	free_token_list(tok1);
+	free_token_list(&tok1);
 	return (0);
 }

@@ -5,9 +5,9 @@
 #include <stdbool.h> //for bool,
 #include <stdlib.h> //for malloc, free
 #include <unistd.h> //for write
-#include "../../../libft/libft.h"
-#include "../../token.h"
-#include "../../utils/utils.h"
+#include "libft.h"
+#include "token.h"
+#include "utils/utils.h"
 
 // 構造体リストを作成するために関数内で使用する構造体
 typedef struct s_token_context {

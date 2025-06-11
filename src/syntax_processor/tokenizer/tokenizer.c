@@ -19,7 +19,7 @@ t_list	*tokenizer(char *string)
 	}
 	if (tokenize(&head, string) != 0)
 	{
-		clean_token_list(&head);
+		free_token_list(&head);
 		return (NULL);
 	}
 	return (head);

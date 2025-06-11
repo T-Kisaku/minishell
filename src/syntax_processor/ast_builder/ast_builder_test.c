@@ -1,8 +1,8 @@
 #include  "ast_builder.h"
-#include  "../tokenizer/tokenizer.h"
+#include  "tokenizer/tokenizer.h"
 #include <stdio.h>
 
-//cc ast_builder_test.c simple_command.c ../tokenizer/process_special_char.c ../tokenizer/processes.c ../tokenizer/tokenizer.c ../tokenizer/utils.c  ../../utils/is_space.c -L../../../libft -lft 
+//cc ast_builder_test.c simple_command.c ../tokenizer/process_special_char.c ../tokenizer/processes.c ../tokenizer/tokenizer.c .z./tokenizer/utils.c  ../../utils/is_space.c -L../../../libft -lft 
 
 int main(void) {
     // 例: "ls -l /tmp" を手動でトークンリストにする

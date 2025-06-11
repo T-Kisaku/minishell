@@ -5,7 +5,7 @@
 
 # include <stddef.h> //for size_t
 #include <stdlib.h> //for malloc,
-#include "../../libft/libft.h"
+#include "libft.h"
 #include "ast.h"
 
 //free_ast_1.c

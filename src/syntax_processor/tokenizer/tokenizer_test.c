@@ -53,7 +53,7 @@ void test_case(const char *description, const char *input)
     if (tokens)
     {
         print_token_lists(tokens);
-        clean_token_list(&tokens);
+        free_token_list(&tokens);
     }
     else
     {

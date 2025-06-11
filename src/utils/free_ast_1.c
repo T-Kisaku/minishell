@@ -1,4 +1,6 @@
 #include "utils.h"
+// #include "libft.h" // TODO: adapt libft's ft_lstclear, just make del function for each struct!!
+
 
 void	free_ast(t_ast *ast);
 void	free_command_list(t_list **command_list);
@@ -56,8 +58,8 @@ void	free_command(t_command **cmd)
 	free_redir_list(&(*cmd)->redir_list);
 	if ((*cmd)->type == CMD_SIMPLE)
 	{
-		free_token_list((*cmd)->u.simple.token_list);
-		free_argv((*cmd)->u.simple.argv, INT_MAX);
+		free_token_list(&(*cmd)->u.simple.token_list);
+		free_argv(&(*cmd)->u.simple.argv, INT_MAX);
 	}
 	else if ((*cmd)->type == CMD_SUBSHELL)
 	{

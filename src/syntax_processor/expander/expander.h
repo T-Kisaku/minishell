@@ -1,10 +1,10 @@
 #ifndef EXPANDER_H
 # define EXPANDER_H
 
-# include "../../../libft/libft.h"
-# include "../../ast.h"
-# include "../../token.h"
-# include "../../utils/utils.h"
+# include "libft.h"
+# include "ast.h"
+# include "token.h"
+# include "utils/utils.h"
 # include <stdlib.h> //for getenv,
 
 typedef enum

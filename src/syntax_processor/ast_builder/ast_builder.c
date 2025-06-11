@@ -1,4 +1,5 @@
 #include "ast_builder.h"
+#include "utils/utils.h"
 
 static void	free_command(t_command **cmd);
 //subshell, &&, ||については未実装
@@ -11,7 +12,6 @@ t_ast	*ast_builder(t_list *tokens)
 	t_list			*last_token;
 	t_list			*next_token;
 
-	and_or = (t_and_or *)ast->content;
 	ast = malloc(sizeof(t_ast));
 	if (!ast)
 		return (NULL);
@@ -19,23 +19,19 @@ t_ast	*ast_builder(t_list *tokens)
 	and_or = malloc(sizeof(t_and_or));
 	if (!and_or)
 	{
-		free(ast);
+		free_ast(ast);
 		return (1);
 	}
+	and_or = (t_and_or *)ast->content;
 	and_or->op_next = OP_NONE;
 	and_or->pipeline = malloc(sizeof(t_pipeline));
 	if (!and_or->pipeline)
 	{
-		free(and_or);
-		free(ast);
+		free_ast(ast);
 		return (1);
 	}
 	cur_cmd = (t_command *)and_or->pipeline->command_list->content;
-	cur_cmd->redir_list = NULL;
-	cur_cmd->type = CMD_SIMPLE;
-	cur_cmd->u.simple.argc = INT_MIN;
-	cur_cmd->u.simple.argv = NULL;
-	cur_cmd->u.simple.token_list = NULL;
+
 	while (tokens)
 	{
 		cur_token_content = (t_token_content *)tokens->content;
@@ -66,8 +62,9 @@ t_ast	*ast_builder(t_list *tokens)
 
 static int	init_command(t_command *cur_cmd)
 {
+	cur_cmd->redir_list = NULL;
+	cur_cmd->type = CMD_SIMPLE;
+	cur_cmd->u.simple.argc = INT_MIN;
+	cur_cmd->u.simple.argv = NULL;
+	cur_cmd->u.simple.token_list = NULL;
 }
-
-
-
-

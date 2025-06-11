@@ -3,9 +3,9 @@
 
 
 # include <stdlib.h> //for getenv,
-#include "../../../libft/libft.h"
-# include "../../ast.h"
-// # include "../../utils/utils.h"
+#include "libft.h"
+# include "ast.h"
+// # include "utils/utils.h"
 
 
 t_command *parse_simple_command(t_list **cur) ;
