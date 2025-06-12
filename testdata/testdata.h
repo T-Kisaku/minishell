@@ -15,6 +15,8 @@ t_testdata ls(void);
 t_testdata echo_hello(void);
 t_testdata cat_nofile(void);
 
+// builtin
+t_testdata pwd(void);
 // builtin edge cases
 t_testdata cd_noarg(void);
 t_testdata cd_non_existing_dir(void);

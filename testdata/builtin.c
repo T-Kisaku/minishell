@@ -1,6 +1,23 @@
 #include "testdata.h"
 
 // Builtin command edge cases
+t_testdata pwd(void) {
+  static char *argv[] = {"pwd", NULL};
+  static t_command cmd = {
+      .type = CMD_SIMPLE,
+      .redir_list = NULL,
+      .u.simple = {.token_list = NULL, .argv = argv, .argc = 1}};
+
+  static t_list cmd_list = {.content = (void *)&cmd, .next = NULL};
+  static t_pipeline pipeline = {.command_list = &cmd_list};
+  static t_and_or and_or = {
+      .pipeline = &pipeline,
+      .op_next = OP_NONE,
+  };
+  static t_ast ast = {.content = (void *)&and_or, .next = NULL};
+  return (t_testdata){
+      .input = "pwd", .token_list = {0}, .ast = ast, .output_file = NULL};
+}
 
 t_testdata cd_noarg(void) {
   static char *argv[] = {"cd", NULL};

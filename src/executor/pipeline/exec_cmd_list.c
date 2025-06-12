@@ -4,9 +4,6 @@
 #include "executor/executor.h"
 #include "ast.h"
 #include "libft.h"
-// TODO: delete below header
-#include <stdio.h>
-#include "testdata.h"
 
 typedef struct s_cmd_fd {
   int prev_pipe_read;
@@ -18,13 +15,6 @@ typedef struct s_cmd_fd {
 
 static int ms_lst_is_last(t_list *lst) { return lst->next == NULL; }
 static void set_io_redir(t_command *cmd, t_cmd_fd cmd_fd);
-
-void debug(t_cmd_fd cmd_fd) {
-  printf("prev_read: %d\n", cmd_fd.prev_pipe_read);
-  printf("read     : %d\n", cmd_fd.current_pipe[PIPE_READ]);
-  printf("write    : %d\n", cmd_fd.current_pipe[PIPE_WRITE]);
-  printf("= = = =\n");
-}
 
 void exec_cmd_list(pid_t *pids, t_list *cmd_list) {
   t_cmd_fd cmd_fd;
