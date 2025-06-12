@@ -38,8 +38,8 @@
  *
  */
 
-#ifndef AST_H
-#define AST_H
+ #ifndef AST_H
+ #define AST_H
 
 #include <stddef.h>
 #include <stdbool.h>

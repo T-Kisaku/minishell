@@ -15,13 +15,17 @@ int	handle_token_for_ast(t_list *token, t_list *command_list)
 	cmd = (t_command *)command_list->content;
 	token_content = (t_token_content *)token->content;
 	if (is_word_token(token_content->type))
-		return (process_word(token, cmd));
-	else if (token_content->type = TOKEN_PIPE)
+	{
+		process_word(token, cmd);
+		token = token->next;
+		return (0);
+	}
+	else if (token_content->type == TOKEN_PIPE)
 		return (process_pipe(token, command_list));
 	else if (is_redir_token(token_content->type))
 		return (process_redirs(token, cmd));
 	else if (token_content->type == TOKEN_EOF)
-		return (process_eof(token));
+		return (2);
 	else
 		return (1);
 	return (0);
