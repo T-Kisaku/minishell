@@ -7,9 +7,6 @@
 // #include "libft.h" // TODO: adapt libft's ft_lstclear,
 //	just make del function for each struct!!
 
-void	free_ast(t_ast **ast);
-void	del_and_or(void *content);
-void	free_command_list(t_list **command_list);
 void	del_command(void *content);
 void	free_command(t_command **cmd);
 
