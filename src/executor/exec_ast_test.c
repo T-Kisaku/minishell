@@ -13,10 +13,10 @@ static void print_title(char *title);
 static void print_file_content(char filename[]);
 
 int main() {
-  /* basic_test(); */
+  basic_test();
   builtin_test();
-  /* redirect_test(); */
-  /* pipe_test(); */
+  redirect_test();
+  pipe_test();
   return (EXIT_SUCCESS);
 }
 
