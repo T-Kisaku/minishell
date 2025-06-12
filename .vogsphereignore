@@ -1,0 +1,8 @@
+*.sh
+
+testdata
+mk/testdata.mk
+*_test.c
+
+doc
+.vogsphereignore
