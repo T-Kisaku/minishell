@@ -1,8 +1,11 @@
-test_bin
-obj
 *.o
 *.out
 *.txt
+vgcore.*
+
 minishell
+obj
+test_bin
+
 .clang-format
 .vscode/

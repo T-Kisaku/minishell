@@ -4,9 +4,9 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <fcntl.h>
-#include "ast.h"
+#include "libft.h"
 
-int run_pipes(pid_t *pids, t_pipeline *pipeline);
+void exec_cmd_list(pid_t *pids, t_list *cmd_list);
 int wait_pids(pid_t *pids, int cmd_count);
 
 #endif // !PIPELINE_H

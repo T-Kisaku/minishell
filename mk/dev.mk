@@ -18,10 +18,9 @@ stdheader:
 	@stdheader $(SRCS)
 
 set-src-files:
-	@echo 'SRCS = \ ' > mk/srcs.mk
+	@echo SRCS = \\ > mk/srcs.mk
 	@$(MAKE) get-src-files >> mk/srcs.mk
 get-src-files:
 	@find ./src -not -type d -name '*.c' ! -name '*_test.c' \
 		| sed 's|^\./||' \
-		| sed '$$!s|$$| \\\\|' \
-		| while read line; do echo $$line; done
+		| while read line; do echo $$line \\; done

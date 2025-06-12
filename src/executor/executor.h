@@ -1,9 +1,12 @@
 #ifndef EXECUTOR_H
 #define EXECUTOR_H
 
+#include <fcntl.h>
+#include <stdbool.h>
 #include "ast.h"
 
-int run_pipeline(t_pipeline *pipeline);
-int run_command(t_command *cmd);
+int exec_pipeline(t_pipeline *pipeline);
+pid_t exec_external_cmd(t_command *cmd);
+bool exec_builtin_cmd(t_command *cmd);
 
 #endif // !EXECUTOR_H

@@ -18,9 +18,4 @@ typedef struct s_token_content {
   e_token_type type;
 } t_token_content;
 
-typedef struct s_token_lst {
-  t_token_content *content;
-  struct s_token_lst *next;
-} t_token_list;
-
 #endif // !TOKEN_H

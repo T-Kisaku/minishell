@@ -1,132 +1,195 @@
+#include "ast.h"
 #include "testdata.h"
+#include <unistd.h>
 
 // Redirection examples
 
-t_testdata redir_output(void)
-{
-    static char *argv[] = {"echo", "hello", NULL};
-    static t_redir redirs[] = {
-        { .type = REDIR_OUTPUT, .target = "out.txt" }
-    };
-    static t_command cmd = {
-        .type = CMD_SIMPLE,
-        .redirs = redirs,
-        .redir_count = 1,
-        .u.simple = { .token_list = NULL, .argv = argv, .argc = 2 }
-    };
-    static t_and_or and_or = {
-        .pipeline = { .commands = &cmd, .cmd_count = 1 },
-        .op_next = OP_NONE,
-        .next = NULL
-    };
-    static t_ast ast = { .first_and_or = &and_or, .next = NULL };
-    return (t_testdata){
-        .input = "echo hello > out.txt",
-        .token_list = {0},
-        .ast = ast
-    };
+/* .is_direct_to_fd = false, */
+/* .fd = -1, */
+/* .filename = NULL, */
+/* .filename_token = NULL, */
+t_testdata redir_output(void) {
+  static char *argv[] = {"echo", "hello", NULL};
+  static t_redir redir = {.type = REDIR_OUTPUT,
+                          .from =
+                              {
+                                  .is_direct_to_fd = true,
+                                  .fd = STDOUT_FILENO,
+                                  .filename = NULL,
+                                  .filename_token = NULL,
+                              },
+                          .to = {
+                              .is_direct_to_fd = false,
+                              .fd = -1,
+                              .filename = "out.txt",
+                              .filename_token = NULL,
+                          }};
+  static t_list redir_list = {.content = (void *)&redir, .next = NULL};
+  static t_command cmd = {
+      .type = CMD_SIMPLE,
+      .redir_list = &redir_list,
+      .u.simple = {.token_list = NULL, .argv = argv, .argc = 2}};
+  static t_list cmd_list = {.content = (void *)&cmd, .next = NULL};
+  static t_pipeline pipeline = {.command_list = &cmd_list};
+  static t_and_or and_or = {
+      .pipeline = &pipeline,
+      .op_next = OP_NONE,
+  };
+  static t_ast ast = {.content = (void *)&and_or, .next = NULL};
+  return (t_testdata){.input = "echo hello > out.txt",
+                      .token_list = {0},
+                      .ast = ast,
+                      .output_file = "out.txt"};
 }
 
-t_testdata redir_input(void)
-{
-    static char *argv[] = {"cat", NULL};
-    static t_redir redirs[] = { { .type = REDIR_INPUT, .target = "out.txt" } };
-    static t_command cmd = {
-        .type = CMD_SIMPLE,
-        .redirs = redirs,
-        .redir_count = 1,
-        .u.simple = { .token_list = NULL, .argv = argv, .argc = 1 }
-    };
-    static t_and_or and_or = {
-        .pipeline = { .commands = &cmd, .cmd_count = 1 },
-        .op_next = OP_NONE,
-        .next = NULL
-    };
-    static t_ast ast = { .first_and_or = &and_or, .next = NULL };
-    return (t_testdata){
-        .input = "cat < out.txt",
-        .token_list = {0},
-        .ast = ast
-    };
+t_testdata redir_input(void) {
+  static char *argv[] = {"cat", NULL};
+  static t_redir redir = {.type = REDIR_INPUT,
+                          .from =
+                              {
+                                  .is_direct_to_fd = true,
+                                  .fd = STDIN_FILENO,
+                                  .filename = NULL,
+                                  .filename_token = NULL,
+                              },
+                          .to = {
+                              .is_direct_to_fd = false,
+                              .fd = -1,
+                              .filename = "out.txt",
+                              .filename_token = NULL,
+                          }};
+  static t_list redir_list = {.content = (void *)&redir, .next = NULL};
+  static t_command cmd = {
+      .type = CMD_SIMPLE,
+      .redir_list = &redir_list,
+      .u.simple = {.token_list = NULL, .argv = argv, .argc = 1}};
+  static t_list cmd_list = {.content = (void *)&cmd, .next = NULL};
+  static t_pipeline pipeline = {.command_list = &cmd_list};
+  static t_and_or and_or = {
+      .pipeline = &pipeline,
+      .op_next = OP_NONE,
+  };
+  static t_ast ast = {.content = (void *)&and_or, .next = NULL};
+  return (t_testdata){.input = "cat < out.txt", .token_list = {0}, .ast = ast};
 }
 
-t_testdata redir_append(void)
-{
-    static char *argv[] = {"echo", "bye", NULL};
-    static t_redir redirs[] = { { .type = REDIR_APPEND, .target = "out.txt" } };
-    static t_command cmd = {
-        .type = CMD_SIMPLE,
-        .redirs = redirs,
-        .redir_count = 1,
-        .u.simple = { .token_list = NULL, .argv = argv, .argc = 2 }
-    };
-    static t_and_or and_or = {
-        .pipeline = { .commands = &cmd, .cmd_count = 1 },
-        .op_next = OP_NONE,
-        .next = NULL
-    };
-    static t_ast ast = { .first_and_or = &and_or, .next = NULL };
-    return (t_testdata){
-        .input = "echo bye >> out.txt",
-        .token_list = {0},
-        .ast = ast
-    };
+t_testdata redir_append(void) {
+  static char *argv[] = {"echo", "bye", NULL};
+  static t_redir redir = {.type = REDIR_APPEND,
+                          .from =
+                              {
+                                  .is_direct_to_fd = true,
+                                  .fd = STDOUT_FILENO,
+                                  .filename = NULL,
+                                  .filename_token = NULL,
+                              },
+                          .to = {
+                              .is_direct_to_fd = false,
+                              .fd = -1,
+                              .filename = "out.txt",
+                              .filename_token = NULL,
+                          }};
+  static t_list redir_list = {.content = (void *)&redir, .next = NULL};
+  static t_command cmd = {
+      .type = CMD_SIMPLE,
+      .redir_list = &redir_list,
+      .u.simple = {.token_list = NULL, .argv = argv, .argc = 2}};
+  static t_list cmd_list = {.content = (void *)&cmd, .next = NULL};
+  static t_pipeline pipeline = {.command_list = &cmd_list};
+  static t_and_or and_or = {
+      .pipeline = &pipeline,
+      .op_next = OP_NONE,
+  };
+  static t_ast ast = {.content = (void *)&and_or, .next = NULL};
+  return (t_testdata){.input = "echo bye >> out.txt",
+                      .token_list = {0},
+                      .ast = ast,
+                      .output_file = "out.txt"};
 }
 
-t_testdata redir_mix(void)
-{
-    static char *argv[] = {"cat", NULL};
-    static t_redir redirs[] = {
-        { .type = REDIR_INPUT, .target = "out.txt" },
-        { .type = REDIR_OUTPUT, .target = "new.txt" }
-    };
-    static t_command cmd = {
-        .type = CMD_SIMPLE,
-        .redirs = redirs,
-        .redir_count = 2,
-        .u.simple = { .token_list = NULL, .argv = argv, .argc = 1 }
-    };
-    static t_and_or and_or = {
-        .pipeline = { .commands = &cmd, .cmd_count = 1 },
-        .op_next = OP_NONE,
-        .next = NULL
-    };
-    static t_ast ast = { .first_and_or = &and_or, .next = NULL };
-    return (t_testdata){
-        .input = "cat < out.txt > new.txt",
-        .token_list = {0},
-        .ast = ast
-    };
+t_testdata redir_mix(void) {
+  static char *argv[] = {"cat", NULL};
+  static t_redir redir1 = {.type = REDIR_INPUT,
+                           .from =
+                               {
+                                   .is_direct_to_fd = true,
+                                   .fd = STDIN_FILENO,
+                                   .filename = NULL,
+                                   .filename_token = NULL,
+                               },
+                           .to = {
+                               .is_direct_to_fd = false,
+                               .fd = -1,
+                               .filename = "out.txt",
+                               .filename_token = NULL,
+                           }};
+  static t_redir redir2 = {.type = REDIR_OUTPUT,
+                           .from =
+                               {
+                                   .is_direct_to_fd = true,
+                                   .fd = STDOUT_FILENO,
+                                   .filename = NULL,
+                                   .filename_token = NULL,
+                               },
+                           .to = {
+                               .is_direct_to_fd = false,
+                               .fd = -1,
+                               .filename = "new.txt",
+                               .filename_token = NULL,
+                           }};
+  static t_list redir_list2 = {.content = (void *)&redir2, .next = NULL};
+  static t_list redir_list1 = {.content = (void *)&redir1,
+                               .next = &redir_list2};
+  static t_command cmd = {
+      .type = CMD_SIMPLE,
+      .redir_list = &redir_list1,
+      .u.simple = {.token_list = NULL, .argv = argv, .argc = 1}};
+  static t_list cmd_list = {.content = (void *)&cmd, .next = NULL};
+  static t_pipeline pipeline = {.command_list = &cmd_list};
+  static t_and_or and_or = {
+      .pipeline = &pipeline,
+      .op_next = OP_NONE,
+  };
+  static t_ast ast = {.content = (void *)&and_or, .next = NULL};
+  return (t_testdata){.input = "cat < out.txt > new.txt",
+                      .token_list = {0},
+                      .ast = ast,
+                      .output_file = "new.txt"};
 }
 
-t_testdata pipe_to_redir(void)
-{
-    static char *argv1[] = {"echo", "test", NULL};
-    static char *argv2[] = {"cat", NULL};
-    static t_redir redirs2[] = { { .type = REDIR_OUTPUT, .target = "result.txt" } };
-    static t_command cmds[] = {
-        {
-            .type = CMD_SIMPLE,
-            .redirs = NULL,
-            .redir_count = 0,
-            .u.simple = { .token_list = NULL, .argv = argv1, .argc = 2 }
-        },
-        {
-            .type = CMD_SIMPLE,
-            .redirs = redirs2,
-            .redir_count = 1,
-            .u.simple = { .token_list = NULL, .argv = argv2, .argc = 1 }
-        }
-    };
-    static t_and_or and_or = {
-        .pipeline = { .commands = cmds, .cmd_count = 2 },
-        .op_next = OP_NONE,
-        .next = NULL
-    };
-    static t_ast ast = { .first_and_or = &and_or, .next = NULL };
-    return (t_testdata){
-        .input = "echo test | cat > result.txt",
-        .token_list = {0},
-        .ast = ast
-    };
+t_testdata pipe_to_redir(void) {
+  static char *argv1[] = {"echo", "test", NULL};
+  static char *argv2[] = {"cat", NULL};
+  static t_redir redir2 = {.type = REDIR_OUTPUT,
+                           .from =
+                               {
+                                   .is_direct_to_fd = true,
+                                   .fd = STDOUT_FILENO,
+                                   .filename = NULL,
+                                   .filename_token = NULL,
+                               },
+                           .to = {
+                               .is_direct_to_fd = false,
+                               .fd = -1,
+                               .filename = "result.txt",
+                               .filename_token = NULL,
+                           }};
+  static t_list redir_list2 = {.content = (void *)&redir2, .next = NULL};
+  static t_command cmd1 = {
+      .type = CMD_SIMPLE,
+      .u.simple = {.token_list = NULL, .argv = argv1, .argc = 2}};
+
+  static t_command cmd2 = {
+      .type = CMD_SIMPLE,
+      .redir_list = &redir_list2,
+      .u.simple = {.token_list = NULL, .argv = argv2, .argc = 1}};
+  static t_list cmd_list2 = {.content = (void *)&cmd2, .next = NULL};
+  static t_list cmd_list1 = {.content = (void *)&cmd1, .next = &cmd_list2};
+  static t_pipeline pipeline = {.command_list = &cmd_list1};
+  static t_and_or and_or = {.pipeline = &pipeline, .op_next = OP_NONE};
+  static t_ast ast = {.content = (void *)&and_or, .next = NULL};
+  return (t_testdata){.input = "echo test | cat > result.txt",
+                      .token_list = {0},
+                      .ast = ast,
+                      .output_file = "result.txt"};
 }

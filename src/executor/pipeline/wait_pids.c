@@ -1,21 +1,22 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <fcntl.h>
+#include <stdlib.h>
 
 int wait_pids(pid_t *pids, int cmd_count) {
-  int status;
+  int last_cmd_status;
   int i;
+  last_cmd_status = EXIT_SUCCESS;
   i = 0;
   while (i < cmd_count) {
-    int wstatus;
-    waitpid(pids[i], &wstatus, 0);
+    waitpid(pids[i], &last_cmd_status, 0);
     if (i == cmd_count - 1) {
-      if (WIFEXITED(wstatus))
-        status = WEXITSTATUS(wstatus);
+      if (WIFEXITED(last_cmd_status))
+        last_cmd_status = WEXITSTATUS(last_cmd_status);
       else
-        status = 1;
+        last_cmd_status = EXIT_SUCCESS;
     }
     i++;
   }
-  return status;
+  return last_cmd_status;
 }

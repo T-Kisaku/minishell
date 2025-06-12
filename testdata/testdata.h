@@ -5,14 +5,15 @@
 
 typedef struct s_testdata {
   char *input;
-  t_token_list token_list;
+  t_list token_list;
   t_ast ast;
+  char *output_file;
 } t_testdata;
-
 
 // basic
 t_testdata ls(void);
 t_testdata echo_hello(void);
+t_testdata cat_nofile(void);
 
 // builtin edge cases
 t_testdata cd_noarg(void);
@@ -46,4 +47,9 @@ t_testdata err_bad_redir(void);
 t_testdata err_pipe_position(void);
 t_testdata err_single_redirect(void);
 
+void print_ast(t_ast *ast, int indent);
+void print_and_or(t_and_or *and_or, int indent);
+void print_pipeline(t_pipeline *pipeline, int indent);
+void print_command(t_command *cmd, int indent);
+void print_redirection(t_list *redir_list, int indent);
 #endif // !TESTDATA_H
