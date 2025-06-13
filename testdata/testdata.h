@@ -59,6 +59,6 @@ void print_command(t_command *cmd, int indent);
 void print_redirection(t_list *redir_list, int indent);
 
 // assert functions
-void assert_token_list(t_list *expected, t_list *actual);
+void assert_token_list_equal(t_list *exp, t_list *act, const char *path);
 void assert_ast_equal(t_ast *expected, t_ast *actual);
 #endif // !TESTDATA_H
