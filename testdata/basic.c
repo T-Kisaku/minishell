@@ -23,7 +23,7 @@ t_testdata ls(void) {
   };
   static t_ast ast = {.content = (void *)&and_or, .next = NULL};
   return (t_testdata){
-      .input = "ls", .token_list = {0}, .ast = ast, .output_file = NULL};
+      .input = "ls", .token_list = token_list, .ast = ast, .output_file = NULL};
 }
 
 t_testdata echo_hello(void) {
