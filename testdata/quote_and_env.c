@@ -8,7 +8,9 @@ t_testdata echo_env_home(void) {
                                    .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token2 = {.value = "$HOME",
                                    .type = TOKEN_DOUBLE_QUOTED_WORD};
-  static t_list token_list2 = {.content = (void *)&token2, .next = NULL};
+  static t_token_content token3 = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list3 = {.content = (void *)&token3, .next = NULL};
+  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
   static t_list token_list1 = {.content = (void *)&token1,
                                .next = &token_list2};
 
@@ -36,7 +38,9 @@ t_testdata echo_no_expand_home(void) {
                                    .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token2 = {.value = "$HOME",
                                    .type = TOKEN_SINGLE_QUOTED_WORD};
-  static t_list token_list2 = {.content = (void *)&token2, .next = NULL};
+  static t_token_content token3 = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list3 = {.content = (void *)&token3, .next = NULL};
+  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
   static t_list token_list1 = {.content = (void *)&token1,
                                .next = &token_list2};
 
@@ -66,7 +70,9 @@ t_testdata echo_concat_user(void) {
                                    .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token2 = {.value = "hello'$USER'world",
                                    .type = TOKEN_UNQUOTED_WORD};
-  static t_list token_list2 = {.content = (void *)&token2, .next = NULL};
+  static t_token_content token3 = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list3 = {.content = (void *)&token3, .next = NULL};
+  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
   static t_list token_list1 = {.content = (void *)&token1,
                                .next = &token_list2};
 
@@ -100,7 +106,9 @@ t_testdata export_and_echo(void) {
                                    .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token5 = {.value = "$VAR",
                                    .type = TOKEN_UNQUOTED_WORD};
-  static t_list token_list5 = {.content = (void *)&token5, .next = NULL};
+  static t_token_content token6 = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list6 = {.content = (void *)&token6, .next = NULL};
+  static t_list token_list5 = {.content = (void *)&token5, .next = &token_list6};
   static t_list token_list4 = {.content = (void *)&token4,
                                .next = &token_list5};
   static t_list token_list3 = {.content = (void *)&token3,
@@ -146,7 +154,9 @@ t_testdata echo_status(void) {
   static t_token_content token1 = {.value = "echo",
                                    .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token2 = {.value = "$?", .type = TOKEN_UNQUOTED_WORD};
-  static t_list token_list2 = {.content = (void *)&token2, .next = NULL};
+  static t_token_content token3 = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list3 = {.content = (void *)&token3, .next = NULL};
+  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
   static t_list token_list1 = {.content = (void *)&token1,
                                .next = &token_list2};
 

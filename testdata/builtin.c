@@ -4,7 +4,9 @@
 t_testdata pwd(void) {
   // TOKEN LIST
   static t_token_content token = {.value = "pwd", .type = TOKEN_UNQUOTED_WORD};
-  static t_list token_list = {.content = (void *)&token, .next = NULL};
+  static t_token_content token_eof = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list_eof = {.content = (void *)&token_eof, .next = NULL};
+  static t_list token_list = {.content = (void *)&token, .next = &token_list_eof};
 
   // AST
   static char *argv[] = {"pwd", NULL};
@@ -28,7 +30,9 @@ t_testdata pwd(void) {
 t_testdata cd_noarg(void) {
   // TOKEN LIST
   static t_token_content token = {.value = "cd", .type = TOKEN_UNQUOTED_WORD};
-  static t_list token_list = {.content = (void *)&token, .next = NULL};
+  static t_token_content token_eof = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list_eof = {.content = (void *)&token_eof, .next = NULL};
+  static t_list token_list = {.content = (void *)&token, .next = &token_list_eof};
 
   // AST
   static char *argv[] = {"cd", NULL};
@@ -53,7 +57,9 @@ t_testdata cd_non_existing_dir(void) {
   static t_token_content token1 = {.value = "cd", .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token2 = {.value = "non_existing_dir",
                                    .type = TOKEN_UNQUOTED_WORD};
-  static t_list token_list2 = {.content = (void *)&token2, .next = NULL};
+  static t_token_content token3 = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list3 = {.content = (void *)&token3, .next = NULL};
+  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
   static t_list token_list1 = {.content = (void *)&token1,
                                .next = &token_list2};
 
@@ -86,7 +92,9 @@ t_testdata export_two_vars(void) {
                                    .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token3 = {.value = "VAR2=world",
                                    .type = TOKEN_UNQUOTED_WORD};
-  static t_list token_list3 = {.content = (void *)&token3, .next = NULL};
+  static t_token_content token4 = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list4 = {.content = (void *)&token4, .next = NULL};
+  static t_list token_list3 = {.content = (void *)&token3, .next = &token_list4};
   static t_list token_list2 = {.content = (void *)&token2,
                                .next = &token_list3};
   static t_list token_list1 = {.content = (void *)&token1,
@@ -124,7 +132,9 @@ t_testdata unset_then_echo(void) {
                                    .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token5 = {.value = "$VAR1",
                                    .type = TOKEN_UNQUOTED_WORD};
-  static t_list token_list5 = {.content = (void *)&token5, .next = NULL};
+  static t_token_content token6 = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list6 = {.content = (void *)&token6, .next = NULL};
+  static t_list token_list5 = {.content = (void *)&token5, .next = &token_list6};
   static t_list token_list4 = {.content = (void *)&token4,
                                .next = &token_list5};
   static t_list token_list3 = {.content = (void *)&token3,
@@ -173,7 +183,9 @@ t_testdata exit_status_42(void) {
   static t_token_content token1 = {.value = "exit",
                                    .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token2 = {.value = "42", .type = TOKEN_UNQUOTED_WORD};
-  static t_list token_list2 = {.content = (void *)&token2, .next = NULL};
+  static t_token_content token3 = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list3 = {.content = (void *)&token3, .next = NULL};
+  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
   static t_list token_list1 = {.content = (void *)&token1,
                                .next = &token_list2};
 

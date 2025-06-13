@@ -7,7 +7,9 @@
 t_testdata ls(void) {
   // TOKEN LIST
   static t_token_content token = {.value = "ls", .type = TOKEN_UNQUOTED_WORD};
-  static t_list token_list = {.content = (void *)&token, .next = NULL};
+  static t_token_content token_eof = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list_eof = {.content = (void *)&token_eof, .next = NULL};
+  static t_list token_list = {.content = (void *)&token, .next = &token_list_eof};
 
   // AST
   static char *argv[] = {"ls", NULL};
@@ -32,7 +34,9 @@ t_testdata echo_hello(void) {
                                    .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token2 = {.value = "hello",
                                    .type = TOKEN_UNQUOTED_WORD};
-  static t_list token_list2 = {.content = (void *)&token2, .next = NULL};
+  static t_token_content token3 = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list3 = {.content = (void *)&token3, .next = NULL};
+  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
   static t_list token_list1 = {.content = (void *)&token1,
                                .next = &token_list2};
   // AST
@@ -59,7 +63,9 @@ t_testdata cat_nofile(void) {
   static t_token_content token1 = {.value = "cat", .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token2 = {.value = "nofile",
                                    .type = TOKEN_UNQUOTED_WORD};
-  static t_list token_list2 = {.content = (void *)&token2, .next = NULL};
+  static t_token_content token3 = {.value = "", .type = TOKEN_EOF};
+  static t_list token_list3 = {.content = (void *)&token3, .next = NULL};
+  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
   static t_list token_list1 = {.content = (void *)&token1,
                                .next = &token_list2};
   // AST
