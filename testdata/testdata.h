@@ -57,4 +57,7 @@ void print_and_or(t_and_or *and_or, int indent);
 void print_pipeline(t_pipeline *pipeline, int indent);
 void print_command(t_command *cmd, int indent);
 void print_redirection(t_list *redir_list, int indent);
+
+// assert functions
+void assert_token_list(t_list *expected, t_list *actual);
 #endif // !TESTDATA_H
