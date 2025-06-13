@@ -8,7 +8,7 @@ PHONY_TARGETS += testdata testdata_all testdata_clean testdata_re
 testdata: testdata_all
 testdata_all: $(TESTDATA_OBJS)
 
-$(TESTDATA_OBJ_DIR)/%.o: $(TESTDATA_DIR)/%.c | $(TESTDATA_OBJ_DIR)
+$(TESTDATA_OBJ_DIR)/%.o: $(TESTDATA_DIR)/%.c
 	@$(MKDIR_P) $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@$(MAKE) print_compiling TARGET="${notdir $<}"
