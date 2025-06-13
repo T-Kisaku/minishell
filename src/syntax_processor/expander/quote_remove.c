@@ -1,9 +1,7 @@
-#include "../../../libft/libft.h"
-#include "../../../include/ast.h"
-#include "../../../include/token.h"
+#include "expander.h"
 
 int			quote_removal_handler(t_command *cmd);
-static int	process_simple(t_token_list *head);
+static int	process_simple(t_list *head);
 static int	count_quotes(char *s);
 static int	copy_without_quotes(char *dst, const char *src);
 
@@ -17,9 +15,10 @@ int	quote_removal_handler(t_command *cmd)
 	return (0);
 }
 
-static int	process_simple(t_token_list *head)
+static int	process_simple(t_list *head)
 {
-	t_token_list	*cur;
+	t_list	*cur;
+	t_token_content *cur_token_content;
 	size_t			value_len;
 	int				quote_count;
 	char			*tmp;
@@ -27,15 +26,16 @@ static int	process_simple(t_token_list *head)
 	cur = head;
 	while (cur)
 	{
-		value_len = ft_strlen(cur->content->value);
-		quote_count = count_quotes(cur->content->value);
+		cur_token_content= (t_token_content*)cur->content;
+		value_len = ft_strlen(cur_token_content->value);
+		quote_count = count_quotes(cur_token_content->value);
 		tmp = malloc(sizeof(char) * (value_len - quote_count + 1));
 		if (!tmp)
 			return (1);
-		if (copy_without_quotes(tmp, cur->content->value) != 0)
+		if (copy_without_quotes(tmp, cur_token_content->value) != 0)
 			return (1);
-		free(cur->content->value);
-		cur->content->value = tmp;
+		free(cur_token_content->value);
+		cur_token_content->value = tmp;
 		cur = cur->next;
 	}
 	return (0);

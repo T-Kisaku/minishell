@@ -1,103 +1,85 @@
-#include "../../../libft/libft.h"
-#include "../../../include/token.h"
-#include "../../../include/tokenizer.h"
-#include "../../../include/expander.h"
-#include "../../../include/ast.h"
-#include <stdio.h>
 
+#include "expander.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-t_token_list *create_token_node(e_token_type type, const char *value)
+// #include "../../../include/expander.h"
+int		expand_handler(t_command *cmd);
+int		generate_argv_handler(t_command *cmd);
+int		quote_removal_handler(t_command *cmd);
+int		word_split_handler(t_command *cmd);
+void	free_argv(char ***argv, int num);
+
+int	main(void)
 {
-    t_token_list *node = malloc(sizeof(t_token_list));
-    node->content = malloc(sizeof(t_token_content));
-    node->content->type = type;
-    node->content->value = strdup(value);
-    node->next = NULL;
-    return node;
-}
+	t_list			*tok1;
+	t_list			*tok2;
+	t_list			*tok3;
+	t_token_content	*cont1;
+	t_token_content	*cont2;
+	t_token_content	*cont3;
+	t_command		cmd;
 
-void free_tokens(t_token_list *head)
-{
-    while (head)
-    {
-        t_token_list *tmp = head;
-        head = head->next;
-        free(tmp->content->value);
-        free(tmp->content);
-        free(tmp);
-    }
-}
-
-void print_tokens(t_token_list *tokens)
-{
-    while (tokens)
-    {
-        printf("Type: %d, Value: %s\n", 
-              tokens->content->type,
-              tokens->content->value);
-        tokens = tokens->next;
-    }
-}
-
-// テストケース1: 基本的な変数展開
-void test_basic_expansion()
-{
-    printf("\n=== 基本変数展開テスト ===\n");
-    t_token_list *node = create_token_node(TOKEN_UNQUOTED_WORD, "$0");
-    
-    printf("Before:\n");
-    print_tokens(node);
-    
-    expand_token_list(&node);
-    
-    printf("After:\n");
-    print_tokens(node);
-    free_tokens(node);
-}
-
-// テストケース2: クォートの扱い
-void test_quote_handling()
-{
-    printf("\n=== クォート処理テスト ===\n");
-    t_token_list *node1 = create_token_node(TOKEN_SINGLE_QUOTED_WORD, "$0");
-    t_token_list *node2 = create_token_node(TOKEN_DOUBLE_QUOTED_WORD, "$0");
-    node1->next = node2;
-
-    printf("Before:\n");
-    print_tokens(node1);
-    
-    expand_token_list(&node1);
-    
-    printf("After:\n");
-    print_tokens(node1);
-    free_tokens(node1);
-}
-
-// テストケース3: 複合トークン
-void test_complex_expansion()
-{
-    printf("\n=== 複合展開テスト ===\n");
-    t_token_list *head = create_token_node(TOKEN_UNQUOTED_WORD, "start$0");
-    head->next = create_token_node(TOKEN_DOUBLE_QUOTED_WORD, "mid$#");
-    head->next->next = create_token_node(TOKEN_UNQUOTED_WORD, "end$_");
-
-    printf("Before:\n");
-    print_tokens(head);
-    
-    expand_token_list(&head);
-    
-    printf("After:\n");
-    print_tokens(head);
-    free_tokens(head);
-}
-
-int main(void)
-{
-    test_basic_expansion();
-    test_quote_handling();
-    test_complex_expansion();
-    return 0;
+	printf("test: %s\n", getenv("test"));
+	// 1. トークンリスト作成: "echo" -> "hello" -> "world"
+	tok1 = malloc(sizeof(t_list));
+	tok2 = malloc(sizeof(t_list));
+	tok3 = malloc(sizeof(t_list));
+	cont1 = malloc(sizeof(t_token_content));
+	cont2 = malloc(sizeof(t_token_content));
+	cont3 = malloc(sizeof(t_token_content));
+	cont1->value = ft_strdup(" e'ch'o     abc def");
+	cont1->type = TOKEN_UNQUOTED_WORD;
+	cont2->value = ft_strdup("zzz$abc$test");
+	cont2->type = TOKEN_UNQUOTED_WORD;
+	cont3->value = ft_strdup("w'o'r\"ld\"");
+	cont3->type = TOKEN_UNQUOTED_WORD;
+	tok1->content = cont1;
+	tok1->next = tok2;
+	tok2->content = cont2;
+	tok2->next = tok3;
+	tok3->content = cont3;
+	tok3->next = NULL;
+	// 2. コマンド構造体作成
+	cmd.u.simple.token_list = tok1;
+	cmd.u.simple.argc = 3;
+	cmd.u.simple.argv = NULL;
+	cmd.type = CMD_SIMPLE;
+	// 3. テスト対象関数呼び出し
+	if (expand_handler(&cmd) != 0)
+	{
+		printf("error");
+		return (1);
+	}
+	if (word_split_handler(&cmd) != 0)
+	{
+		printf("error");
+		return (1);
+	}
+	if (quote_removal_handler(&cmd) != 0)
+	{
+		printf("error");
+		return (1);
+	}
+	if (generate_argv_handler(&cmd) != 0)
+	{
+		printf("argv生成に失敗しました\n");
+		free_token_list(&tok1);
+		return (1);
+	}
+	// 4. 結果確認
+	printf("%d\n", cmd.u.simple.argc);
+	for (int i = 0; i < cmd.u.simple.argc; ++i)
+	{
+		printf("argv[%d]: %s\n", i, cmd.u.simple.argv[i]);
+	}
+	if (cmd.u.simple.argv[cmd.u.simple.argc] == NULL)
+		printf("argvのNULL終端もOK\n");
+	// 5. 後始末
+	for (int i = 0; i < cmd.u.simple.argc; ++i)
+		free(cmd.u.simple.argv[i]);
+	free(cmd.u.simple.argv);
+	free_token_list(&tok1);
+	return (0);
 }

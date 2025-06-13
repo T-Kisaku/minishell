@@ -1,7 +1,6 @@
-#include <stddef.h> //for size_t,
-#include <stdlib.h> //for malloc,
-#include "../../libft/libft.h"
-#include "../../include/utils.h"
+#include <stdlib.h> //malloc,
+# include <stddef.h> //size_t
+#include "libft.h" //ft_memcpy,
 
 char *ft_strndup(const char *s, size_t n)
 {

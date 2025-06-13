@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:11:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/06 11:58:10 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/13 10:51:39 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,9 @@
 
 #include "ast.h"
 
-typedef struct data {
-  char **lexered;
-  t_ast *parsered;
-} t_data;
-
-char **lexer(char **argv);
-t_ast *parse_tokens(char *tokens[]);
+t_ast *argv_to_ast(char **argv);
 int exec_ast(t_ast *ast);
 
-void cleanup(t_data data);
 void error();
 
 #endif

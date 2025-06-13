@@ -1,7 +1,10 @@
 #ifndef EXPANDER_H
 # define EXPANDER_H
 
+# include "libft.h"
 # include "ast.h"
+# include "token.h"
+# include "utils/utils.h"
 # include <stdlib.h> //for getenv,
 
 typedef enum
@@ -26,9 +29,9 @@ typedef struct s_expansion_context
 
 typedef struct s_split_token_context
 {
-	t_token_list	*cur;
-	t_token_list	*tmp;
-	t_token_list	*next;
+	t_list			*cur;
+	t_list			*tmp;
+	t_list			*next;
 	char			*original;
 	char			*start_str;
 	char			*cur_str;
@@ -46,10 +49,10 @@ typedef enum
 	MODE_SET_VALUE,
 }					e_expander_mode;
 //expander.c
-int	process_expansion(t_ast *ast);
-int	expand_tokens_handler(t_command *cmd);
+int					process_expansion(t_ast *ast);
+int					expand_handler(t_command *cmd);
 //expand_single_token.c
-int					expand_single_token(t_token_list **token);
+int					expand_single_token(t_list **token);
 //process_expansion_core_core.c
 int	process_expansion_core_core(t_expansion_context *ctx,
 								e_expander_mode mode);
@@ -59,14 +62,13 @@ int					expand_special(t_expansion_context *ctx);
 //word_split.c
 int					word_split_handler(t_command *cmd);
 //split_token.c
-int					split_token(t_token_list *token, int word_count);
+int					split_token(t_list *token, int word_count);
 //quote_remove.c
 int					quote_removal_handler(t_command *cmd);
 //generate_argv.c
 int					generate_argv_handler(t_command *cmd);
 //utils.h
 int					cmd_loop(t_ast *ast, int (*handler)(t_command *));
-void				free_argv(char ***argv, int num);
 void				copy_and_advance(t_expansion_context *ctx, char *src,
 						size_t count);
 #endif

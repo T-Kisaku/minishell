@@ -1,7 +1,4 @@
-#include "../../../include/ast.h"
-#include "../../../include/expander.h"
-#include "../../../include/utils.h"
-#include "../../../libft/libft.h"
+#include "expander.h"
 
 int	process_expansion_core_core(t_expansion_context *ctx,
 								e_expander_mode mode);

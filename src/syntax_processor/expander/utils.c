@@ -1,64 +1,32 @@
-#include "../../../include/ast.h"
-#include "../../../include/expander.h"
-#include "../../../libft/libft.h"
+#include "expander.h"
 
 int		cmd_loop(t_ast *ast, int (*handler)(t_command *));
-void	free_argv(char ***argv, int num);
 void	copy_and_advance(t_expansion_context *ctx, char *src, size_t count);
 
 int	cmd_loop(t_ast *ast, int (*handler)(t_command *))
 {
-	t_a_list	*cur_list;
+	t_list		*cur_list;
 	t_and_or	*cur_and_or;
-	int			cmd_index;
+	t_list		*cmd_node;
+	t_command	*cmd;
 
 	if (!ast || !handler)
 		return (1);
 	cur_list = ast;
 	while (cur_list)
 	{
-		cur_and_or = cur_list->first_and_or;
-		while (cur_and_or)
+		cur_and_or = (t_and_or *)(cur_list->content);
+		cmd_node = cur_and_or->pipeline->command_list;
+		while (cmd_node)
 		{
-			cmd_index = 0;
-			while (cmd_index < cur_and_or->pipeline.cmd_count)
-			{
-				if (handler(&cur_and_or->pipeline.commands[cmd_index]) != 0)
-					return (1);
-				cmd_index++;
-			}
-			cur_and_or = cur_and_or->next;
+			cmd = (t_command *)(cmd_node->content);
+			if (handler(cmd) != 0)
+				return (1);
+			cmd_node = cmd_node->next;
 		}
 		cur_list = cur_list->next;
 	}
 	return (0);
-}
-
-void	free_argv(char ***argv, int num)
-{
-	int	i;
-
-	if (!argv || !*argv)
-		return ;
-	i = 0;
-	if (num == INT_MAX)
-		while ((*argv)[i])
-		{
-			free((*argv)[i]);
-			(*argv)[i] = NULL;
-			i++;
-		}
-	else
-	{
-		while (i < num)
-		{
-			free((*argv)[i]);
-			(*argv)[i] = NULL;
-			i++;
-		}
-	}
-	free(*argv);
-	*argv = NULL;
 }
 
 void	copy_and_advance(t_expansion_context *ctx, char *src, size_t count)

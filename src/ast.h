@@ -92,8 +92,9 @@ typedef union {
 } u_command;
 
 typedef struct s_command {
-  t_cmd_type type;
   t_list *redir_list; // content = t_redir*
+
+  t_cmd_type type;
 
   u_command u;
 } t_command;
@@ -127,6 +128,11 @@ typedef struct s_redir {
 } t_redir;
 
 t_redir *new_redir();
+t_redir *lstget_redir(t_list *node);
+void del_redir(void *ptr);
+
+t_list *lstnew_redir(int type, const t_list *token);
+t_list *new_fd_redir_lst(int type, int fd);
 t_redir *lstget_redir(t_list *node);
 void del_redir(void *ptr);
 

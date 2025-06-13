@@ -1,7 +1,4 @@
-#include "../../../include/expander.h"
-#include "../../../include/token.h"
-#include "../../../include/utils.h"
-#include "../../../libft/libft.h"
+#include "expander.h"
 
 int			expand_variable(t_expansion_context *ctx);
 int			expand_special(t_expansion_context *ctx);

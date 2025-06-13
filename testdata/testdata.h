@@ -49,9 +49,16 @@ t_testdata err_bad_redir(void);
 t_testdata err_pipe_position(void);
 t_testdata err_single_redirect(void);
 
+// print functions
+void print_token_list(t_list *token_list);
+
 void print_ast(t_ast *ast, int indent);
 void print_and_or(t_and_or *and_or, int indent);
 void print_pipeline(t_pipeline *pipeline, int indent);
 void print_command(t_command *cmd, int indent);
 void print_redirection(t_list *redir_list, int indent);
+
+// assert functions
+void assert_token_list_equal(t_list *exp, t_list *act, const char *path);
+void assert_ast_equal(t_ast *expected, t_ast *actual);
 #endif // !TESTDATA_H
