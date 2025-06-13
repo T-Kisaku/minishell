@@ -4,10 +4,15 @@
 
 t_testdata echo_env_home(void) {
   // TOKEN LIST
-  static t_token_content token1 = {.value = "echo", .type = TOKEN_UNQUOTED_WORD};
-  static t_token_content token2 = {.value = "$HOME", .type = TOKEN_DOUBLE_QUOTED_WORD};
+  static t_token_content token1 = {.value = "echo",
+                                   .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token2 = {.value = "$HOME",
+                                   .type = TOKEN_DOUBLE_QUOTED_WORD};
   static t_list token_list2 = {.content = (void *)&token2, .next = NULL};
-  static t_list token_list1 = {.content = (void *)&token1, .next = &token_list2};
+  static t_list token_list1 = {.content = (void *)&token1,
+                               .next = &token_list2};
+
+  // AST
   static char *argv[] = {"echo", "$HOME", NULL};
   static t_command cmd = {
       .type = CMD_SIMPLE,
@@ -27,10 +32,15 @@ t_testdata echo_env_home(void) {
 
 t_testdata echo_no_expand_home(void) {
   // TOKEN LIST
-  static t_token_content token1 = {.value = "echo", .type = TOKEN_UNQUOTED_WORD};
-  static t_token_content token2 = {.value = "$HOME", .type = TOKEN_SINGLE_QUOTED_WORD};
+  static t_token_content token1 = {.value = "echo",
+                                   .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token2 = {.value = "$HOME",
+                                   .type = TOKEN_SINGLE_QUOTED_WORD};
   static t_list token_list2 = {.content = (void *)&token2, .next = NULL};
-  static t_list token_list1 = {.content = (void *)&token1, .next = &token_list2};
+  static t_list token_list1 = {.content = (void *)&token1,
+                               .next = &token_list2};
+
+  // AST
   static char *argv[] = {"echo", "$HOME", NULL};
   static t_command cmd = {
       .type = CMD_SIMPLE,
@@ -49,12 +59,18 @@ t_testdata echo_no_expand_home(void) {
                       .output_file = NULL};
 }
 
+// TODO:
 t_testdata echo_concat_user(void) {
   // TOKEN LIST
-  static t_token_content token1 = {.value = "echo", .type = TOKEN_UNQUOTED_WORD};
-  static t_token_content token2 = {.value = "hello'$USER'world", .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token1 = {.value = "echo",
+                                   .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token2 = {.value = "hello'$USER'world",
+                                   .type = TOKEN_UNQUOTED_WORD};
   static t_list token_list2 = {.content = (void *)&token2, .next = NULL};
-  static t_list token_list1 = {.content = (void *)&token1, .next = &token_list2};
+  static t_list token_list1 = {.content = (void *)&token1,
+                               .next = &token_list2};
+
+  // AST
   static char *argv[] = {"echo", "hello'$USER'world", NULL};
   static t_command cmd = {
       .type = CMD_SIMPLE,
@@ -75,16 +91,26 @@ t_testdata echo_concat_user(void) {
 
 t_testdata export_and_echo(void) {
   // TOKEN LIST
-  static t_token_content token1 = {.value = "export", .type = TOKEN_UNQUOTED_WORD};
-  static t_token_content token2 = {.value = "VAR=test", .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token1 = {.value = "export",
+                                   .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token2 = {.value = "VAR=test",
+                                   .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token3 = {.value = ";", .type = TOKEN_UNQUOTED_WORD};
-  static t_token_content token4 = {.value = "echo", .type = TOKEN_UNQUOTED_WORD};
-  static t_token_content token5 = {.value = "$VAR", .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token4 = {.value = "echo",
+                                   .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token5 = {.value = "$VAR",
+                                   .type = TOKEN_UNQUOTED_WORD};
   static t_list token_list5 = {.content = (void *)&token5, .next = NULL};
-  static t_list token_list4 = {.content = (void *)&token4, .next = &token_list5};
-  static t_list token_list3 = {.content = (void *)&token3, .next = &token_list4};
-  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
-  static t_list token_list1 = {.content = (void *)&token1, .next = &token_list2};
+  static t_list token_list4 = {.content = (void *)&token4,
+                               .next = &token_list5};
+  static t_list token_list3 = {.content = (void *)&token3,
+                               .next = &token_list4};
+  static t_list token_list2 = {.content = (void *)&token2,
+                               .next = &token_list3};
+  static t_list token_list1 = {.content = (void *)&token1,
+                               .next = &token_list2};
+
+  // AST
   static char *argv1[] = {"export", "VAR=test", NULL};
   static char *argv2[] = {"echo", "$VAR", NULL};
   static t_command cmd1 = {
@@ -110,16 +136,21 @@ t_testdata export_and_echo(void) {
   };
   static t_ast list2 = {.content = (void *)&and_or2, .next = NULL};
   static t_ast list1 = {.content = (void *)&and_or1, .next = &list2};
-  return (t_testdata){
-      .input = "export VAR=test ; echo $VAR", .token_list = token_list1, .ast = list1};
+  return (t_testdata){.input = "export VAR=test ; echo $VAR",
+                      .token_list = token_list1,
+                      .ast = list1};
 }
 
 t_testdata echo_status(void) {
   // TOKEN LIST
-  static t_token_content token1 = {.value = "echo", .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token1 = {.value = "echo",
+                                   .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token2 = {.value = "$?", .type = TOKEN_UNQUOTED_WORD};
   static t_list token_list2 = {.content = (void *)&token2, .next = NULL};
-  static t_list token_list1 = {.content = (void *)&token1, .next = &token_list2};
+  static t_list token_list1 = {.content = (void *)&token1,
+                               .next = &token_list2};
+
+  // AST
   static char *argv[] = {"echo", "$?", NULL};
   static t_command cmd = {
       .type = CMD_SIMPLE,
@@ -132,6 +163,8 @@ t_testdata echo_status(void) {
       .op_next = OP_NONE,
   };
   static t_ast ast = {.content = (void *)&and_or, .next = NULL};
-  return (t_testdata){
-      .input = "echo $?", .token_list = token_list1, .ast = ast, .output_file = NULL};
+  return (t_testdata){.input = "echo $?",
+                      .token_list = token_list1,
+                      .ast = ast,
+                      .output_file = NULL};
 }

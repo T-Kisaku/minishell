@@ -4,20 +4,24 @@
 
 // Redirection examples
 
-/* .is_direct_to_fd = false, */
-/* .fd = -1, */
-/* .filename = NULL, */
-/* .filename_token = NULL, */
 t_testdata redir_output(void) {
   // TOKEN LIST
-  static t_token_content token1 = {.value = "echo", .type = TOKEN_UNQUOTED_WORD};
-  static t_token_content token2 = {.value = "hello", .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token1 = {.value = "echo",
+                                   .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token2 = {.value = "hello",
+                                   .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token3 = {.value = ">", .type = TOKEN_REDIR_OUTPUT};
-  static t_token_content token4 = {.value = "out.txt", .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token4 = {.value = "out.txt",
+                                   .type = TOKEN_UNQUOTED_WORD};
   static t_list token_list4 = {.content = (void *)&token4, .next = NULL};
-  static t_list token_list3 = {.content = (void *)&token3, .next = &token_list4};
-  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
-  static t_list token_list1 = {.content = (void *)&token1, .next = &token_list2};
+  static t_list token_list3 = {.content = (void *)&token3,
+                               .next = &token_list4};
+  static t_list token_list2 = {.content = (void *)&token2,
+                               .next = &token_list3};
+  static t_list token_list1 = {.content = (void *)&token1,
+                               .next = &token_list2};
+
+  // AST
   static char *argv[] = {"echo", "hello", NULL};
   static t_redir redir = {.type = REDIR_OUTPUT,
                           .from =
@@ -55,10 +59,15 @@ t_testdata redir_input(void) {
   // TOKEN LIST
   static t_token_content token1 = {.value = "cat", .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token2 = {.value = "<", .type = TOKEN_REDIR_INPUT};
-  static t_token_content token3 = {.value = "out.txt", .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token3 = {.value = "out.txt",
+                                   .type = TOKEN_UNQUOTED_WORD};
   static t_list token_list3 = {.content = (void *)&token3, .next = NULL};
-  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
-  static t_list token_list1 = {.content = (void *)&token1, .next = &token_list2};
+  static t_list token_list2 = {.content = (void *)&token2,
+                               .next = &token_list3};
+  static t_list token_list1 = {.content = (void *)&token1,
+                               .next = &token_list2};
+
+  // AST
   static char *argv[] = {"cat", NULL};
   static t_redir redir = {.type = REDIR_INPUT,
                           .from =
@@ -86,19 +95,27 @@ t_testdata redir_input(void) {
       .op_next = OP_NONE,
   };
   static t_ast ast = {.content = (void *)&and_or, .next = NULL};
-  return (t_testdata){.input = "cat < out.txt", .token_list = token_list1, .ast = ast};
+  return (t_testdata){
+      .input = "cat < out.txt", .token_list = token_list1, .ast = ast};
 }
 
 t_testdata redir_append(void) {
   // TOKEN LIST
-  static t_token_content token1 = {.value = "echo", .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token1 = {.value = "echo",
+                                   .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token2 = {.value = "bye", .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token3 = {.value = ">>", .type = TOKEN_REDIR_APPEND};
-  static t_token_content token4 = {.value = "out.txt", .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token4 = {.value = "out.txt",
+                                   .type = TOKEN_UNQUOTED_WORD};
   static t_list token_list4 = {.content = (void *)&token4, .next = NULL};
-  static t_list token_list3 = {.content = (void *)&token3, .next = &token_list4};
-  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
-  static t_list token_list1 = {.content = (void *)&token1, .next = &token_list2};
+  static t_list token_list3 = {.content = (void *)&token3,
+                               .next = &token_list4};
+  static t_list token_list2 = {.content = (void *)&token2,
+                               .next = &token_list3};
+  static t_list token_list1 = {.content = (void *)&token1,
+                               .next = &token_list2};
+
+  // AST
   static char *argv[] = {"echo", "bye", NULL};
   static t_redir redir = {.type = REDIR_APPEND,
                           .from =
@@ -136,14 +153,22 @@ t_testdata redir_mix(void) {
   // TOKEN LIST
   static t_token_content token1 = {.value = "cat", .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token2 = {.value = "<", .type = TOKEN_REDIR_INPUT};
-  static t_token_content token3 = {.value = "out.txt", .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token3 = {.value = "out.txt",
+                                   .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token4 = {.value = ">", .type = TOKEN_REDIR_OUTPUT};
-  static t_token_content token5 = {.value = "new.txt", .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token5 = {.value = "new.txt",
+                                   .type = TOKEN_UNQUOTED_WORD};
   static t_list token_list5 = {.content = (void *)&token5, .next = NULL};
-  static t_list token_list4 = {.content = (void *)&token4, .next = &token_list5};
-  static t_list token_list3 = {.content = (void *)&token3, .next = &token_list4};
-  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
-  static t_list token_list1 = {.content = (void *)&token1, .next = &token_list2};
+  static t_list token_list4 = {.content = (void *)&token4,
+                               .next = &token_list5};
+  static t_list token_list3 = {.content = (void *)&token3,
+                               .next = &token_list4};
+  static t_list token_list2 = {.content = (void *)&token2,
+                               .next = &token_list3};
+  static t_list token_list1 = {.content = (void *)&token1,
+                               .next = &token_list2};
+
+  // AST
   static char *argv[] = {"cat", NULL};
   static t_redir redir1 = {.type = REDIR_INPUT,
                            .from =
@@ -195,18 +220,28 @@ t_testdata redir_mix(void) {
 
 t_testdata pipe_to_redir(void) {
   // TOKEN LIST
-  static t_token_content token1 = {.value = "echo", .type = TOKEN_UNQUOTED_WORD};
-  static t_token_content token2 = {.value = "test", .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token1 = {.value = "echo",
+                                   .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token2 = {.value = "test",
+                                   .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token3 = {.value = "|", .type = TOKEN_PIPE};
   static t_token_content token4 = {.value = "cat", .type = TOKEN_UNQUOTED_WORD};
   static t_token_content token5 = {.value = ">", .type = TOKEN_REDIR_OUTPUT};
-  static t_token_content token6 = {.value = "result.txt", .type = TOKEN_UNQUOTED_WORD};
+  static t_token_content token6 = {.value = "result.txt",
+                                   .type = TOKEN_UNQUOTED_WORD};
   static t_list token_list6 = {.content = (void *)&token6, .next = NULL};
-  static t_list token_list5 = {.content = (void *)&token5, .next = &token_list6};
-  static t_list token_list4 = {.content = (void *)&token4, .next = &token_list5};
-  static t_list token_list3 = {.content = (void *)&token3, .next = &token_list4};
-  static t_list token_list2 = {.content = (void *)&token2, .next = &token_list3};
-  static t_list token_list1 = {.content = (void *)&token1, .next = &token_list2};
+  static t_list token_list5 = {.content = (void *)&token5,
+                               .next = &token_list6};
+  static t_list token_list4 = {.content = (void *)&token4,
+                               .next = &token_list5};
+  static t_list token_list3 = {.content = (void *)&token3,
+                               .next = &token_list4};
+  static t_list token_list2 = {.content = (void *)&token2,
+                               .next = &token_list3};
+  static t_list token_list1 = {.content = (void *)&token1,
+                               .next = &token_list2};
+
+  // AST
   static char *argv1[] = {"echo", "test", NULL};
   static char *argv2[] = {"cat", NULL};
   static t_redir redir2 = {.type = REDIR_OUTPUT,
