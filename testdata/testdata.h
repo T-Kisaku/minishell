@@ -57,4 +57,6 @@ void print_and_or(t_and_or *and_or, int indent);
 void print_pipeline(t_pipeline *pipeline, int indent);
 void print_command(t_command *cmd, int indent);
 void print_redirection(t_list *redir_list, int indent);
+
+void assert_ast_equal(t_ast *expected, t_ast *actual);
 #endif // !TESTDATA_H
