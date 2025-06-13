@@ -13,7 +13,6 @@ static void	set_dollar_type(t_expansion_context *ctx);
 int	expand_single_token(t_list **token)
 {
 	t_expansion_context	ctx;
-	char				*result;
 	t_token_content		*token_content;
 
 	if (!token || !*token)
@@ -95,8 +94,7 @@ static void	set_dollar_type(t_expansion_context *ctx)
 		|| (*ctx->cur_pos == '_' && *ctx->next_pos != '_'
 			&& !ft_isalnum(*ctx->next_pos)) || *ctx->cur_pos == '-')
 		ctx->cur_dollar_type = DOLLAR_SPECIAL;
-	else if (*ctx->cur_pos == '_' && (*ctx->next_pos == '_'
-				|| ft_isalnum(*ctx->next_pos)) || ft_isalpha(*ctx->cur_pos))
+	else if(ft_isalpha(*ctx->cur_pos) || *ctx->cur_pos == '_')
 		ctx->cur_dollar_type = DOLLAR_VARIABLE;
 	else
 		ctx->cur_dollar_type = DOLLAR_LITERAL;

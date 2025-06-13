@@ -7,7 +7,7 @@ MAKEFLAGS += --silent --no-print-directory
 # Compiler
 # -----------------------------------------------------------------------------
 CC       = cc
-INCLUDE_FLAGS = -Isrc -I$(LIBFTDIR) -lreadline
+INCLUDE_FLAGS = -Isrc -I$(LIBFTDIR)
 CFLAGS   = -Wall -Wextra -Werror $(INCLUDE_FLAGS)
 
 

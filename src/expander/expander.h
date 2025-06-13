@@ -70,5 +70,5 @@ int					generate_argv_handler(t_command *cmd);
 //utils.h
 int					cmd_loop(t_ast *ast, int (*handler)(t_command *));
 void				copy_and_advance(t_expansion_context *ctx, char *src,
-						size_t count);
+						int count);
 #endif

@@ -4,6 +4,9 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 #include "utils/ms_string.h"
+#include "ast.h"
+#include "minishell.h"
+#include "utils/utils.h"
 
 static void run_cmd(char *argv);
 static bool process_option_c(int argc, char **argv);
@@ -26,11 +29,14 @@ int main(int argc, char **argv) {
 }
 
 static void run_cmd(char *input) {
-  printf("PROMPTED: %s\n", input);
-  /* t_ast *ast; */
-  /* t_ast ast = parse(argv); */
-  /* execute_ast(ast); */
-  /* free_ast(ast); */
+  t_ast *ast;
+  if(!input)
+	// TODO: error handling or put newline
+	return;
+  ast = str_to_ast(input);
+  process_expansion(ast);
+  exec_ast(ast);
+  free_ast(&ast);
 }
 static bool process_option_c(int argc, char **argv) {
   if (!(argc == 3 && ms_strcmp(argv[1], "-c") == 0))

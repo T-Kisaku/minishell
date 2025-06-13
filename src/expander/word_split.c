@@ -21,7 +21,6 @@ int	process_simple(t_list *head)
 	t_list	*cur;
 	t_list	*prev;
 	t_token_content *cur_token_content;
-	char			*start;
 	int				word_count;
 
 	cur = head;

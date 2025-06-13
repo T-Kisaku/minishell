@@ -23,7 +23,7 @@ PHONY_TARGETS = all clean fclean re
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
 	@$(MAKE) print_finished MSG="Minishell build complete"
 
 $(LIBFT):

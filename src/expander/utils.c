@@ -1,7 +1,7 @@
 #include "expander.h"
 
 int		cmd_loop(t_ast *ast, int (*handler)(t_command *));
-void	copy_and_advance(t_expansion_context *ctx, char *src, size_t count);
+void	copy_and_advance(t_expansion_context *ctx, char *src, int count);
 
 int	cmd_loop(t_ast *ast, int (*handler)(t_command *))
 {
@@ -29,7 +29,7 @@ int	cmd_loop(t_ast *ast, int (*handler)(t_command *))
 	return (0);
 }
 
-void	copy_and_advance(t_expansion_context *ctx, char *src, size_t count)
+void	copy_and_advance(t_expansion_context *ctx, char *src, int count)
 {
 	int	i;
 

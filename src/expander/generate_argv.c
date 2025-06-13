@@ -24,7 +24,7 @@ static int	process_simple(t_command *cmd)
 {
 	t_list			*cur_token;
 	t_token_content	*cur_token_content;
-	size_t			index;
+	int			index;
 
 	cmd->u.simple.argv = malloc(sizeof(char *) * (cmd->u.simple.argc + 1));
 	if (!cmd->u.simple.argv)

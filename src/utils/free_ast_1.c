@@ -44,10 +44,6 @@ void del_command(void *content) {
 }
 
 void free_command(t_command **cmd) {
-  t_list *cur_token;
-  t_list *next;
-  t_token_content *token_content;
-
   if (!cmd || !*cmd)
     return;
   free_redir_list(&(*cmd)->redir_list);
