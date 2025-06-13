@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "tokenizer.h"
+#include "utils/utils.h"
 #include "testdata.h"
 
 // 個別テストケース

@@ -3,11 +3,9 @@
 
 #include <stddef.h>  //for NULL,
 #include <stdbool.h> //for bool,
-#include <stdlib.h> //for malloc, free
-#include <unistd.h> //for write
+#include <unistd.h>  //for write
 #include "libft.h"
 #include "token.h"
-#include "utils/utils.h"
 
 // 構造体リストを作成するために関数内で使用する構造体
 typedef struct s_token_context {
@@ -30,6 +28,6 @@ int process_special_char(t_token_context *lc);
 // utils.c
 int write_error(char *msg);
 
-//for test
+// for test
 int main();
 #endif
