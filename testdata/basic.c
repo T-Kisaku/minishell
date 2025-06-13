@@ -1,9 +1,15 @@
 #include "ast.h"
 #include "testdata.h"
+#include "token.h"
 
 // Basic command execution
 
 t_testdata ls(void) {
+  // TOKEN LIST
+  static t_token_content token = {.value = "ls", .type = TOKEN_UNQUOTED_WORD};
+  static t_list token_list = {.content = (void *)&token, .next = NULL};
+
+  // AST
   static char *argv[] = {"ls", NULL};
   static t_command cmd = {
       .type = CMD_SIMPLE,
