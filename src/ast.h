@@ -38,8 +38,8 @@
  *
  */
 
- #ifndef AST_H
- #define AST_H
+#ifndef AST_H
+#define AST_H
 
 #include <stddef.h>
 #include <stdbool.h>
@@ -95,7 +95,6 @@ typedef struct s_command {
   t_list *redir_list; // content = t_redir*
 
   t_cmd_type type;
-  t_list *redir_list; // content = t_redir*
 
   u_command u;
 } t_command;
