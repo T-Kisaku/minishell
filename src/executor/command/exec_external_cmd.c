@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include <stdbool.h>
 #include "ast.h"
+#include "error.h"
 #include "minishell.h"
 #include "executor/executor.h"
 #include "executor/command/command.h"
@@ -17,7 +18,7 @@ pid_t exec_external_cmd(t_command *cmd) {
   process_redir_list(cmd->redir_list);
   if (cmd->type == CMD_SIMPLE) {
     execvp(cmd->u.simple.argv[0], cmd->u.simple.argv);
-    perror("execvp");
+    perror(ERR_MSG_EXECVP);
   } else if (cmd->type == CMD_SUBSHELL) {
     // WARN: this is not supported
     exec_ast(cmd->u.subshell.and_or_list);

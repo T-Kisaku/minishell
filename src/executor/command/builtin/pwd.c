@@ -3,21 +3,25 @@
 #include <stdlib.h>
 #include "ast.h"
 #include "buildin.h"
+#include "error.h"
+#include "exit_status.h"
 
 int exec_pwd(t_command *cmd) {
   char *cwd;
-  // TODO: handle error
-  if (cmd->type != CMD_SIMPLE)
-    return (EXIT_FAILURE);
-  // TODO: handle error
-  if (cmd->u.simple.argc != 1)
-    return (EXIT_FAILURE);
+  if (cmd->type != CMD_SIMPLE) {
+    dev_error();
+    return (EXIT_INTERNAL_ERR);
+  }
+  if (cmd->u.simple.argc != 1) {
+    user_error("pwd: expected 0 arguments");
+    return EXIT_USER_ERR;
+  }
   cwd = getcwd(NULL, 0);
   if (cwd == NULL) {
-    perror("pwd");
+    perror(ERR_MSG_PWD);
     return (EXIT_FAILURE);
   }
   printf("%s\n", cwd);
   free(cwd);
-  return (EXIT_SUCCESS);
+  return (EXIT_OK);
 }

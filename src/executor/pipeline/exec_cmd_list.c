@@ -16,6 +16,7 @@ typedef struct s_cmd_fd {
 static int ms_lst_is_last(t_list *lst) { return lst->next == NULL; }
 static void set_io_redir(t_command *cmd, t_cmd_fd cmd_fd);
 
+// TODO: get status if builtin cmd is last
 void exec_cmd_list(pid_t *pids, t_list *cmd_list) {
   t_cmd_fd cmd_fd;
   int pid_i;

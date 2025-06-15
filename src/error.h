@@ -5,7 +5,12 @@
 #define ERR_MSG_MINISHEL "minishell: "
 #define ERR_MSG_WRITE ERR_MSG_MINISHEL "write"
 #define ERR_MSG_MALLOC ERR_MSG_MINISHEL "malloc"
+#define ERR_MSG_EXECVP ERR_MSG_MINISHEL "execvp"
+#define ERR_MSG_PWD ERR_MSG_MINISHEL "pwd"
+#define ERR_MSG_DEV                                                            \
+  ERR_MSG_MINISHEL "minishell's program is bad, not your fault👍"
 
-int usr_error(char *msg);
+int user_error(char *msg);
+void dev_error();
 
 #endif // !MS_ERROR_H
