@@ -1,4 +1,4 @@
-#include "tokenizer.h"
+#include "syntax_processor/tokenizer.h"
 
 int			process_special_char(t_token_context *ctx);
 static int	process_less_than(t_token_context *ctx);

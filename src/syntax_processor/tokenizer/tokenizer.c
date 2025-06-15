@@ -1,6 +1,6 @@
 #include "utils/utils.h"
 #include "utils/ms_string.h"
-#include "tokenizer.h"
+#include "syntax_processor/tokenizer.h"
 
 static int tokenize(t_list **head, char *string);
 static void init_token_context(t_token_context *ctx, t_list **head,

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdbool.h> //for bool,
 #include "ast.h"
-#include "ast_builder.h"
+#include "syntax_processor/ast_builder.h"
 #include "token.h"
 #include "utils/utils.h"
 

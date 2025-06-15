@@ -1,4 +1,4 @@
-#include "tokenizer.h"
+#include "syntax_processor/tokenizer.h"
 
 int		write_error(char *msg);
 

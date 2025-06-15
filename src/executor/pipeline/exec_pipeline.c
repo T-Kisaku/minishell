@@ -7,7 +7,7 @@
 #include "exit_status.h"
 #include "libft.h"
 #include "ast.h"
-#include "executor/pipeline/pipeline.h"
+#include "executor/pipeline.h"
 
 int exec_pipeline(t_pipeline *pipeline) {
   int status;

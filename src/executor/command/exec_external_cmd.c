@@ -7,8 +7,8 @@
 #include "ast.h"
 #include "error.h"
 #include "minishell.h"
-#include "executor/executor.h"
-#include "executor/command/command.h"
+#include "executor.h"
+#include "executor/command.h"
 
 pid_t exec_external_cmd(t_command *cmd) {
   pid_t pid;

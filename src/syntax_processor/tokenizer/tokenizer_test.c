@@ -1,6 +1,6 @@
 // TODO: adapt to testdata
 #include <stdio.h>
-#include "tokenizer.h"
+#include "syntax_processor/tokenizer.h"
 #include "utils/utils.h"
 #include "testdata.h"
 

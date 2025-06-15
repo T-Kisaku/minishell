@@ -2,9 +2,9 @@
 #include <unistd.h>
 #include "ast.h"
 #include "utils/ms_string.h"
-#include "executor/command/command.h"
-#include "executor/executor.h"
-#include "buildin.h"
+#include "executor/command.h"
+#include "executor.h"
+#include "executor/command/buildin.h"
 
 static bool is_builtin(t_command *cmd);
 static const t_builtin_entry *find_builtin(const char *name);

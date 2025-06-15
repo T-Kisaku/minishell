@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <fcntl.h>
-#include "executor/executor.h"
+#include "executor.h"
 #include "ast.h"
 #include "libft.h"
 
