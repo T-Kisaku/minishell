@@ -15,8 +15,6 @@ typedef struct s_token_context {
   char *cur_str;
 } t_token_context;
 
-// tokenizer.c
-t_list *tokenizer(char *string);
 // processes.c
 int create_token(t_token_context *ctx);
 int set_token(t_token_context *ctx, e_token_type type);
@@ -25,9 +23,4 @@ int process_quoted_word(t_token_context *ctx);
 int process_unquoted_word(t_token_context *ctx);
 // process_special_char.c
 int process_special_char(t_token_context *lc);
-// utils.c
-int write_error(char *msg);
-
-// for test
-int main();
 #endif
