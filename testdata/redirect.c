@@ -59,6 +59,12 @@ t_testdata redir_output(void) {
                       .output_file = "out.txt"};
 }
 
+t_testdata redir_output_nospace(void) {
+	t_testdata d = redir_output();
+	d.input = "echo hello >out.txt";
+	return d;
+}
+
 t_testdata redir_input(void) {
   // TOKEN LIST
   static t_token_content token1 = {.value = "cat", .type = TOKEN_UNQUOTED_WORD};

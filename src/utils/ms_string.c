@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ms_string.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 18:45:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/13 11:21:10 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/16 14:35:08 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stddef.h>
+
 
 int ms_strcmp(const char s1[], const char s2[]) {
   size_t i;
@@ -27,7 +27,7 @@ int ms_strcmp(const char s1[], const char s2[]) {
   return (0);
 }
 
-int ft_isspace(int c) {
+int ms_isspace(int c) {
   if (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r' || c == ' ')
     return (1);
   else

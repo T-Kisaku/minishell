@@ -32,6 +32,7 @@ int main() {
   test("Double quoted string", echo_env_home());
   test("Pipe command", ls_pipe_grep());
   test("Output redirection", redir_output());
+  test("Output redirection without space", redir_output_nospace());
   test("Input redirection", redir_input());
   // TODO: adapt heredoc
   /* test_case("Here-doc", "cat << EOF"); */

@@ -65,10 +65,22 @@ int					word_split_handler(t_command *cmd);
 int					split_token(t_list *token, int word_count);
 //quote_remove.c
 int					quote_removal_handler(t_command *cmd);
+
 //generate_argv.c
 int					generate_argv_handler(t_command *cmd);
 //utils.h
-int					cmd_loop(t_ast *ast, int (*handler)(t_command *));
 void				copy_and_advance(t_expansion_context *ctx, char *src,
 						int count);
+
+//redir
+int	input_heredoc_content_handler(t_redir *redir);
+int	redir_split_handler(t_redir *redir);
+int	redir_quote_removal_handler(t_redir *target);
+int	generate_heredoc_file_handler(t_redir *redir);
+int	generate_filename_handler(t_redir *target);
+
+
+//common
+int	quote_remove_core(t_token_content *content);
+
 #endif

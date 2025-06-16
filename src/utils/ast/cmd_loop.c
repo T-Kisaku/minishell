@@ -1,7 +1,4 @@
-#include "expander.h"
-
-int		cmd_loop(t_ast *ast, int (*handler)(t_command *));
-void	copy_and_advance(t_expansion_context *ctx, char *src, int count);
+#include "ast.h"
 
 int	cmd_loop(t_ast *ast, int (*handler)(t_command *))
 {
@@ -27,18 +24,4 @@ int	cmd_loop(t_ast *ast, int (*handler)(t_command *))
 		cur_list = cur_list->next;
 	}
 	return (0);
-}
-
-void	copy_and_advance(t_expansion_context *ctx, char *src, int count)
-{
-	int	i;
-
-	ft_memcpy(&ctx->output[ctx->index], src, count);
-	i = 0;
-	while (i < count)
-	{
-		ctx->cur_pos++;
-		ctx->index++;
-		i++;
-	}
 }

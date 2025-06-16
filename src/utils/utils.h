@@ -23,4 +23,8 @@ void free_argv(char ***argv, int num);
 
 char *ft_strndup(const char *s, size_t n);
 
+void	free_and_null(void **ptr);	
+
+int	cmd_loop(t_ast *ast, int (*handler)(t_command *));
+int	redir_loop(t_ast *ast, int (*handler)(t_redir *));
 #endif

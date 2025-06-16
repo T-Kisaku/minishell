@@ -38,6 +38,7 @@ t_testdata echo_status(void);
 
 // redirect
 t_testdata redir_output(void);
+t_testdata redir_output_nospace(void);
 t_testdata redir_input(void);
 t_testdata redir_append(void);
 t_testdata redir_mix(void);
