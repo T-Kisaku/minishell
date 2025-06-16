@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "minishell.h"
 #include "syntax_processor.h"
 #include "testdata.h"
 #include "utils/utils.h"
@@ -50,8 +51,10 @@ static void pipe_test(void) {
 
 static void run_test(t_testdata d) {
   printf("== COMMAND =====================\n%s\n", d.input);
-  t_list *token_list = tokenizer(d.input);
-  t_ast *ast = ast_builder(&token_list);
+  t_list *token_list;
+  str_to_token(d.input, &token_list);
+  t_ast *ast;
+  token_to_ast(&token_list, &ast);
   process_expansion(ast);
   puts("============== TEST DATA=================");
   print_ast(&d.ast, 0);

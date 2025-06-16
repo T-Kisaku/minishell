@@ -9,7 +9,7 @@ t_ast *ast_builder(t_list **tokens);
 // create_cmd_list.c
 int create_command_list(t_list **cmd_list);
 // build_ast_from_token.c
-int build_ast_from_tokens(t_list **tokens, t_ast *ast);
+int build_ast_from_tokens(t_list **tokens, t_ast **ast_ptr);
 int advance_token(t_list **token, t_list *next_token, bool is_free);
 // processes.c
 int process_word(t_list **token, t_list **cmd_list);
