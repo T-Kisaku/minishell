@@ -1,6 +1,6 @@
 // TODO: adapt to testdata
 #include <stdio.h>
-#include "syntax_processor/tokenizer.h"
+#include "syntax_processor.h"
 #include "utils/utils.h"
 #include "testdata.h"
 
@@ -9,7 +9,9 @@ void test_case(const char *description, const char *input) {
   printf("=== Test: %s ===\n", description);
   printf("Input: \"%s\"\n", input);
 
-  t_list *token_list = tokenizer((char *)input);
+  t_list *token_list;
+  token_list = NULL;
+  str_to_token((char *)input, &token_list);
   if (token_list) {
     print_token_list(token_list);
     free_token_list(&token_list);
@@ -20,7 +22,9 @@ void test_case(const char *description, const char *input) {
 void test(const char *description, t_testdata d) {
   printf("=== Test: %s ===\n", description);
   printf("Input: \"%s\"\n", d.input);
-  t_list *actual = tokenizer((char *)d.input);
+  t_list *actual;
+  actual = NULL;
+  str_to_token(d.input, &actual);
   assert_token_list_equal(&d.token_list, actual, "tokenizer");
   print_token_list(actual);
   free_token_list(&actual);

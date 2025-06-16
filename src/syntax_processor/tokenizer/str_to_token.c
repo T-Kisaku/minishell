@@ -1,3 +1,5 @@
+#include "error.h"
+#include "exit_status.h"
 #include "utils/utils.h"
 #include "utils/ms_string.h"
 #include "syntax_processor/tokenizer.h"
@@ -8,30 +10,28 @@ static void init_token_context(t_token_context *ctx, t_list **head,
 static int tokenize_loop(t_token_context *ctx);
 static int add_eof_token(t_token_context *ctx);
 
-t_list *tokenizer(char *string) {
-  t_list *head;
-
-  head = NULL;
-  if (string == NULL) {
-    write_error("string is NULL");
-    return (NULL);
+int str_to_token(char *input_str, t_list **token_list_ptr) {
+  t_token_context ctx;
+  if (input_str == NULL) {
+    dev_error();
+    return (EXIT_INTERNAL_ERR);
   }
-  if (tokenize(&head, string) != 0) {
-    free_token_list(&head);
-    return (NULL);
+  if (tokenize(token_list_ptr, input_str) != EXIT_OK) {
+    free_token_list(token_list_ptr);
+    return (EXIT_INTERNAL_ERR);
   }
-  return (head);
+  return EXIT_OK;
 }
 
 static int tokenize(t_list **head, char *string) {
   t_token_context ctx;
 
   init_token_context(&ctx, head, string);
-  if (tokenize_loop(&ctx) != 0)
-    return (1);
-  if (add_eof_token(&ctx) != 0)
-    return (1);
-  return (0);
+  if (tokenize_loop(&ctx) != EXIT_OK)
+    return (EXIT_INTERNAL_ERR);
+  if (add_eof_token(&ctx) != EXIT_OK)
+    return (EXIT_INTERNAL_ERR);
+  return (EXIT_OK);
 }
 
 static void init_token_context(t_token_context *ctx, t_list **head,

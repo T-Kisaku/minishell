@@ -1,5 +1,8 @@
+#include "error.h"
+#include "exit_status.h"
 #include "syntax_processor/tokenizer.h"
 #include "utils/ms_string.h"
+#include <stdio.h>
 
 int create_token(t_token_context *ctx);
 int set_token(t_token_context *ctx, e_token_type type);
@@ -12,12 +15,16 @@ int create_token(t_token_context *ctx) {
   t_token_content *new_token_content;
 
   new_token = malloc(sizeof(t_list));
-  if (!new_token)
-    return (write_error("malloc error \"new_token\""));
+  if (!new_token) {
+    perror(ERR_MSG_MALLOC);
+    return (EXIT_INTERNAL_ERR);
+  }
   new_token->next = NULL;
   new_token->content = malloc(sizeof(t_token_content));
-  if (!new_token->content)
-    return (write_error("malloc_error \"new_token->content\""));
+  if (!new_token->content) {
+    perror(ERR_MSG_MALLOC);
+    return (EXIT_INTERNAL_ERR);
+  }
   new_token_content = new_token->content;
   new_token_content->value = NULL;
   new_token_content->type = TOKEN_UNQUOTED_WORD;
@@ -36,8 +43,10 @@ int set_token(t_token_context *ctx, e_token_type type) {
   cur_token_content->type = type;
   cur_token_content->value =
       malloc(sizeof(char) * (ctx->cur_str - ctx->start_str + 1));
-  if (!cur_token_content->value)
-    return (write_error("malloc error \"value\""));
+  if (!cur_token_content->value) {
+    perror(ERR_MSG_MALLOC);
+    return (EXIT_INTERNAL_ERR);
+  }
   ft_memcpy(cur_token_content->value, ctx->start_str,
             ctx->cur_str - ctx->start_str);
   cur_token_content->value[ctx->cur_str - ctx->start_str] = '\0';
@@ -79,8 +88,10 @@ int process_quoted_word(t_token_context *ctx) {
   ctx->start_str = ctx->cur_str;
   while (*ctx->cur_str != '\0' && *ctx->cur_str != quote)
     ctx->cur_str++;
-  if (*ctx->cur_str == '\0')
-    return (write_error("unclosed quotes"));
+  if (*ctx->cur_str == '\0') {
+    perror(ERR_MSG_MALLOC);
+    return (EXIT_INTERNAL_ERR);
+  }
   if (set_token(ctx, type) != 0)
     return (1);
   ctx->cur_str++;
