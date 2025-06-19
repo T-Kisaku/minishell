@@ -2,42 +2,40 @@
 #include "expander/expander.h"
 #include <stdio.h>
 
-int			expand_single_token(t_list **token);
+int			expand_single_token(t_token_content *content);
 static void	init_expansion_context(t_expansion_context *ctx,
-									t_list *tokens);
+									t_token_content *content);
 static int	process_expansion_core(t_expansion_context *ctx,
 									e_expander_mode mode);
 static void	set_dollar_type(t_expansion_context *ctx);
 
 //ワイルドカードの扱いでunquotedとdobule_quotedで差が出るが、ボーナス内容なので一旦スルー
-int	expand_single_token(t_list **token)
+int	expand_single_token(t_token_content *content)
 {
 	t_expansion_context	ctx;
-	t_token_content		*token_content;
 
-	if (!token || !*token)
+	if (!content)
 		return (1);
-	token_content = (t_token_content *)(*token)->content;
-	if (token_content->type == TOKEN_EOF)
+	if (content->type == TOKEN_EOF)
 		return (0);
-	init_expansion_context(&ctx, *token);
+	init_expansion_context(&ctx, content);
 	if (process_expansion_core(&ctx, MODE_CALCULATE) != 0)
 		return (1);
 	ctx.cur_pos = (char *)ctx.input;
 	ctx.index = 0;
 	if (process_expansion_core(&ctx, MODE_SET_VALUE) != 0)
 		return (1);
-	free(token_content->value);
-	token_content->value = ctx.output;
+	free(content->value);
+	content->value = ctx.output;
 	return (0);
 }
 
 static void	init_expansion_context(t_expansion_context *ctx,
-									t_list *tokens)
+									t_token_content *content)
 {
 	t_token_content	*token_content;
 
-	token_content = (t_token_content *)tokens->content;
+	token_content = content;
 	ctx->input = token_content->value;
 	ctx->output = NULL;
 	ctx->cur_pos = token_content->value;

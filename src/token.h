@@ -6,7 +6,9 @@ typedef enum {
   TOKEN_UNQUOTED_WORD,
   TOKEN_SINGLE_QUOTED_WORD,
   TOKEN_DOUBLE_QUOTED_WORD,
-  TOKEN_PIPE,
+  TOKEN_PIPE,  /* "|" */
+  TOKEN_AND_IF, /* "&&" */
+  TOKEN_OR_IF, /* "||" */
   TOKEN_REDIR_INPUT,    /* "<"   */
   TOKEN_REDIR_OUTPUT,   /* ">"   */
   TOKEN_REDIR_HERE_DOC, /* "<<"  */

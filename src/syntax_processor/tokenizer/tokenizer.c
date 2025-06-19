@@ -6,7 +6,6 @@ static int tokenize(t_list **head, char *string);
 static void init_token_context(t_token_context *ctx, t_list **head,
                                char *string);
 static int tokenize_loop(t_token_context *ctx);
-static int add_eof_token(t_token_context *ctx);
 
 t_list *tokenizer(char *string) {
   t_list *head;
@@ -29,8 +28,6 @@ static int tokenize(t_list **head, char *string) {
   init_token_context(&ctx, head, string);
   if (tokenize_loop(&ctx) != 0)
     return (1);
-  if (add_eof_token(&ctx) != 0)
-    return (1);
   return (0);
 }
 
@@ -44,7 +41,7 @@ static void init_token_context(t_token_context *ctx, t_list **head,
 
 static int tokenize_loop(t_token_context *ctx) {
   while (*ctx->cur_str) {
-    if (ft_isspace(*ctx->cur_str))
+    if (ms_isspace(*ctx->cur_str))
       process_space(ctx);
     else if (*ctx->cur_str == '\'' || *ctx->cur_str == '"') {
       if (process_quoted_word(ctx) != 0)
@@ -61,10 +58,4 @@ static int tokenize_loop(t_token_context *ctx) {
   return (0);
 }
 
-static int add_eof_token(t_token_context *ctx) {
-  if (create_token(ctx) != 0)
-    return (1);
-  if (set_token(ctx, TOKEN_EOF) != 0)
-    return (1);
-  return (0);
-}
+

@@ -1,4 +1,4 @@
-#include <unistd.h>
+#include <stdlib.h>
 
 void	free_and_null(void **ptr)
 {

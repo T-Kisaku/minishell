@@ -1,12 +1,7 @@
-#include "expander.h"
+#include "libft.h"
+#include "expander/expander.h"
 
-int		cmd_loop(t_ast *ast, int (*handler)(t_command *));
-int	redir_loop(t_ast *ast, int (*handler)(t_redir *));
 void	copy_and_advance(t_expansion_context *ctx, char *src, int count);
-
-
-
-
 
 void	copy_and_advance(t_expansion_context *ctx, char *src, int count)
 {

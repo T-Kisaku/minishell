@@ -25,8 +25,6 @@ int process_quoted_word(t_token_context *ctx);
 int process_unquoted_word(t_token_context *ctx);
 // process_special_char.c
 int process_special_char(t_token_context *lc);
-// utils.c
-int write_error(char *msg);
 
 // for test
 int main();

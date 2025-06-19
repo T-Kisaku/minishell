@@ -50,12 +50,12 @@ static int	count_words(char *str)
 	word_count = 0;
 	while (*str)
 	{
-		while (ft_isspace(*str))
+		while (ms_isspace(*str))
 			str++;
-		if (*str && !ft_isspace(*str))
+		if (*str && !ms_isspace(*str))
 		{
 			word_count++;
-			while (*str && !ft_isspace(*str))
+			while (*str && !ms_isspace(*str))
 				str++;
 		}
 	}

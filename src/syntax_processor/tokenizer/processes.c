@@ -1,6 +1,6 @@
 #include "syntax_processor/tokenizer.h"
 #include "utils/ms_string.h"
-
+#include "utils/utils.h"
 int create_token(t_token_context *ctx);
 int set_token(t_token_context *ctx, e_token_type type);
 void process_space(t_token_context *ctx);
@@ -46,7 +46,7 @@ int set_token(t_token_context *ctx, e_token_type type) {
 }
 
 void process_space(t_token_context *ctx) {
-  while (ft_isspace(*ctx->cur_str))
+  while (ms_isspace(*ctx->cur_str))
     ctx->cur_str++;
   ctx->start_str = ctx->cur_str;
 }
@@ -55,7 +55,7 @@ void process_space(t_token_context *ctx) {
 int process_unquoted_word(t_token_context *ctx) {
   if (create_token(ctx) != 0)
     return (1);
-  while (*ctx->cur_str != '\0' && !ft_isspace(*ctx->cur_str) &&
+  while (*ctx->cur_str != '\0' && !ms_isspace(*ctx->cur_str) &&
          *ctx->cur_str != '|' && *ctx->cur_str != '<' && *ctx->cur_str != '>')
     ctx->cur_str++;
   if (set_token(ctx, TOKEN_UNQUOTED_WORD) != 0)

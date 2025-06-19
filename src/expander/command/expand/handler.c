@@ -1,5 +1,9 @@
 #include "ast.h"
 #include "token.h"
+#include "expander/expander.h"
+
+int	expand_handler(t_command *cmd);
+static int	expand_token_list(t_list **tokens);
 
 int	expand_handler(t_command *cmd)
 {
@@ -28,7 +32,7 @@ static int	expand_token_list(t_list **tokens)
 		if (cur_token_content->type == TOKEN_UNQUOTED_WORD
 			|| cur_token_content->type == TOKEN_DOUBLE_QUOTED_WORD)
 		{
-			if (expand_single_token(&cur_token) != 0)
+			if (expand_single_token(cur_token->content) != 0)
 				return (1);
 		}
 		cur_token = cur_token->next;

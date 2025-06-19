@@ -51,10 +51,10 @@ static int	generate_value(t_split_token_context *ctx)
 {
 	t_token_content *cur_token_content;
 
-	while (*ctx->cur_str && ft_isspace(*ctx->cur_str))
+	while (*ctx->cur_str && ms_isspace(*ctx->cur_str))
 		ctx->cur_str++;
 	ctx->start_str = ctx->cur_str;
-	while (*ctx->cur_str && !ft_isspace(*ctx->cur_str))
+	while (*ctx->cur_str && !ms_isspace(*ctx->cur_str))
 		ctx->cur_str++;
 	cur_token_content = (t_token_content*)ctx->cur->content; 
 	cur_token_content->value = malloc(sizeof(char) * (ctx->cur_str

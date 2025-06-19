@@ -6,10 +6,11 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 18:45:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/16 14:35:08 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/17 09:53:54 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stddef.h>
 
 int ms_strcmp(const char s1[], const char s2[]) {
   size_t i;

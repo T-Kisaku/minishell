@@ -70,7 +70,7 @@ static int	create_and_write_heredoc(t_redir *redir)
 	fd = open(redir->to.filename, O_WRONLY | O_CREAT | O_EXCL, 0600);
 	if (fd == -1)
 	{
-		free_and_null(&redir->to.filename);
+		free_and_null((void**)&redir->to.filename);
 		return (1);
 	}
 	content = redir->to.filename_token->value;
@@ -80,7 +80,7 @@ static int	create_and_write_heredoc(t_redir *redir)
 	{
 		if (unlink(redir->to.filename) == -1)
 			; //適切な表示 perror?
-		free_and_null(&redir->to.filename);
+		free_and_null((void**)&redir->to.filename);
 		return (1);
 	}
 	return (0);

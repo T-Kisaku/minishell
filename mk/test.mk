@@ -11,14 +11,14 @@ PHONY_TARGETS += test_all test_fclean %_test
 test: test_all
 test_all:
 	$(MAKE) $(TEST_MODS)
-
+#add -lreadline
 %_test: | $(TEST_BIN_DIR)
 	@$(MAKE) $(LIBFT)
 	@$(MAKE) $(TEST_OBJS) CFLAGS="$(TEST_CFLAGS)"
 	@$(MAKE) $(TESTDATA_OBJS) CFLAGS="$(TEST_CFLAGS)"
 	$(eval TEST_SRC := $(shell find src -type f -name "$*_test.c" | head -n 1))
 	@$(MAKE) print_compiling TARGET="$(TEST_SRC)"
-	$(CC) $(TEST_CFLAGS) $(TEST_SRC) $(TEST_OBJS) $(TESTDATA_OBJS) $(LIBFT) -o $(TEST_BIN_DIR)/$*_test
+	$(CC) $(TEST_CFLAGS) $(TEST_SRC) $(TEST_OBJS) $(TESTDATA_OBJS) $(LIBFT) -lreadline -o $(TEST_BIN_DIR)/$*_test 
 	@$(MAKE) print_running TARGET="$(TEST_BIN_DIR)/$*_test"
 	@valgrind --leak-check=full --quiet ./$(TEST_BIN_DIR)/$*_test
 
