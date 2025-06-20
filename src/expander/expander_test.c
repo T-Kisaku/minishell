@@ -7,7 +7,6 @@
 // #include "../../../include/expander.h"
 int		expand_handler(t_command *cmd);
 int		generate_argv_handler(t_command *cmd);
-int		quote_removal_handler(t_command *cmd);
 int		word_split_handler(t_command *cmd);
 void	free_argv(char ***argv, int num);
 
