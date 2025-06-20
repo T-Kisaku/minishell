@@ -1,5 +1,5 @@
 #include "ast.h"
-#include "expander/expander.h"
+#include "expander.h"
 
 int	redir_expand_handler(t_redir *redir);
 

@@ -1,4 +1,4 @@
-#include "expander/expander.h"
+#include "expander.h"
 
 int			quote_removal_handler(t_command *cmd);
 static int	process_simple(t_list *head);

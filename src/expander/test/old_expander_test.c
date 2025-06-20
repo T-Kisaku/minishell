@@ -1,5 +1,5 @@
 
-#include "expander/expander.h"
+#include "expander.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -48,8 +48,7 @@ int	main(void)
 	cmd.redir_list->next = redir_list2;
 	redir1 = malloc(sizeof(t_redir));
 	redir2 = malloc(sizeof(t_redir));
-	redir1->type =REDIR_HERE_DOC
-	redir
+	redir1->type =REDIR_HERE_DOC;
 	cmd.redir_list->content = redir1;
 	cmd.redir_list->next->content = redir2;
 	
@@ -104,7 +103,7 @@ int	main(void)
 //     if (!token) return NULL;
 //     token->value = ft_strdup(value);
 //     token->type = type;
-    return token;
+    // return token;
 // }
 
 // t_redir *create_test_redir(t_redir_type type, const char *filename_value, e_token_type token_type) {

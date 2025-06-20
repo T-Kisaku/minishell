@@ -1,5 +1,5 @@
 #include "libft.h"
-#include "expander/expander.h"
+#include "expander.h"
 
 void	copy_and_advance(t_expansion_context *ctx, char *src, int count);
 

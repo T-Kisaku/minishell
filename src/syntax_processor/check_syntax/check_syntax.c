@@ -87,7 +87,7 @@ static int	check_syntax_pair(e_token_group cur, e_token_group prev)
 	}
 	else if (prev == TOKEN_GROUP_CONTROL_OP)
 	{
-		if (cur != TOKEN_GROUP_WORD && cur != TOKEN_GROUP_REDIR)
+		if (cur == TOKEN_GROUP_CONTROL_OP)
 			return (1);
 	}
 	return (0);

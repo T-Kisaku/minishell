@@ -1,5 +1,5 @@
 #include "ast.h"
-#include "expander/expander.h"
+#include "expander.h"
 
 int	redir_quote_removal_handler(t_redir *target)
 {

@@ -1,6 +1,6 @@
 #include "ast.h"
 #include "token.h"
-#include "expander/expander.h"
+#include "expander.h"
 
 int	expand_handler(t_command *cmd);
 static int	expand_token_list(t_list **tokens);

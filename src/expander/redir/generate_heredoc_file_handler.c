@@ -14,8 +14,6 @@ static int	create_and_write_heredoc(t_redir *redir);
 
 int	generate_heredoc_file_handler(t_redir *redir)
 {
-	char	*content;
-
 	if (redir->type != REDIR_HERE_DOC)
 		return (0);
 	if (prepare_heredoc_file(redir) != 0)

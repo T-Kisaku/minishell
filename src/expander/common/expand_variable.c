@@ -1,4 +1,4 @@
-#include "expander/expander.h"
+#include "expander.h"
 
 int			expand_variable(t_expansion_context *ctx);
 int			expand_special(t_expansion_context *ctx);

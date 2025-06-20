@@ -1,4 +1,4 @@
-#include "expander/expander.h"
+#include "expander.h"
 #include "utils/ms_string.h"
 
 int	split_token(t_list *token, int word_count);

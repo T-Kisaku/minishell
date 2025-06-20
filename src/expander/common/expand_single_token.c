@@ -1,5 +1,5 @@
 
-#include "expander/expander.h"
+#include "expander.h"
 #include <stdio.h>
 
 int			expand_single_token(t_token_content *content);
