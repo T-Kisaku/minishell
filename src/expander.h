@@ -1,5 +1,5 @@
 #ifndef EXPANDER_H
-# define EXPANDER_H
+#define EXPANDER_H
 
 # include "ast.h"
 # include "libft.h"
@@ -7,41 +7,30 @@
 # include "utils/utils.h"
 # include <stdlib.h> //for getenv,
 
-typedef enum
-{
-	DOLLAR_SPECIAL,
-	DOLLAR_VARIABLE,
-	DOLLAR_LITERAL
-}					e_dollar_type;
+typedef enum { DOLLAR_SPECIAL, DOLLAR_VARIABLE, DOLLAR_LITERAL } e_dollar_type;
 
-typedef struct s_expansion_context
-{
-	const char		*input;
-	char			*output;
-	char			*cur_pos;
-	char			*next_pos;
-	int				index;
-	size_t			required_len;
-	int				in_single_quote;
-	char			*variable;
-	e_dollar_type	cur_dollar_type;
-}					t_expansion_context;
+typedef struct s_expansion_context {
+  const char *input;
+  char *output;
+  char *cur_pos;
+  char *next_pos;
+  int index;
+  size_t required_len;
+  int in_single_quote;
+  char *variable;
+  e_dollar_type cur_dollar_type;
+} t_expansion_context;
 
-typedef struct s_split_token_context
-{
-	t_list			*cur;
-	t_list			*tmp;
-	t_list			*next;
-	char			*original;
-	char			*start_str;
-	char			*cur_str;
-}					t_split_token_context;
+typedef struct s_split_token_context {
+  t_list *cur;
+  t_list *tmp;
+  t_list *next;
+  char *original;
+  char *start_str;
+  char *cur_str;
+} t_split_token_context;
 
-typedef enum
-{
-	SET_MODE_NORMAL,
-	SET_MODE_FIGURE
-}					e_mode_set_temp;
+typedef enum { SET_MODE_NORMAL, SET_MODE_FIGURE } e_mode_set_temp;
 
 typedef enum
 {

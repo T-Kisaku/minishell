@@ -6,8 +6,8 @@
 
 static size_t list_size(t_list *lst) { return (size_t)ft_lstsize(lst); }
 
-static void assert_single_token_equal(const t_token_content *et,
-                                      const t_token_content *at,
+static void assert_single_token_equal(const t_token *et,
+                                      const t_token *at,
                                       const char *path, size_t idx) {
   if (et->type != at->type || strcmp(et->value, at->value) != 0) {
     fprintf(stderr, "%s[%zu] token mismatch: exp(%d,'%s') act(%d,'%s')\n", path,

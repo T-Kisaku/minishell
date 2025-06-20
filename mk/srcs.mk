@@ -55,3 +55,4 @@ src/expander/redir/redir_quote_removal_handler.c \
 src/expander/redir/redir_split_handler.c \
 src/minishell.c \
 src/error.c \
+src/minishell.c \

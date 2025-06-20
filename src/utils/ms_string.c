@@ -6,11 +6,12 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 18:45:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/17 09:53:54 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:08:00 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdlib.h>
 #include <stddef.h>
+#include "libft.h"
 
 int ms_strcmp(const char s1[], const char s2[]) {
   size_t i;
@@ -33,4 +34,14 @@ int ms_isspace(int c) {
     return (1);
   else
     return (0);
+}
+
+char *ms_strndup(const char *s, size_t n) {
+  char *res;
+  res = malloc(n + 1);
+  if (!res)
+    return NULL;
+  ft_memcpy(res, s, n);
+  res[n] = '\0';
+  return res;
 }

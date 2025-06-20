@@ -1,4 +1,5 @@
-// TODO: these functions are WIP
+#include <stddef.h>
+#include "libft.h"
 #include "ast.h"
 
 t_and_or *lstget_and_or(t_list *node) {

@@ -1,5 +1,3 @@
-// TODO: these functions are WIP
-
 #include "ast.h"
 
 t_command *lstget_command(t_list *node) {

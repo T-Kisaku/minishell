@@ -13,4 +13,9 @@
 int user_error(char *msg);
 void dev_error();
 
+typedef struct s_err {
+  int exit_code;
+  char *msg;
+} t_err;
+
 #endif // !MS_ERROR_H

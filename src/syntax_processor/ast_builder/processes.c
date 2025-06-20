@@ -1,88 +1,94 @@
 
+#include "libft.h"
+#include "token.h"
 #include "ast.h"
+#include "error.h"
+#include "exit_status.h"
 #include "syntax_processor/ast_builder.h"
-#include <stdbool.h>
 
-int process_word(t_list **token, t_list **cmd_list);
-int process_pipe(t_list **token, t_list **cmd_list);
-int process_redirs(t_list **token, t_list **cmd_list);
-static t_redir_type get_redir_type(e_token_type token_type);
-int advance_token(t_list **token, t_list *next_token, bool is_free);
+static int process_and_or(t_list **token_list_ptr, t_list **cmd_list);
+static int process_pipe(t_list **token_list_ptr, t_list **andor_list_ptr);
+static int process_word(t_list **token, t_list **andor_list_ptr);
+static int process_redirs(t_list **token, t_list **andor_list_ptr);
 
-int process_word(t_list **token, t_list **cmd_list) {
-  t_list *next;
-  t_list *tail;
-  t_command *last_cmd;
-  tail = ft_lstlast(*cmd_list);
-  if (tail == NULL) {
-    // TODO: internal server error
+int handle_token_for_ast(t_list **token_list_ptr, t_list **ast_ptr) {
+  t_token *token;
+  if (!token_list_ptr || !*token_list_ptr || !ast_ptr || !*ast_ptr)
     return (EXIT_FAILURE);
-  }
-  last_cmd = lstget_command(tail);
+  token = lstget_token(*token_list_ptr);
+  if (is_word_token(token->type))
+    return (process_word(token_list_ptr, ast_ptr));
+  else if (token->type == TOKEN_PIPE)
+    return (process_pipe(token_list_ptr, ast_ptr));
+  else if (is_redir_token(token->type))
+    return (process_redirs(token_list_ptr, ast_ptr));
+  else if (is_control_op(token->type))
+    return process_and_or(token_list_ptr, ast_ptr);
+  return (EXIT_FAILURE);
+}
 
-  if (!token || !*token || !last_cmd)
-    return (1);
-  next = (*token)->next;
-  (*token)->next = NULL;
-  ft_lstadd_back(&last_cmd->u.simple.token_list, *token);
+static int process_and_or(t_list **token_list_ptr,
+                          t_list **andor_list_ptr) { // TODO: error handling
+  t_and_or *last_and_or;
+  t_token *current_token;
+  last_and_or = get_last_and_or(andor_list_ptr);
+  current_token = lstget_token(*token_list_ptr);
+  if (current_token->type == TOKEN_AND_IF)
+    last_and_or->op_next = OP_AND;
+  else if (current_token->type == TOKEN_OR_IF)
+    last_and_or->op_next = OP_OR;
+  else // TODO: error
+    return (EXIT_INTERNAL_ERR);
+  lstadd_back_and_or(andor_list_ptr, OP_NONE);
+  return (EXIT_OK);
+}
+
+static int process_pipe(t_list **token_list_ptr, t_list **andor_list_ptr) {
+  t_and_or *last_andor = get_last_and_or(andor_list_ptr);
+  if (!token_list_ptr || !*token_list_ptr || !last_andor ||
+      !last_andor->pipeline->command_list)
+    return (EXIT_INTERNAL_ERR);
+  if (advance_token(token_list_ptr) != 0)
+    return (EXIT_INTERNAL_ERR);
+  if (lstadd_back_command(&last_andor->pipeline->command_list, CMD_SIMPLE) ==
+      NULL)
+    return (EXIT_INTERNAL_ERR);
+  return (EXIT_OK);
+}
+
+static int process_word(t_list **token_list_ptr, t_list **andor_list_ptr) {
+  t_command *last_cmd;
+  t_list *copied_token_list;
+  last_cmd = get_last_cmd(andor_list_ptr);
+
+  if (!token_list_ptr || !*token_list_ptr || !last_cmd) {
+    dev_error();
+    return (EXIT_INTERNAL_ERR);
+  }
+  if (lstcopy_back_token(&last_cmd->u.simple.token_list,
+                         *lstget_token(*token_list_ptr)) == NULL)
+    return (EXIT_INTERNAL_ERR);
   last_cmd->u.simple.argc++;
-  return (advance_token(token, next, false));
+  return (advance_token(token_list_ptr));
 }
 
-int process_pipe(t_list **token, t_list **cmd_list) {
-  if (!token || !*token || !cmd_list)
-    return (1);
-  if (advance_token(token, (*token)->next, true) != 0)
-    return (1);
-  if (create_command_list(cmd_list) != 0)
-    return (1);
-  return (0);
-}
-
-int process_redirs(t_list **token, t_list **cmd_list) {
-  t_list *next;
-  t_token_content *content;
+static int process_redirs(t_list **token_list_ptr, t_list **andor_list_ptr) {
   t_redir_type type;
-  t_list *new_redir;
-  t_list *tail;
   t_command *last_cmd;
-  tail = ft_lstlast(*cmd_list);
-  if (tail == NULL) {
-    // TODO: internal server error
-    return (EXIT_FAILURE);
-  }
-  last_cmd = lstget_command(tail);
+  last_cmd = get_last_cmd(andor_list_ptr);
 
-  if (!token || !*token || !last_cmd)
-    return (1);
-  next = (*token)->next;
-  content = (t_token_content *)(*token)->content;
-  type = get_redir_type(content->type);
-  if (advance_token(token, next, true) != 0)
-    return (1);
-  if (!*token)
-    return (1);
-  next = (*token)->next;
-  (*token)->next = NULL;
-  new_redir = create_redir_list(type, (*token));
-  if (!new_redir)
-    return (1);
-  ft_lstadd_back(&last_cmd->redir_list, new_redir);
-  return (advance_token(token, next, false));
-}
+  if (!token_list_ptr || !*token_list_ptr || !last_cmd)
+    return (EXIT_INTERNAL_ERR);
+  // TODO: handle error properly
+  if (!*token_list_ptr)
+    return (EXIT_INTERNAL_ERR);
+  type = get_redir_type(lstget_token(*token_list_ptr)->type);
+  if (advance_token(token_list_ptr) != 0)
+    return (EXIT_INTERNAL_ERR);
+  if (lstadd_back_redir(&last_cmd->redir_list, type,
+                        lstget_token(*token_list_ptr)) == NULL)
+    return (EXIT_INTERNAL_ERR);
 
-static t_redir_type get_redir_type(e_token_type token_type) {
-  t_redir_type redir_type;
 
-  if (token_type == TOKEN_REDIR_INPUT)
-    redir_type = REDIR_INPUT;
-  else if (token_type == TOKEN_REDIR_OUTPUT)
-    redir_type = REDIR_OUTPUT;
-  else if (token_type == TOKEN_REDIR_HERE_DOC)
-    redir_type = REDIR_HERE_DOC;
-  else if (token_type == TOKEN_REDIR_APPEND)
-    redir_type = REDIR_APPEND;
-  else
-    return (REDIR_INPUT); // default
-  return (redir_type);
+  return (advance_token(token_list_ptr));
 }

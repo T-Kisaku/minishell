@@ -46,11 +46,11 @@ void process_redir_list(t_list *redir_list) {
   redir = NULL;
   while (redir_list) {
     redir = lstget_redir(redir_list);
-    process(&redir->from, redir->type);
-    process(&redir->to, redir->type);
-    dup2(redir->to.fd, redir->from.fd);
-    close_opened_fd(&redir->to);
-    close_opened_fd(&redir->from);
+    process(&redir->redirect_source, redir->type);
+    process(&redir->to_be_redirected, redir->type);
+    dup2(redir->to_be_redirected.fd, redir->redirect_source.fd);
+    close_opened_fd(&redir->to_be_redirected);
+    close_opened_fd(&redir->redirect_source);
 
     redir_list = redir_list->next;
   }

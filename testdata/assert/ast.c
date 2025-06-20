@@ -38,10 +38,10 @@ static void assert_redir_equal(t_redir *exp, t_redir *act, const char *path) {
     assert(0);
   }
   char buf[256];
-  snprintf(buf, sizeof(buf), "%s.from", path);
-  assert_redir_target_equal(exp->from, act->from, buf);
+  snprintf(buf, sizeof(buf), "%s.to_be_redirected", path);
+  assert_redir_target_equal(exp->redirect_source, act->redirect_source, buf);
   snprintf(buf, sizeof(buf), "%s.to", path);
-  assert_redir_target_equal(exp->to, act->to, buf);
+  assert_redir_target_equal(exp->to_be_redirected, act->to_be_redirected, buf);
 }
 
 static void assert_command_equal(t_command *exp, t_command *act,

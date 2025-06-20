@@ -60,10 +60,10 @@ static void set_io_redir(t_command *cmd, t_cmd_fd cmd_fd) {
     new = new_redir();
     if (new) {
       new->type = REDIR_OUTPUT;
-      new->to.is_direct_to_fd = true;
-      new->to.fd = cmd_fd.current_pipe[PIPE_WRITE];
-      new->from.is_direct_to_fd = true;
-      new->from.fd = STDOUT_FILENO;
+      new->to_be_redirected.is_direct_to_fd = true;
+      new->to_be_redirected.fd = cmd_fd.current_pipe[PIPE_WRITE];
+      new->redirect_source.is_direct_to_fd = true;
+      new->redirect_source.fd = STDOUT_FILENO;
       ft_lstadd_front(&cmd->redir_list, ft_lstnew((void *)new));
     } else {
       // TODO: error handling
@@ -75,10 +75,10 @@ static void set_io_redir(t_command *cmd, t_cmd_fd cmd_fd) {
     new = new_redir();
     if (new) {
       new->type = REDIR_INPUT;
-      new->to.is_direct_to_fd = true;
-      new->to.fd = cmd_fd.prev_pipe_read;
-      new->from.is_direct_to_fd = true;
-      new->from.fd = STDIN_FILENO;
+      new->to_be_redirected.is_direct_to_fd = true;
+      new->to_be_redirected.fd = cmd_fd.prev_pipe_read;
+      new->redirect_source.is_direct_to_fd = true;
+      new->redirect_source.fd = STDIN_FILENO;
       ft_lstadd_front(&cmd->redir_list, ft_lstnew((void *)new));
     } else {
       // TODO: error handling

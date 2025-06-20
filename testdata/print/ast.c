@@ -23,16 +23,7 @@ void print_redirection(t_list *redir_list, int indent) {
     print_indent(indent);
     printf("redir: ");
 
-    switch (redir->type) {
-    case REDIR_INPUT:
-    case REDIR_OUTPUT:
-      print_redir_target(redir->from);
-      break;
-    case REDIR_HERE_DOC:
-    case REDIR_APPEND:
-      print_redir_target(redir->to);
-      break;
-    }
+    print_redir_target(redir->to_be_redirected);
     switch (redir->type) {
     case REDIR_INPUT:
       printf("< ");
@@ -47,16 +38,7 @@ void print_redirection(t_list *redir_list, int indent) {
       printf(">> ");
       break;
     }
-    switch (redir->type) {
-    case REDIR_INPUT:
-    case REDIR_OUTPUT:
-      print_redir_target(redir->to);
-      break;
-    case REDIR_HERE_DOC:
-    case REDIR_APPEND:
-      print_redir_target(redir->from);
-      break;
-    }
+    print_redir_target(redir->redirect_source);
     printf("\n");
     redir_list = redir_list->next;
   }

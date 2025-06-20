@@ -62,9 +62,13 @@ typedef struct s_and_or {
   t_andor_op op_next;
 } t_and_or;
 
-// t_list *lstnew_and_or(int type, const char *target);
 t_and_or *lstget_and_or(t_list *node);
-// void del_and_or(void *ptr);
+void del_and_or(void *content);
+void lstclear_and_or(t_ast **ast);
+t_and_or *new_and_or(t_andor_op andor_op);
+t_list *lstnew_and_or(t_andor_op andor_op);
+t_list *lstadd_back_and_or(t_list **and_or_list_ptr, t_andor_op andor_op);
+#define free_ast lstclear_and_or
 
 /******************************************************************************/
 /* pipeline                                                                   */
@@ -73,6 +77,9 @@ t_and_or *lstget_and_or(t_list *node);
 typedef struct s_pipeline {
   t_list *command_list; // content = t_command*
 } t_pipeline;
+
+t_pipeline *new_pipeline();
+void del_pipeline(t_pipeline *pipe);
 
 /******************************************************************************/
 /* command                                                                    */
@@ -99,9 +106,13 @@ typedef struct s_command {
   u_command u;
 } t_command;
 
-// t_list *lstnew_command(int type, const char *target);
+void lstclear_cmd(t_list **command_list);
 t_command *lstget_command(t_list *node);
-// void del_command(void *ptr);
+void del_command(void *content);
+
+t_command *new_command(t_cmd_type cmd_type);
+t_list *lstnew_command(t_cmd_type cmd_type);
+t_list *lstadd_back_command(t_list **cmd_list_ptr, t_cmd_type cmd_type);
 
 /******************************************************************************/
 /* redirection                                                                */
@@ -118,22 +129,22 @@ typedef struct s_redir_target {
   bool is_direct_to_fd; // whether fd is set without char *target
   int fd;               // set -1 as initial value
   char *filename;       // filename is going to be assigned when it's expander!
-  t_token_content *filename_token;
+  t_token *filename_token;
 } t_redir_target;
 
 typedef struct s_redir {
   t_redir_type type;
-  t_redir_target to;
-  t_redir_target from;
+  t_redir_target to_be_redirected;
+  t_redir_target redirect_source;
 } t_redir;
 
-t_redir *new_redir();
+t_redir *new_redir(void);
+t_list *lstnew_redir(t_redir_type redir_type, t_token *filename_token);
+t_list *lstadd_back_redir(t_list **redir_list_ptr, t_redir_type redir_type,
+                          t_token *filename_token);
 t_redir *lstget_redir(t_list *node);
+t_redir_type get_redir_type(t_token_type token_type);
 void del_redir(void *ptr);
-
-t_list *lstnew_redir(int type, const t_list *token);
-t_list *new_fd_redir_lst(int type, int fd);
-t_redir *lstget_redir(t_list *node);
-void del_redir(void *ptr);
+void clear_redir_list(t_list **head);
 
 #endif /* AST_H */
