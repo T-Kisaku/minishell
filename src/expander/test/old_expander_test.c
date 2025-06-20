@@ -8,9 +8,9 @@ int	main(void)
 	t_list			*tok1;
 	t_list			*tok2;
 	t_list			*tok3;
-	t_token_content	*cont1;
-	t_token_content	*cont2;
-	t_token_content	*cont3;
+	t_token	*cont1;
+	t_token	*cont2;
+	t_token	*cont3;
 	t_list *redir_list1;
 	t_list *redir_list2;
 	t_redir *redir1;
@@ -22,9 +22,9 @@ int	main(void)
 	tok1 = malloc(sizeof(t_list));
 	tok2 = malloc(sizeof(t_list));
 	tok3 = malloc(sizeof(t_list));
-	cont1 = malloc(sizeof(t_token_content));
-	cont2 = malloc(sizeof(t_token_content));
-	cont3 = malloc(sizeof(t_token_content));
+	cont1 = malloc(sizeof(t_token));
+	cont2 = malloc(sizeof(t_token));
+	cont3 = malloc(sizeof(t_token));
 	cont1->value = ft_strdup(" >e'ch'o     abc<def");
 	cont1->type = TOKEN_UNQUOTED_WORD;
 	cont2->value = ft_strdup("zzz$abc$test");
@@ -98,8 +98,8 @@ int	main(void)
 // #include <string.h>
 
 // // テスト用のヘルパー関数
-// t_token_content *create_token_content(const char *value, t_token_type type) {
-//     t_token_content *token = malloc(sizeof(t_token_content));
+// t_token *create_token_content(const char *value, t_token_type type) {
+//     t_token *token = malloc(sizeof(t_token));
 //     if (!token) return NULL;
 //     token->value = ft_strdup(value);
 //     token->type = type;

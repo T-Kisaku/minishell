@@ -47,10 +47,10 @@ static int	check_head(t_list **cur, t_list **prev)
 	e_token_group	cur_group;
 
 	if (set_token_group(&cur_group,
-						((t_token_content *)(*cur)->content)->type) != 0)
+						((t_token *)(*cur)->content)->type) != 0)
 		return (write_error("bad token group"));
 	if (cur_group == TOKEN_GROUP_CONTROL_OP)
-		return (syntax_error(((t_token_content *)(*cur)->content)->value));
+		return (syntax_error(((t_token *)(*cur)->content)->value));
 	(*prev) = (*cur);
 	(*cur) = (*cur)->next;
 	return (0);
@@ -62,15 +62,15 @@ static int	check_body(t_list **cur, t_list **prev)
 	e_token_group	prev_group;
 
 	if (set_token_group(&prev_group,
-						((t_token_content *)(*prev)->content)->type))
+						((t_token *)(*prev)->content)->type))
 		return (write_error("bad token group"));
 	while (*cur)
 	{
 		if (set_token_group(&cur_group,
-							((t_token_content *)(*cur)->content)->type))
+							((t_token *)(*cur)->content)->type))
 			return (write_error("bad token group"));
 		if (check_syntax_pair(cur_group, prev_group) != 0)
-			return (syntax_error(((t_token_content *)(*cur)->content)->value));
+			return (syntax_error(((t_token *)(*cur)->content)->value));
 		(*prev) = (*cur);
 		prev_group = cur_group;
 		(*cur) = (*cur)->next;
@@ -99,7 +99,7 @@ static int	check_tail(t_list *tail)
 	char			*input;
 	t_list			*new;
 
-	if (set_token_group(&group, ((t_token_content *)tail->content)->type) != 0)
+	if (set_token_group(&group, ((t_token *)tail->content)->type) != 0)
 		return (write_error("bad token group"));
 	if (group == TOKEN_GROUP_CONTROL_OP)
 	{
@@ -111,7 +111,7 @@ static int	check_tail(t_list *tail)
 		return (0);
 	}
 	else if (group == TOKEN_GROUP_REDIR)
-		return (syntax_error(((t_token_content *)tail->content)->value));
+		return (syntax_error(((t_token *)tail->content)->value));
 	else if (group == TOKEN_GROUP_WORD)
 		return (SYNTAX_OK);
 	else

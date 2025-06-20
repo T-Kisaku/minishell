@@ -2,11 +2,11 @@
 #include "token.h"
 #include <stddef.h>
 
-int			quote_remove_core(t_token_content *content);
+int			quote_remove_core(t_token *content);
 static int	count_quotes(char *s);
 static int	copy_without_quotes(char *dst, const char *src);
 
-int	quote_remove_core(t_token_content *content)
+int	quote_remove_core(t_token *content)
 {
 	size_t	value_len;
 	int		quote_count;

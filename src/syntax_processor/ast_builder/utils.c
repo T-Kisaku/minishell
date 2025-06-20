@@ -35,5 +35,3 @@ t_command *get_last_cmd(t_list **and_or_list_ptr) {
         lstadd_back_command(&last_and_or->pipeline->command_list, CMD_SIMPLE));
   return lstget_command(last_cmd_node);
 }
-
-void p() { int **num_array_ptr = NULL; }

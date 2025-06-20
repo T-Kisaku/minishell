@@ -2,15 +2,15 @@
 #include "expander.h"
 #include <stdio.h>
 
-int			expand_single_token(t_token_content *content);
+int			expand_single_token(t_token *content);
 static void	init_expansion_context(t_expansion_context *ctx,
-									t_token_content *content);
+									t_token *content);
 static int	process_expansion_core(t_expansion_context *ctx,
 									e_expander_mode mode);
 static void	set_dollar_type(t_expansion_context *ctx);
 
 //ワイルドカードの扱いでunquotedとdobule_quotedで差が出るが、ボーナス内容なので一旦スルー
-int	expand_single_token(t_token_content *content)
+int	expand_single_token(t_token *content)
 {
 	t_expansion_context	ctx;
 
@@ -31,9 +31,9 @@ int	expand_single_token(t_token_content *content)
 }
 
 static void	init_expansion_context(t_expansion_context *ctx,
-									t_token_content *content)
+									t_token *content)
 {
-	t_token_content	*token_content;
+	t_token	*token_content;
 
 	token_content = content;
 	ctx->input = token_content->value;

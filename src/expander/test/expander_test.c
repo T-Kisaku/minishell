@@ -32,14 +32,14 @@ int	testcase(char *s)
 int	print_cmd(t_command *cmd)
 {
 	t_list			*cmd_list;
-	t_token_content	*content;
+	t_token	*content;
 	int				i;
 
 	cmd_list = cmd->u.simple.token_list;
 	i = 0;
 	while (cmd_list)
 	{
-		content = (t_token_content *)cmd_list->content;
+		content = (t_token *)cmd_list->content;
 		printf("[%d] cmd_name = %s\n",
 				i,
 				content->value);

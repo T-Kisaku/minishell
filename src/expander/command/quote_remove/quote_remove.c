@@ -17,12 +17,12 @@ int	quote_removal_handler(t_command *cmd)
 static int	process_simple(t_list *head)
 {
 	t_list			*cur;
-	t_token_content	*cur_token_content;
+	t_token	*cur_token_content;
 
 	cur = head;
 	while (cur)
 	{
-		cur_token_content = (t_token_content *)cur->content;
+		cur_token_content = (t_token *)cur->content;
 		if (quote_remove_core(cur_token_content) != 0)
 			return (1);
 		cur = cur->next;

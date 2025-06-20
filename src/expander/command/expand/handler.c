@@ -23,12 +23,12 @@ int	expand_handler(t_command *cmd)
 static int	expand_token_list(t_list **tokens)
 {
 	t_list *cur_token;
-	t_token_content *cur_token_content;
+	t_token *cur_token_content;
 
 	cur_token = *tokens;
 	while (cur_token)
 	{
-		cur_token_content = (t_token_content *)cur_token->content;
+		cur_token_content = (t_token *)cur_token->content;
 		if (cur_token_content->type == TOKEN_UNQUOTED_WORD
 			|| cur_token_content->type == TOKEN_DOUBLE_QUOTED_WORD)
 		{

@@ -58,7 +58,6 @@ static int process_pipe(t_list **token_list_ptr, t_list **andor_list_ptr) {
 
 static int process_word(t_list **token_list_ptr, t_list **andor_list_ptr) {
   t_command *last_cmd;
-  t_list *copied_token_list;
   last_cmd = get_last_cmd(andor_list_ptr);
 
   if (!token_list_ptr || !*token_list_ptr || !last_cmd) {
