@@ -1,11 +1,11 @@
-#include "libft.h"
-#include "syntax_processor.h"
-#include "syntax_processor/check_syntax/check_syntax.h"
-#include "token.h"
-#include "utils/utils.h"
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
-#include <stdio.h>
+#include "libft.h"
+#include "token.h"
+#include "utils/utils.h"
+#include "syntax_processor.h"
+#include "syntax_processor/check_syntax/check_syntax.h"
 
 #define SYNTAX_OK 2
 
@@ -104,7 +104,7 @@ static int	check_tail(t_list *tail)
 	if (group == TOKEN_GROUP_CONTROL_OP)
 	{
 		input = readline("> ");
-		new = tokenizer(input);
+    str_to_token(input, &new);
 		if (!new)
 			return (1);
 		tail->next = new;
