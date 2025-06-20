@@ -21,13 +21,9 @@ src/utils/token/copy.c \
 src/utils/token/del.c \
 src/utils/token/get.c \
 src/utils/token/new.c \
-src/syntax_processor/ast_builder/ast_builder.c \
-src/syntax_processor/ast_builder/build_ast_from_tokens.c \
 src/syntax_processor/ast_builder/processes.c \
 src/syntax_processor/ast_builder/token_to_ast.c \
 src/syntax_processor/ast_builder/utils.c \
-src/syntax_processor/tokenizer/processes.c \
-src/syntax_processor/tokenizer/tokenizer.c \
 src/syntax_processor/tokenizer/process_special_char.c \
 src/syntax_processor/tokenizer/str_to_token.c \
 src/syntax_processor/tokenizer/token_extraction.c \
