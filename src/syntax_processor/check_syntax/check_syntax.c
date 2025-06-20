@@ -14,7 +14,7 @@ static int	check_head(t_list **cur, t_list **prev);
 static int	check_body(t_list **cur, t_list **prev);
 static int	check_syntax_pair(e_token_group cur, e_token_group prev);
 static int	check_tail(t_list *tail);
-static int	set_token_group(e_token_group *group, e_token_type type);
+static int	set_token_group(e_token_group *group, t_token_type type);
 
 int	check_syntax(t_list *list)
 {
@@ -118,7 +118,7 @@ static int	check_tail(t_list *tail)
 		return (write_error("bad token group"));
 }
 
-static int	set_token_group(e_token_group *group, e_token_type type)
+static int	set_token_group(e_token_group *group, t_token_type type)
 {
 	if (is_word_token(type))
 	{

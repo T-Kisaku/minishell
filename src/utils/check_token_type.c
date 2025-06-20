@@ -1,11 +1,11 @@
 #include "token.h"
 #include <stdbool.h>
 
-bool	is_word_token(e_token_type type);
-bool	is_redir_token(e_token_type type);
-bool	is_control_op_token(e_token_type type);
+bool	is_word_token(t_token_type type);
+bool	is_redir_token(t_token_type type);
+bool	is_control_op_token(t_token_type type);
 
-bool	is_word_token(e_token_type type)
+bool	is_word_token(t_token_type type)
 {
 	if (type == TOKEN_UNQUOTED_WORD || type == TOKEN_SINGLE_QUOTED_WORD
 		|| type == TOKEN_DOUBLE_QUOTED_WORD)
@@ -14,7 +14,7 @@ bool	is_word_token(e_token_type type)
 		return (false);
 }
 
-bool	is_redir_token(e_token_type type)
+bool	is_redir_token(t_token_type type)
 {
 	if (type == TOKEN_REDIR_INPUT ||
 		type == TOKEN_REDIR_OUTPUT ||
@@ -25,7 +25,7 @@ bool	is_redir_token(e_token_type type)
 		return (false);
 }
 
-bool	is_control_op_token(e_token_type type)
+bool	is_control_op_token(t_token_type type)
 {
 	if (type == TOKEN_PIPE || type == TOKEN_AND_IF || type == TOKEN_OR_IF)
 		return (true);

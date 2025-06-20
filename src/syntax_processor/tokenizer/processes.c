@@ -2,7 +2,7 @@
 #include "utils/ms_string.h"
 #include "utils/utils.h"
 int create_token(t_token_context *ctx);
-int set_token(t_token_context *ctx, e_token_type type);
+int set_token(t_token_context *ctx, t_token_type type);
 void process_space(t_token_context *ctx);
 int process_quoted_word(t_token_context *ctx);
 int process_unquoted_word(t_token_context *ctx);
@@ -29,7 +29,7 @@ int create_token(t_token_context *ctx) {
   return (0);
 }
 
-int set_token(t_token_context *ctx, e_token_type type) {
+int set_token(t_token_context *ctx, t_token_type type) {
   t_token_content *cur_token_content;
 
   cur_token_content = ctx->cur_token->content;
@@ -66,7 +66,7 @@ int process_unquoted_word(t_token_context *ctx) {
 // quoted string
 int process_quoted_word(t_token_context *ctx) {
   char quote;
-  e_token_type type;
+  t_token_type type;
 
   if (create_token(ctx) != 0)
     return (1);

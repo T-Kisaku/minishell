@@ -31,9 +31,9 @@ int	redir_loop(t_ast *ast, int (*handler)(t_redir *));
 
 
 //check_token_type.c
- bool	is_word_token(e_token_type type);
- bool	is_redir_token(e_token_type type);
-bool	is_control_op_token(e_token_type type);
+ bool	is_word_token(t_token_type type);
+ bool	is_redir_token(t_token_type type);
+bool	is_control_op_token(t_token_type type);
 
 //write_error.c
 int		write_error(char *msg);

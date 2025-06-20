@@ -98,7 +98,7 @@ int	main(void)
 // #include <string.h>
 
 // // テスト用のヘルパー関数
-// t_token_content *create_token_content(const char *value, e_token_type type) {
+// t_token_content *create_token_content(const char *value, t_token_type type) {
 //     t_token_content *token = malloc(sizeof(t_token_content));
 //     if (!token) return NULL;
 //     token->value = ft_strdup(value);
@@ -106,7 +106,7 @@ int	main(void)
     // return token;
 // }
 
-// t_redir *create_test_redir(t_redir_type type, const char *filename_value, e_token_type token_type) {
+// t_redir *create_test_redir(t_redir_type type, const char *filename_value, t_token_type token_type) {
 //     t_redir *redir = new_redir();
 //     if (!redir) return NULL;
     
