@@ -22,7 +22,7 @@ int handle_token_for_ast(t_list **token_list_ptr, t_list **ast_ptr) {
     return (process_pipe(token_list_ptr, ast_ptr));
   else if (is_redir_token(token->type))
     return (process_redirs(token_list_ptr, ast_ptr));
-  else if (is_control_op(token->type))
+  else if (is_control_op_token(token->type))
     return process_and_or(token_list_ptr, ast_ptr);
   return (EXIT_FAILURE);
 }
