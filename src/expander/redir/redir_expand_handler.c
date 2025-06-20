@@ -7,15 +7,15 @@ int	redir_expand_handler(t_redir *redir)
 {
 	if (redir->type == REDIR_HERE_DOC)
 	{
-		if (redir->to.filename_token->type == TOKEN_UNQUOTED_WORD)
+		if (redir->redirect_source.filename_token->type == TOKEN_UNQUOTED_WORD)
 		{
-			if (expand_single_token(redir->to.filename_token) != 0)
+			if (expand_single_token(redir->redirect_source.filename_token) != 0)
 				return (1);
 		}
 	}
-	else if (redir->to.filename_token->type != TOKEN_SINGLE_QUOTED_WORD)
+	else if (redir->redirect_source.filename_token->type != TOKEN_SINGLE_QUOTED_WORD)
 	{
-		if (expand_single_token(redir->to.filename_token) != 0)
+		if (expand_single_token(redir->redirect_source.filename_token) != 0)
 			return (1);
 	}
 	return (0);

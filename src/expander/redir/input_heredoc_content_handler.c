@@ -1,5 +1,6 @@
 #include "ast.h"
 #include <libft.h>
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdbool.h>
@@ -29,8 +30,8 @@ int	input_heredoc_content_handler(t_redir *redir)
 		free(content);
 		return (1);
 	}
-	free(redir->to.filename_token->value);
-	redir->to.filename_token->value = content;
+	free(redir->redirect_source.filename_token->value);
+	redir->redirect_source.filename_token->value = content;
 	return (0);
 }
 
@@ -40,7 +41,7 @@ static int	init_heredoc_context(t_redir *redir, char **content,
 	*content = ft_strdup("");
 	if (!*content)
 		return (1);
-	*delimiter = redir->to.filename_token->value;
+	*delimiter = redir->redirect_source.filename_token->value;
 	*delimiter_len = ft_strlen(*delimiter);
 	return (0);
 }

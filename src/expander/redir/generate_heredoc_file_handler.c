@@ -29,8 +29,8 @@ static int	prepare_heredoc_file(t_redir *redir)
 
 	if (generate_heredoc_filename(temp_filename, sizeof(temp_filename)) != 0)
 		return (1);
-	redir->to.filename = ft_strdup(temp_filename);
-	if (!redir->to.filename)
+	redir->redirect_source.filename = ft_strdup(temp_filename);
+	if (!redir->redirect_source.filename)
 		return (1);
 	return 0;
 }
@@ -65,20 +65,21 @@ static int	create_and_write_heredoc(t_redir *redir)
 	char	*content;
 	int write_result;
 
-	fd = open(redir->to.filename, O_WRONLY | O_CREAT | O_EXCL, 0600);
+	fd = open(redir->redirect_source.filename, O_WRONLY | O_CREAT | O_EXCL, 0600);
 	if (fd == -1)
 	{
-		free_and_null((void**)&redir->to.filename);
+		free_and_null((void**)&redir->redirect_source.filename);
 		return (1);
 	}
-	content = redir->to.filename_token->value;
+	content = redir->redirect_source.filename_token->value;
 	write_result = write(fd, content, ft_strlen(content));
 	close(fd);
 	if (write_result == -1)
 	{
-		if (unlink(redir->to.filename) == -1)
-			; //適切な表示 perror?
-		free_and_null((void**)&redir->to.filename);
+			 //適切な表示 perror?
+		if (unlink(redir->redirect_source.filename) == -1)
+    {}
+		free_and_null((void**)&redir->redirect_source.filename);
 		return (1);
 	}
 	return (0);
