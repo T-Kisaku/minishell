@@ -37,6 +37,6 @@ t_list *lstcopy_token(t_token token);
 t_list *lstcopy_back_token(t_list **token_list_ptr, t_token token);
 bool is_word_token(t_token_type type);
 bool is_redir_token(t_token_type type);
-bool is_control_op(t_token_type type);
+bool is_control_op_token(t_token_type type);
 
 #endif // !TOKEN_H
