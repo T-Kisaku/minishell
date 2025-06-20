@@ -41,11 +41,8 @@ static int	count_quotes(char *s)
 
 static int	copy_without_quotes(char *dst, const char *src)
 {
-	int	index;
-
 	if (!dst || !src)
 		return (1);
-	index = 0;
 	while (*src)
 	{
 		if (*src != '\'' && *src != '"')

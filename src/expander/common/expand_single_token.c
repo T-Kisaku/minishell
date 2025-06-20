@@ -16,8 +16,6 @@ int	expand_single_token(t_token *content)
 
 	if (!content)
 		return (1);
-	if (content->type == TOKEN_EOF)
-		return (0);
 	init_expansion_context(&ctx, content);
 	if (process_expansion_core(&ctx, MODE_CALCULATE) != 0)
 		return (1);
