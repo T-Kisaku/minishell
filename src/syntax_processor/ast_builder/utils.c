@@ -1,14 +1,16 @@
 #include <stdbool.h> //bool,
 #include "ast.h"
+#include "error.h"
 #include "exit_status.h"
 #include "libft.h"
 #include "syntax_processor/ast_builder.h"
 
-int advance_token(t_list **token_list_ptr) {
+t_error *advance_token(t_list **token_list_ptr) {
   if (!token_list_ptr || !*token_list_ptr)
-    return (EXIT_INTERNAL_ERR);
+    return (
+        new_error(EXIT_INTERNAL_ERR, "not good args for advance_token bro!!"));
   *token_list_ptr = (*token_list_ptr)->next;
-  return (EXIT_OK);
+  return NULL;
 }
 
 t_and_or *get_last_and_or(t_list **and_or_list_ptr) {

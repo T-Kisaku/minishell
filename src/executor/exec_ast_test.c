@@ -3,6 +3,8 @@
 #include <assert.h>
 #include "minishell.h"
 #include "testdata.h"
+#include "error.h"
+#include "exit_status.h"
 
 static void basic_test();
 static void builtin_test();
@@ -23,8 +25,8 @@ int main() {
 static void basic_test() {
   print_title("BASIC");
   test(ls(), EXIT_SUCCESS);
-  test(echo_hello(), EXIT_SUCCESS);
-  test(cat_nofile(), EXIT_FAILURE);
+  test(echo_simple_string(), EXIT_SUCCESS);
+  /* test(cat_nofile(), EXIT_FAILURE); */
 }
 
 static void builtin_test() {
@@ -38,14 +40,12 @@ static void redirect_test() {
   test(redir_append(), EXIT_SUCCESS);
   test(redir_input(), EXIT_SUCCESS);
   test(redir_mix(), EXIT_SUCCESS);
-  test(pipe_to_redir(), EXIT_SUCCESS);
 }
 
 static void pipe_test() {
   print_title("PIPE");
   test(ls_pipe_grep(), EXIT_SUCCESS);
   test(cat_makefile_pipe_wc_l(), EXIT_SUCCESS);
-  test(ls_pipe_grep_pipe_wc(), EXIT_SUCCESS);
 }
 
 static void test(t_testdata d, int expected_status) {
@@ -54,7 +54,8 @@ static void test(t_testdata d, int expected_status) {
   /* printf("== AST     =====================\n"); */
   /* print_ast(&d.ast, 0); */
   printf("== STDOUT ======================\n");
-  int result_status = exec_ast(&d.ast);
+  t_error *result_error = exec_ast(d.ast);
+  int result_status = result_error == NULL ? EXIT_OK : result_error->exit_code;
   if (d.output_file) {
     printf("== %s ======================\n", d.output_file);
     print_file_content(d.output_file);

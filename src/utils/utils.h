@@ -5,8 +5,9 @@
 
 #include <stddef.h> //size_t
 #include <stdbool.h>
-#include "libft.h"  //t_list
-#include "ast.h"    //t_ast, t_command
+#include "libft.h" //t_list
+#include "ast.h"   //t_ast, t_command
+#include "error.h"
 
 // free_ast_1.c
 void free_ast(t_ast **ast);
@@ -24,13 +25,13 @@ void free_argv(char ***argv, int num);
 
 char *ft_strndup(const char *s, size_t n);
 
-void	free_and_null(void **ptr);	
+void free_and_null(void **ptr);
 
-int	cmd_loop(t_ast *ast, int (*handler)(t_command *));
-int	redir_loop(t_ast *ast, int (*handler)(t_redir *));
+t_error *cmd_loop(t_ast *ast, t_error *(*handler)(t_command *));
+t_error *redir_loop(t_ast *ast, t_error *(*handler)(t_redir *));
 
-//write_error.c
-int		write_error(char *msg);
-int	syntax_error(const char *token);
+// write_error.c
+int write_error(char *msg);
+int syntax_error(const char *token);
 
 #endif

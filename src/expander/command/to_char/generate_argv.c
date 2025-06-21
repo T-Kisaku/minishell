@@ -1,30 +1,36 @@
+#include "error.h"
+#include "exit_status.h"
 #include "expander.h"
 #include "utils/argv.h"
 
-int generate_argv_handler(t_command *cmd);
-static int process_simple(t_command *cmd);
+t_error *generate_argv_handler(t_command *cmd);
+static t_error *process_simple(t_command *cmd);
 
-int generate_argv_handler(t_command *cmd) {
+t_error *generate_argv_handler(t_command *cmd) {
+  t_error *error;
+  error = NULL;
   if (cmd->type == CMD_SIMPLE) {
-    if (process_simple(cmd) != 0)
-      return (1);
+    error = process_simple(cmd);
+    if (is_error(error))
+      return error;
   } else if (cmd->type == CMD_SUBSHELL) {
     // not impliment
   }
   if (cmd->u.simple.argv == NULL)
-    return (1);
+    return new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO");
   else
-    return (0);
+    return error;
 }
 
-static int process_simple(t_command *cmd) {
+static t_error *process_simple(t_command *cmd) {
   t_list *cur_token;
   t_token *cur_token_content;
   int index;
 
   cmd->u.simple.argv = malloc(sizeof(char *) * (cmd->u.simple.argc + 1));
   if (!cmd->u.simple.argv)
-    return (1);
+    return new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO");
+
   cur_token = cmd->u.simple.token_list;
   index = 0;
   while (index < cmd->u.simple.argc) {
@@ -32,11 +38,11 @@ static int process_simple(t_command *cmd) {
     cmd->u.simple.argv[index] = ft_strdup(cur_token_content->value);
     if (!cmd->u.simple.argv[index]) {
       free_argv(&cmd->u.simple.argv, index);
-      return (1);
+      return new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO");
     }
     index++;
     cur_token = cur_token->next;
   }
   cmd->u.simple.argv[index] = NULL;
-  return (0);
+  return NULL;
 }
