@@ -1,6 +1,6 @@
 #include <stdio.h>
+#include "error.h"
 #include "syntax_processor.h"
-
 #include "testdata.h"
 
 void test(const char *description, t_testdata d) {
@@ -8,7 +8,11 @@ void test(const char *description, t_testdata d) {
   printf("Input: \"%s\"\n", d.input);
   t_list *actual;
   actual = NULL;
-  str_to_token(d.input, &actual);
+  t_error *error = str_to_token(d.input, &actual);
+  if (is_error(error)) {
+    puts("== ERROR MSG ==");
+    puts(error->msg);
+  }
   print_token_list(actual);
   assert_token_list_equal(d.token_list, actual, "tokenizer");
   lstclear_token(&actual);

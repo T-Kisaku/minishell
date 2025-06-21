@@ -49,4 +49,4 @@ ssize_t print_error(const char *msg) {
   return bytes;
 }
 
-bool is_error(t_error *error) { return error == NULL; }
+bool is_error(t_error *error) { return error != NULL; }
