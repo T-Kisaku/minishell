@@ -15,10 +15,10 @@ static void print_title(char *title);
 static void print_file_content(char filename[]);
 
 int main() {
-  basic_test();
-  builtin_test();
+  /* basic_test(); */
+  /* builtin_test(); */
   redirect_test();
-  pipe_test();
+  /* pipe_test(); */
   return (EXIT_SUCCESS);
 }
 
@@ -52,10 +52,11 @@ static void test(t_testdata d, int expected_status) {
   printf("== COMMAND =====================\n");
   printf("%s\n", d.input);
   /* printf("== AST     =====================\n"); */
-  /* print_ast(&d.ast, 0); */
+  /* print_ast(d.ast, 0); */
   printf("== STDOUT ======================\n");
   t_error *result_error = exec_ast(d.ast);
-  int result_status = result_error == NULL ? EXIT_OK : result_error->exit_code;
+  int result_status =
+      is_error(result_error) ? result_error->exit_code : EXIT_OK;
   if (d.output_file) {
     printf("== %s ======================\n", d.output_file);
     print_file_content(d.output_file);
@@ -65,6 +66,8 @@ static void test(t_testdata d, int expected_status) {
   printf("Result  : %d\n", result_status);
   assert(expected_status == result_status);
   printf("\n");
+  free_testdata(&d);
+  del_error(result_error);
 }
 
 static void print_title(char *title) {

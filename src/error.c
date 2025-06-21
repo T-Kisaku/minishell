@@ -35,7 +35,7 @@ t_error *new_error(int exit_code, const char *msg) {
   return err;
 }
 void del_error(t_error *error) {
-  if (!error) {
+  if (error != NULL) {
     free(error->msg);
     free(error);
   }
