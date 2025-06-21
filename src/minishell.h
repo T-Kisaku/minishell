@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:11:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/16 14:52:07 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/21 11:16:01 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 #define MINISHELL_H
 
 #include "ast.h"
+#include "error.h"
 
-int str_to_ast(char *input_str, t_ast **ast_ptr);
-int exec_ast(t_ast *ast);
-int process_expansion(t_ast *ast);
-
-void error();
+t_error *str_to_ast(char *input_str, t_ast **ast_ptr);
+t_error *exec_ast(t_ast *ast);
+t_error *process_expansion(t_ast *ast);
 
 #endif

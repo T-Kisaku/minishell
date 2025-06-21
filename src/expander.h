@@ -1,11 +1,11 @@
 #ifndef EXPANDER_H
 #define EXPANDER_H
 
-# include "ast.h"
-# include "libft.h"
-# include "token.h"
-# include "utils/utils.h"
-# include <stdlib.h> //for getenv,
+#include "ast.h"
+#include "libft.h"
+#include "token.h"
+#include <stdlib.h> //for getenv,
+#include "error.h"
 
 typedef enum { DOLLAR_SPECIAL, DOLLAR_VARIABLE, DOLLAR_LITERAL } e_dollar_type;
 
@@ -32,47 +32,40 @@ typedef struct s_split_token_context {
 
 typedef enum { SET_MODE_NORMAL, SET_MODE_FIGURE } e_mode_set_temp;
 
-typedef enum
-{
-	MODE_CALCULATE,
-	MODE_SET_VALUE,
-}					e_expander_mode;
+typedef enum {
+  MODE_CALCULATE,
+  MODE_SET_VALUE,
+} e_expander_mode;
 
-//main
-//expander.c
-int					expand_handler(t_command *cmd);
+t_error *expand_handler(t_command *cmd);
+// word_split.c
+t_error *word_split_handler(t_command *cmd);
+// split_token.c
+t_error *split_token(t_list *token, int word_count);
+// quote_remove.c
+t_error *quote_removal_handler(t_command *cmd);
 
-//command
-int					process_expansion(t_ast *ast);
-//word_split.c
-int					word_split_handler(t_command *cmd);
-//split_token.c
-int					split_token(t_list *token, int word_count);
-//quote_remove.c
-int					quote_removal_handler(t_command *cmd);
+// generate_argv.c
+t_error *generate_argv_handler(t_command *cmd);
 
-//generate_argv.c
-int					generate_argv_handler(t_command *cmd);
+// redir
+t_error *input_heredoc_content_handler(t_redir *redir);
+t_error *redir_expand_handler(t_redir *redir);
+t_error *redir_split_handler(t_redir *redir);
+t_error *redir_quote_removal_handler(t_redir *target);
+t_error *generate_heredoc_file_handler(t_redir *redir);
+t_error *generate_filename_handler(t_redir *target);
 
-//redir
-int					input_heredoc_content_handler(t_redir *redir);
-int					redir_expand_handler(t_redir *redir);
-int					redir_split_handler(t_redir *redir);
-int					redir_quote_removal_handler(t_redir *target);
-int					generate_heredoc_file_handler(t_redir *redir);
-int					generate_filename_handler(t_redir *target);
-
-//common
-int					quote_remove_core(t_token *content);
-//expand_single_token.c
-int					expand_single_token(t_token *content);
-//process_expansion_core_core.c
-int	process_expansion_core_core(t_expansion_context *ctx,
-								e_expander_mode mode);
-//expand_variable.c
-int					expand_variable(t_expansion_context *ctx);
-int					expand_special(t_expansion_context *ctx);
-//utils.h
-void				copy_and_advance(t_expansion_context *ctx, char *src,
-						int count);
+// common
+t_error *quote_remove_core(t_token *content);
+// expand_single_token.c
+t_error *expand_single_token(t_token *content);
+// process_expansion_core_core.c
+t_error *process_expansion_core_core(t_expansion_context *ctx,
+                                     e_expander_mode mode);
+// expand_variable.c
+t_error *expand_variable(t_expansion_context *ctx);
+t_error *expand_special(t_expansion_context *ctx);
+// utils.h
+void copy_and_advance(t_expansion_context *ctx, char *src, int count);
 #endif

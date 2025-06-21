@@ -17,12 +17,16 @@ t_testdata redir_output(void) {
       ft_strdup("out.txt");
 
   return (t_testdata){.input = "echo hello > out.txt",
-                      .token_list = gen_token_list(4,
-                                                   TOKEN_UNQUOTED_WORD, "echo",
-                                                   TOKEN_UNQUOTED_WORD, "hello",
-                                                   TOKEN_REDIR_OUTPUT, ">",
-                                                   TOKEN_UNQUOTED_WORD, "out.txt"
-                                                   ),
+                      .token_list = gen_token_list(
+                          4, TOKEN_UNQUOTED_WORD, "echo", TOKEN_UNQUOTED_WORD,
+                          "hello", TOKEN_REDIR_OUTPUT, ">", TOKEN_UNQUOTED_WORD,
+                          "out.txt"),
                       .ast = ast_ptr,
                       .output_file = "out.txt"};
+}
+
+t_testdata redir_output_nospace(void) {
+  t_testdata d = redir_output();
+  d.input = "echo hello >out.txt";
+  return d;
 }

@@ -2,6 +2,8 @@
 #ifndef MS_ERROR_H
 #define MS_ERROR_H
 
+#include <stdbool.h>
+
 #define ERR_MSG_MINISHEL "minishell: "
 #define ERR_MSG_WRITE ERR_MSG_MINISHEL "write"
 #define ERR_MSG_MALLOC ERR_MSG_MINISHEL "malloc"
@@ -10,12 +12,13 @@
 #define ERR_MSG_DEV                                                            \
   ERR_MSG_MINISHEL "minishell's program is bad, not your fault👍"
 
-int user_error(char *msg);
-void dev_error();
-
-typedef struct s_err {
+typedef struct s_error {
   int exit_code;
   char *msg;
-} t_err;
+} t_error;
+
+t_error *new_error(int exit_code, const char *msg);
+void del_error(t_error *error);
+bool is_error(t_error *error);
 
 #endif // !MS_ERROR_H

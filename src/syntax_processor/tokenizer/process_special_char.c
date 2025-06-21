@@ -1,10 +1,10 @@
+#include <stdbool.h>
 #include "syntax_processor/tokenizer.h"
-#include "exit_status.h"
 
-static int process_less_than(t_token_context *ctx);
-static int process_greater_than(t_token_context *ctx);
+static t_error *process_less_than(t_token_context *ctx);
+static t_error *process_greater_than(t_token_context *ctx);
 
-int process_special_char(t_token_context *ctx) {
+t_error *process_special_char(t_token_context *ctx) {
   if (*ctx->cur_str == '<')
     return (process_less_than(ctx));
   else if (*ctx->cur_str == '>')
@@ -13,11 +13,11 @@ int process_special_char(t_token_context *ctx) {
     ctx->cur_str++;
     return (extract_and_add_token(ctx, TOKEN_PIPE));
   }
-  return EXIT_OK;
+  return NULL;
 }
 
 // "<" or "<<"
-static int process_less_than(t_token_context *ctx) {
+static t_error *process_less_than(t_token_context *ctx) {
   ctx->cur_str++;
   if (*ctx->cur_str != '<')
     return (extract_and_add_token(ctx, TOKEN_REDIR_INPUT));
@@ -25,11 +25,11 @@ static int process_less_than(t_token_context *ctx) {
     ctx->cur_str++;
     return (extract_and_add_token(ctx, TOKEN_REDIR_HERE_DOC));
   }
-  return EXIT_OK;
+  return NULL;
 }
 
 //">" or ">>"
-static int process_greater_than(t_token_context *ctx) {
+static t_error *process_greater_than(t_token_context *ctx) {
   ctx->cur_str++;
   if (*ctx->cur_str != '>')
     return (extract_and_add_token(ctx, TOKEN_REDIR_OUTPUT));
@@ -37,6 +37,6 @@ static int process_greater_than(t_token_context *ctx) {
     ctx->cur_str++;
     return (extract_and_add_token(ctx, TOKEN_REDIR_APPEND));
   }
-  return EXIT_OK;
+  return NULL;
 }
-int is_special_char(char c) { return c == '|' || c == '<' || c == '>'; };
+bool is_special_char(char c) { return c == '|' || c == '<' || c == '>'; };

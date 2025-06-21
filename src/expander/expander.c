@@ -1,44 +1,56 @@
+#include "error.h"
 #include "expander.h"
 #include "utils/utils.h"
 
-int			process_expansion(t_ast *ast);
-static int	expand_command(t_ast *ast);
-static int	expand_redir(t_ast *ast);
+static t_error *expand_command(t_ast *ast);
+static t_error *expand_redir(t_ast *ast);
 
-int	process_expansion(t_ast *ast)
-{
-	if (expand_command(ast) != 0)
-		return (1);
-	if (expand_redir(ast) != 0)
-		return (1);
-	return (0);
+t_error *process_expansion(t_ast *ast) {
+  t_error *error;
+  error = NULL;
+  error = expand_command(ast);
+  if (is_error(error))
+    return error;
+  error = expand_redir(ast);
+  if (is_error(error))
+    return error;
+
+  return error;
 }
-static int	expand_command(t_ast *ast)
-{
-	if (cmd_loop(ast, expand_handler) != 0)
-		return (1);
-	if (cmd_loop(ast, word_split_handler) != 0)
-		return (1);
-	if (cmd_loop(ast, quote_removal_handler) != 0)
-		return (1);
-	if (cmd_loop(ast, generate_argv_handler) != 0)
-		return (1);
-	return (0);
+static t_error *expand_command(t_ast *ast) {
+  t_error *error;
+  error = NULL;
+  error = cmd_loop(ast, expand_handler);
+  if (is_error(error))
+    return error;
+  error = cmd_loop(ast, word_split_handler);
+  if (is_error(error))
+    return error;
+  error = cmd_loop(ast, quote_removal_handler);
+  if (is_error(error))
+    return error;
+  error = cmd_loop(ast, generate_argv_handler);
+  return error;
 }
 
-static int	expand_redir(t_ast *ast)
-{
-	if (redir_loop(ast, input_heredoc_content_handler) != 0)
-		return (1);
-	if (redir_loop(ast, redir_expand_handler) != 0)
-		return (1);
-	if (redir_loop(ast, redir_split_handler) != 0)
-		return (1);
-	if (redir_loop(ast, redir_quote_removal_handler) != 0)
-		return (1);
-	if (redir_loop(ast, generate_heredoc_file_handler) != 0)
-		return (1);
-	if (redir_loop(ast, generate_filename_handler) != 0)
-		return (1);
-	return (0);
+static t_error *expand_redir(t_ast *ast) {
+  t_error *error;
+  error = NULL;
+  error = redir_loop(ast, input_heredoc_content_handler);
+  if (is_error(error))
+    return error;
+  error = redir_loop(ast, redir_expand_handler);
+  if (is_error(error))
+    return error;
+  error = redir_loop(ast, redir_split_handler);
+  if (is_error(error))
+    return error;
+  error = redir_loop(ast, redir_quote_removal_handler);
+  if (is_error(error))
+    return error;
+  error = redir_loop(ast, generate_heredoc_file_handler);
+  if (is_error(error))
+    return error;
+  error = redir_loop(ast, generate_filename_handler);
+  return error;
 }

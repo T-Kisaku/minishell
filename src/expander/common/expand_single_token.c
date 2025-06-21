@@ -1,62 +1,68 @@
 
 #include "expander.h"
 #include <stdio.h>
+#include "error.h"
+#include "exit_status.h"
 
-int			expand_single_token(t_token *content);
-static void	init_expansion_context(t_expansion_context *ctx,
-									t_token *content);
-static int	process_expansion_core(t_expansion_context *ctx,
-									e_expander_mode mode);
-static void	set_dollar_type(t_expansion_context *ctx);
+t_error *expand_single_token(t_token *content);
+static void init_expansion_context(t_expansion_context *ctx, t_token *content);
+static t_error *process_expansion_core(t_expansion_context *ctx,
+                                       e_expander_mode mode);
+static void set_dollar_type(t_expansion_context *ctx);
 
-//ワイルドカードの扱いでunquotedとdobule_quotedで差が出るが、ボーナス内容なので一旦スルー
-int	expand_single_token(t_token *content)
-{
-	t_expansion_context	ctx;
+// ワイルドカードの扱いでunquotedとdobule_quotedで差が出るが、ボーナス内容なので一旦スルー
+t_error *expand_single_token(t_token *content) {
+  t_expansion_context ctx;
+  t_error *error;
 
-	if (!content)
-		return (1);
-	init_expansion_context(&ctx, content);
-	if (process_expansion_core(&ctx, MODE_CALCULATE) != 0)
-		return (1);
-	ctx.cur_pos = (char *)ctx.input;
-	ctx.index = 0;
-	if (process_expansion_core(&ctx, MODE_SET_VALUE) != 0)
-		return (1);
-	free(content->value);
-	content->value = ctx.output;
-	return (0);
+  error = NULL;
+  if (!content)
+    return new_error(EXIT_INTERNAL_ERR, "arg is not good bro");
+  init_expansion_context(&ctx, content);
+  error = process_expansion_core(&ctx, MODE_CALCULATE);
+  if (is_error(error))
+    return error;
+  ctx.cur_pos = (char *)ctx.input;
+  ctx.index = 0;
+  error = process_expansion_core(&ctx, MODE_SET_VALUE);
+  if (is_error(error))
+    return error;
+  free(content->value);
+  content->value = ctx.output;
+  return NULL;
 }
 
-static void	init_expansion_context(t_expansion_context *ctx,
-									t_token *content)
-{
-	t_token	*token_content;
+static void init_expansion_context(t_expansion_context *ctx, t_token *content) {
+  t_token *token_content;
 
-	token_content = content;
-	ctx->input = token_content->value;
-	ctx->output = NULL;
-	ctx->cur_pos = token_content->value;
-	ctx->next_pos = NULL;
-	ctx->index = 0;
-	ctx->required_len = 0;
-	ctx->in_single_quote = 0;
-	ctx->cur_dollar_type = DOLLAR_LITERAL;
-	ctx->variable = NULL;
+  token_content = content;
+  ctx->input = token_content->value;
+  ctx->output = NULL;
+  ctx->cur_pos = token_content->value;
+  ctx->next_pos = NULL;
+  ctx->index = 0;
+  ctx->required_len = 0;
+  ctx->in_single_quote = 0;
+  ctx->cur_dollar_type = DOLLAR_LITERAL;
+  ctx->variable = NULL;
 }
 
-static int process_expansion_core(t_expansion_context *ctx,
-                                  e_expander_mode mode) {
+static t_error *process_expansion_core(t_expansion_context *ctx,
+                                       e_expander_mode mode) {
+
+  t_error *error;
+  error = NULL;
   if (mode == MODE_SET_VALUE) {
     ctx->output = malloc(sizeof(char) * (ctx->required_len + 1));
     if (!ctx->output)
-      return (1);
+      return new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO");
   }
   while (*ctx->cur_pos) {
     if (!ctx->in_single_quote && *ctx->cur_pos == '$') {
       set_dollar_type(ctx);
-      if (process_expansion_core_core(ctx, mode) != 0)
-        return (1);
+      error = process_expansion_core_core(ctx, mode);
+      if (is_error(error))
+        return error;
     } else {
       if (*ctx->cur_pos == '\'')
         ctx->in_single_quote = (ctx->in_single_quote + 1) % 2;
@@ -70,7 +76,7 @@ static int process_expansion_core(t_expansion_context *ctx,
     ctx->required_len = ctx->index;
   else if (mode == MODE_SET_VALUE)
     ctx->output[ctx->index] = '\0';
-  return (0);
+  return (error);
 }
 
 static void set_dollar_type(t_expansion_context *ctx) {

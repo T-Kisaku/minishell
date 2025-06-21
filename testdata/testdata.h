@@ -2,6 +2,7 @@
 #define TESTDATA_H
 
 #include "ast.h"
+#include "error.h"
 
 typedef struct s_testdata {
   char *input;
@@ -33,7 +34,6 @@ t_testdata exit_status_42(void);
 t_testdata ls_pipe_grep(void);
 t_testdata cat_makefile_pipe_wc_l(void);
 t_testdata ls_pipe_grep_h_pipe_wc_l(void);
-
 
 // redirect
 t_testdata redir_output(void);
@@ -67,4 +67,6 @@ char **gen_argv(char *first, ...);
 int gen_argc(char **argv);
 
 void free_testdata(t_testdata *d);
+
+void check_error(t_error *error);
 #endif // !TESTDATA_H
