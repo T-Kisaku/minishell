@@ -13,7 +13,8 @@ t_error *print_redir(t_command *cmd);
 t_error *print(t_ast *ast);
 
 int main(void) {
-  testcase("cat $abc <<&abc bbb > aaa.txt");
+  /* testcase("cat $abc <<&abc bbb > aaa.txt"); */
+  testcase("echo $SHELL");
   return (0);
 }
 
