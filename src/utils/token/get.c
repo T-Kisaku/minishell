@@ -16,7 +16,7 @@ bool is_word_token(t_token_type type) {
 
 bool is_redir_token(t_token_type type) {
   return type == TOKEN_REDIR_INPUT || type == TOKEN_REDIR_OUTPUT ||
-      type == TOKEN_REDIR_HERE_DOC || TOKEN_REDIR_HERE_STRINGS ||
+      type == TOKEN_REDIR_HERE_DOC || type == TOKEN_REDIR_HERE_STRINGS ||
       type == TOKEN_REDIR_APPEND;
 }
 
