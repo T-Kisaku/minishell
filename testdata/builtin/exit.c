@@ -7,12 +7,12 @@
 t_testdata exit_no_args(void) {
   t_ast *ast_ptr = NULL;
   t_command *last_cmd = get_last_cmd(&ast_ptr);
-  last_cmd->u.simple.argv = gen_argv("exit", NULL);
+  last_cmd->u.simple.argv = gen_argv("minishell", "-c", "exit", NULL);
   last_cmd->u.simple.argc = gen_argc(last_cmd->u.simple.argv);
-  last_cmd->u.simple.token_list = gen_token_list(1, TOKEN_UNQUOTED_WORD, "exit");
+  last_cmd->u.simple.token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit");
 
-  return (t_testdata){.input = "exit",
-                      .token_list = gen_token_list(1, TOKEN_UNQUOTED_WORD, "exit"),
+  return (t_testdata){.input = "minishell -c \"exit\"",
+                      .token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit"),
                       .ast = ast_ptr};
 }
 
@@ -20,12 +20,12 @@ t_testdata exit_no_args(void) {
 t_testdata exit_with_number(void) {
   t_ast *ast_ptr = NULL;
   t_command *last_cmd = get_last_cmd(&ast_ptr);
-  last_cmd->u.simple.argv = gen_argv("exit", "42", NULL);
+  last_cmd->u.simple.argv = gen_argv("minishell", "-c", "exit 42", NULL);
   last_cmd->u.simple.argc = gen_argc(last_cmd->u.simple.argv);
-  last_cmd->u.simple.token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "42");
+  last_cmd->u.simple.token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit 42");
 
-  return (t_testdata){.input = "exit 42",
-                      .token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "42"),
+  return (t_testdata){.input = "minishell -c \"exit 42\"",
+                      .token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit 42"),
                       .ast = ast_ptr};
 }
 
@@ -33,12 +33,12 @@ t_testdata exit_with_number(void) {
 t_testdata exit_with_plus_prefix(void) {
   t_ast *ast_ptr = NULL;
   t_command *last_cmd = get_last_cmd(&ast_ptr);
-  last_cmd->u.simple.argv = gen_argv("exit", "+123", NULL);
+  last_cmd->u.simple.argv = gen_argv("minishell", "-c", "exit +123", NULL);
   last_cmd->u.simple.argc = gen_argc(last_cmd->u.simple.argv);
-  last_cmd->u.simple.token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "+123");
+  last_cmd->u.simple.token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit +123");
 
-  return (t_testdata){.input = "exit +123",
-                      .token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "+123"),
+  return (t_testdata){.input = "minishell -c \"exit +123\"",
+                      .token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit +123"),
                       .ast = ast_ptr};
 }
 
@@ -46,12 +46,12 @@ t_testdata exit_with_plus_prefix(void) {
 t_testdata exit_with_minus_prefix(void) {
   t_ast *ast_ptr = NULL;
   t_command *last_cmd = get_last_cmd(&ast_ptr);
-  last_cmd->u.simple.argv = gen_argv("exit", "-456", NULL);
+  last_cmd->u.simple.argv = gen_argv("minishell", "-c", "exit -456", NULL);
   last_cmd->u.simple.argc = gen_argc(last_cmd->u.simple.argv);
-  last_cmd->u.simple.token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "-456");
+  last_cmd->u.simple.token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit -456");
 
-  return (t_testdata){.input = "exit -456",
-                      .token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "-456"),
+  return (t_testdata){.input = "minishell -c \"exit -456\"",
+                      .token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit -456"),
                       .ast = ast_ptr};
 }
 
@@ -59,12 +59,12 @@ t_testdata exit_with_minus_prefix(void) {
 t_testdata exit_with_zero(void) {
   t_ast *ast_ptr = NULL;
   t_command *last_cmd = get_last_cmd(&ast_ptr);
-  last_cmd->u.simple.argv = gen_argv("exit", "0", NULL);
+  last_cmd->u.simple.argv = gen_argv("minishell", "-c", "exit 0", NULL);
   last_cmd->u.simple.argc = gen_argc(last_cmd->u.simple.argv);
-  last_cmd->u.simple.token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "0");
+  last_cmd->u.simple.token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit 0");
 
-  return (t_testdata){.input = "exit 0",
-                      .token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "0"),
+  return (t_testdata){.input = "minishell -c \"exit 0\"",
+                      .token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit 0"),
                       .ast = ast_ptr};
 }
 
@@ -72,12 +72,12 @@ t_testdata exit_with_zero(void) {
 t_testdata exit_with_multiple_args(void) {
   t_ast *ast_ptr = NULL;
   t_command *last_cmd = get_last_cmd(&ast_ptr);
-  last_cmd->u.simple.argv = gen_argv("exit", "42", "extra", "args", NULL);
+  last_cmd->u.simple.argv = gen_argv("minishell", "-c", "exit 42 extra args", NULL);
   last_cmd->u.simple.argc = gen_argc(last_cmd->u.simple.argv);
-  last_cmd->u.simple.token_list = gen_token_list(4, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "42", TOKEN_UNQUOTED_WORD, "extra", TOKEN_UNQUOTED_WORD, "args");
+  last_cmd->u.simple.token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit 42 extra args");
 
-  return (t_testdata){.input = "exit 42 extra args",
-                      .token_list = gen_token_list(4, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "42", TOKEN_UNQUOTED_WORD, "extra", TOKEN_UNQUOTED_WORD, "args"),
+  return (t_testdata){.input = "minishell -c \"exit 42 extra args\"",
+                      .token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit 42 extra args"),
                       .ast = ast_ptr};
 }
 
@@ -85,12 +85,12 @@ t_testdata exit_with_multiple_args(void) {
 t_testdata exit_with_invalid_arg(void) {
   t_ast *ast_ptr = NULL;
   t_command *last_cmd = get_last_cmd(&ast_ptr);
-  last_cmd->u.simple.argv = gen_argv("exit", "abc", NULL);
+  last_cmd->u.simple.argv = gen_argv("minishell", "-c", "exit abc", NULL);
   last_cmd->u.simple.argc = gen_argc(last_cmd->u.simple.argv);
-  last_cmd->u.simple.token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "abc");
+  last_cmd->u.simple.token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit abc");
 
-  return (t_testdata){.input = "exit abc",
-                      .token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "abc"),
+  return (t_testdata){.input = "minishell -c \"exit abc\"",
+                      .token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit abc"),
                       .ast = ast_ptr};
 }
 
@@ -98,12 +98,12 @@ t_testdata exit_with_invalid_arg(void) {
 t_testdata exit_with_plus_invalid(void) {
   t_ast *ast_ptr = NULL;
   t_command *last_cmd = get_last_cmd(&ast_ptr);
-  last_cmd->u.simple.argv = gen_argv("exit", "+abc", NULL);
+  last_cmd->u.simple.argv = gen_argv("minishell", "-c", "exit +abc", NULL);
   last_cmd->u.simple.argc = gen_argc(last_cmd->u.simple.argv);
-  last_cmd->u.simple.token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "+abc");
+  last_cmd->u.simple.token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit +abc");
 
-  return (t_testdata){.input = "exit +abc",
-                      .token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "+abc"),
+  return (t_testdata){.input = "minishell -c \"exit +abc\"",
+                      .token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit +abc"),
                       .ast = ast_ptr};
 }
 
@@ -111,12 +111,12 @@ t_testdata exit_with_plus_invalid(void) {
 t_testdata exit_with_minus_invalid(void) {
   t_ast *ast_ptr = NULL;
   t_command *last_cmd = get_last_cmd(&ast_ptr);
-  last_cmd->u.simple.argv = gen_argv("exit", "-xyz", NULL);
+  last_cmd->u.simple.argv = gen_argv("minishell", "-c", "exit -xyz", NULL);
   last_cmd->u.simple.argc = gen_argc(last_cmd->u.simple.argv);
-  last_cmd->u.simple.token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "-xyz");
+  last_cmd->u.simple.token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit -xyz");
 
-  return (t_testdata){.input = "exit -xyz",
-                      .token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "-xyz"),
+  return (t_testdata){.input = "minishell -c \"exit -xyz\"",
+                      .token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit -xyz"),
                       .ast = ast_ptr};
 }
 
@@ -124,12 +124,12 @@ t_testdata exit_with_minus_invalid(void) {
 t_testdata exit_with_large_number(void) {
   t_ast *ast_ptr = NULL;
   t_command *last_cmd = get_last_cmd(&ast_ptr);
-  last_cmd->u.simple.argv = gen_argv("exit", "255", NULL);
+  last_cmd->u.simple.argv = gen_argv("minishell", "-c", "exit 255", NULL);
   last_cmd->u.simple.argc = gen_argc(last_cmd->u.simple.argv);
-  last_cmd->u.simple.token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "255");
+  last_cmd->u.simple.token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit 255");
 
-  return (t_testdata){.input = "exit 255",
-                      .token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "255"),
+  return (t_testdata){.input = "minishell -c \"exit 255\"",
+                      .token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit 255"),
                       .ast = ast_ptr};
 }
 
@@ -137,11 +137,11 @@ t_testdata exit_with_large_number(void) {
 t_testdata exit_with_plus_large_number(void) {
   t_ast *ast_ptr = NULL;
   t_command *last_cmd = get_last_cmd(&ast_ptr);
-  last_cmd->u.simple.argv = gen_argv("exit", "+999", NULL);
+  last_cmd->u.simple.argv = gen_argv("minishell", "-c", "exit +999", NULL);
   last_cmd->u.simple.argc = gen_argc(last_cmd->u.simple.argv);
-  last_cmd->u.simple.token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "+999");
+  last_cmd->u.simple.token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit +999");
 
-  return (t_testdata){.input = "exit +999",
-                      .token_list = gen_token_list(2, TOKEN_UNQUOTED_WORD, "exit", TOKEN_UNQUOTED_WORD, "+999"),
+  return (t_testdata){.input = "minishell -c \"exit +999\"",
+                      .token_list = gen_token_list(3, TOKEN_UNQUOTED_WORD, "minishell", TOKEN_UNQUOTED_WORD, "-c", TOKEN_UNQUOTED_WORD, "exit +999"),
                       .ast = ast_ptr};
 }

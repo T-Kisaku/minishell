@@ -42,9 +42,8 @@ static bool process_option_c(int argc, char **argv, char **envp) {
 
 // return whether it should exit
 static bool prompt(char **envp, int *prev_exit_code) {
-  /* int status; */
   char *input_str;
-  input_str = readline("minishell$");
+  input_str = readline("minishell$ ");
   if (!input_str) {
     printf("exit\n");
     return true;

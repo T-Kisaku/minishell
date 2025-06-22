@@ -28,6 +28,8 @@ int exec_exit(t_command *cmd, char **envp) {
     ms_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
     return EXIT_INTERNAL_ERR;
   }
+  if (cmd->u.simple.argc == 1)
+    exit(EXIT_OK);
   if (cmd->u.simple.argc > 2) {
     ms_fputs("exit: expected less than 1 argument", STDERR_FILENO);
     return EXIT_USER_ERR;
@@ -37,5 +39,5 @@ int exec_exit(t_command *cmd, char **envp) {
              STDERR_FILENO);
     return EXIT_USER_ERR;
   }
-  return ft_atoi(cmd->u.simple.argv[1]);
+  exit(ft_atoi(cmd->u.simple.argv[1]));
 }

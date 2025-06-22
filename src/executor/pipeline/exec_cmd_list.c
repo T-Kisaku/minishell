@@ -39,7 +39,7 @@ int exec_cmd_list(pid_t *pids, t_list *cmd_list, char **envp) {
     if (is_builtin(lstget_command(cmd_list)))
       builtin_exit_code = exec_builtin_cmd(lstget_command(cmd_list), envp);
     else {
-      pids[pid_i++] = exec_external_cmd(lstget_command(cmd_list));
+      pids[pid_i++] = exec_external_cmd(lstget_command(cmd_list), envp);
       builtin_exit_code = -1;
     }
     if (cmd_fd.prev_pipe_read >= 0) {

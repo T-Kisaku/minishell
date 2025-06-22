@@ -10,7 +10,7 @@
 #include "executor.h"
 #include "executor/command.h"
 
-pid_t exec_external_cmd(t_command *cmd) {
+pid_t exec_external_cmd(t_command *cmd, char **envp) {
   pid_t pid;
   pid = fork();
   if (pid != 0)
@@ -21,7 +21,7 @@ pid_t exec_external_cmd(t_command *cmd) {
     perror(ERR_MSG_EXECVP);
   } else if (cmd->type == CMD_SUBSHELL) {
     // WARN: this is not supported
-    exec_ast(cmd->u.subshell.and_or_list);
+    exec_ast(cmd->u.subshell.and_or_list, envp);
   }
   // TODO: this is forbitten func
   _exit(1);
