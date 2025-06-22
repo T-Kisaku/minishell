@@ -5,6 +5,7 @@
 #include "utils/ms_stdio.h"
 
 int exec_pwd(t_command *cmd, char **envp) {
+  (void)envp;
   char *cwd;
   if (cmd->type != CMD_SIMPLE) {
     ms_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
