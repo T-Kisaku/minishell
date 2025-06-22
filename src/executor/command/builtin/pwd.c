@@ -1,22 +1,26 @@
-#include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include "ast.h"
-#include "executor/command/buildin.h"
-#include "error.h"
+#include "executor/command/builtin.h"
 #include "exit_status.h"
+#include "utils/ms_stdio.h"
 
-t_error *exec_pwd(t_command *cmd) {
+int exec_pwd(t_command *cmd, char **envp) {
   char *cwd;
-  if (cmd->type != CMD_SIMPLE)
-    return new_error(EXIT_INTERNAL_ERR, "cmd->type should be CMD_SIMPLE bro");
-  if (cmd->u.simple.argc != 1)
-    return new_error(EXIT_USER_ERR, "pwd: expected 0 arguments");
+  if (cmd->type != CMD_SIMPLE) {
+    ms_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
+    return EXIT_INTERNAL_ERR;
+  }
+  if (cmd->u.simple.argc != 1) {
+    ms_fputs("pwd: expected no arguments", STDERR_FILENO);
+    return EXIT_USER_ERR;
+  }
   cwd = getcwd(NULL, 0);
-  if (cwd == NULL)
-    return new_error(EXIT_INTERNAL_ERR, "strerror for cwd bro");
+  if (cwd == NULL) {
+    ms_fputs("strerror for cwd bro", STDERR_FILENO);
+    return EXIT_INTERNAL_ERR;
+  }
 
   printf("%s\n", cwd);
   free(cwd);
-  return NULL;
+  return (EXIT_OK);
 }

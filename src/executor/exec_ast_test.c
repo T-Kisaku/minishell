@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 #include "minishell.h"
 #include "testdata.h"
-#include "error.h"
 #include "exit_status.h"
 
 static void basic_test();
@@ -13,12 +13,18 @@ static void pipe_test();
 static void test(t_testdata d, int expected_status);
 static void print_title(char *title);
 static void print_file_content(char filename[]);
+static char **copy_env(char **envp);
+static void free_env(char **env);
+char **g_envp;
 
-int main() {
+int main(int _, char **__, char **envp) {
+  g_envp = copy_env(envp);
   /* basic_test(); */
-  /* builtin_test(); */
-  redirect_test();
+  builtin_test();
+  /* redirect_test(); */
   /* pipe_test(); */
+
+  free_env(g_envp);
   return (EXIT_SUCCESS);
 }
 
@@ -32,6 +38,9 @@ static void basic_test() {
 static void builtin_test() {
   print_title("BUILTIN");
   test(pwd(), EXIT_SUCCESS);
+  test(pwd_with_arg(), EXIT_USER_ERR);
+  test(env(), EXIT_SUCCESS);
+  test(env_with_arg(), EXIT_USER_ERR);
 }
 
 static void redirect_test() {
@@ -54,9 +63,7 @@ static void test(t_testdata d, int expected_status) {
   /* printf("== AST     =====================\n"); */
   /* print_ast(d.ast, 0); */
   printf("== STDOUT ======================\n");
-  t_error *result_error = exec_ast(d.ast);
-  int result_status =
-      is_error(result_error) ? result_error->exit_code : EXIT_OK;
+  int result_status = exec_ast(d.ast, g_envp);
   if (d.output_file) {
     printf("== %s ======================\n", d.output_file);
     print_file_content(d.output_file);
@@ -67,7 +74,6 @@ static void test(t_testdata d, int expected_status) {
   assert(expected_status == result_status);
   printf("\n");
   free_testdata(&d);
-  del_error(result_error);
 }
 
 static void print_title(char *title) {
@@ -87,4 +93,24 @@ static void print_file_content(char filename[]) {
     putchar(ch);
   }
   fclose(file);
+}
+
+static char **copy_env(char **envp) {
+  int i = 0;
+  while (envp[i])
+    i++;
+
+  char **copy = malloc(sizeof(char *) * (i + 1));
+  for (int j = 0; j < i; j++)
+    copy[j] = strdup(envp[j]);
+  copy[i] = NULL;
+  return copy;
+}
+
+static void free_env(char **env) {
+  if (!env)
+    return;
+  for (int i = 0; env[i]; i++)
+    free(env[i]); // 各文字列を解放
+  free(env);      // 配列本体を解放
 }

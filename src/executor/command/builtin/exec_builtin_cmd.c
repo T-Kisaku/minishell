@@ -1,23 +1,20 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include "ast.h"
+#include "exit_status.h"
 #include "utils/ms_string.h"
+#include "utils/ms_stdio.h"
 #include "executor/command.h"
 #include "executor.h"
-#include "executor/command/buildin.h"
+#include "executor/command/builtin.h"
 
-static bool is_builtin(t_command *cmd);
 static const t_builtin_entry *find_builtin(const char *name);
 static const t_builtin_entry *get_builtin_table(void);
 
-// TODO: how to manage status of builtin command
-// parent
-/*
- * Return whether buitin is executed or not
- */
-bool exec_builtin_cmd(t_command *cmd) {
+int exec_builtin_cmd(t_command *cmd, char **envp) {
   int old_in;
   int old_out;
+  int exit_code;
   const t_builtin_entry *entry;
   if (!is_builtin(cmd))
     return false;
@@ -25,17 +22,19 @@ bool exec_builtin_cmd(t_command *cmd) {
   old_out = dup(STDOUT_FILENO);
   process_redir_list(cmd->redir_list);
   entry = find_builtin(cmd->u.simple.argv[0]);
-  if (entry && entry->func)
-    entry->func(cmd);
-
+  if (!entry || !entry->func) {
+    ms_fputs("entry data for builtin is broken", STDERR_FILENO);
+    return (EXIT_INTERNAL_ERR);
+  }
+  exit_code = entry->func(cmd, envp);
   dup2(old_in, STDIN_FILENO);
   close(old_in);
   dup2(old_out, STDOUT_FILENO);
   close(old_out);
-  return true;
+  return exit_code;
 }
 
-static bool is_builtin(t_command *cmd) {
+bool is_builtin(t_command *cmd) {
   if (cmd->type != CMD_SIMPLE)
     return false;
   return find_builtin(cmd->u.simple.argv[0]) != NULL;
@@ -52,13 +51,13 @@ static const t_builtin_entry *find_builtin(const char *name) {
 
 static const t_builtin_entry *get_builtin_table(void) {
   static const t_builtin_entry table[8] = {
-      /* {"cd", cd}, */
-      /* {"echo",  builtin_echo}, */
-      /* {"env",   builtin_env}, */
-      /* {"exit",  builtin_exit}, */
-      /* {"export",builtin_export}, */
+      /* {"cd", exec_cd},          */
+      /*   {"echo", exec_echo}, */
+      {"exit", exec_exit},
+      {"env", exec_env},
+      /* {"export", exec_export}, */
+      /* {"unset", exec_unset}, */
       {"pwd", exec_pwd},
-      /* {"unset", builtin_unset}, */
       {NULL, NULL} // 終端
   };
   return table;

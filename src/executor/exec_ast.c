@@ -3,32 +3,30 @@
 #include <fcntl.h>
 #include <stdbool.h>
 #include "ast.h"
-#include "error.h"
 #include "minishell.h"
 #include "executor.h"
+#include "exit_status.h"
 
 // same meaning as exec_and_or
-t_error *exec_ast(t_ast *ast) {
+int exec_ast(t_ast *ast, char **envp) {
   t_list *andor_list;
   t_and_or *andor;
-  t_error *error;
+  int exit_code;
   bool exec_next;
   andor_list = ast;
-  error = NULL;
   exec_next = true;
+  exit_code = EXIT_OK;
   while (andor_list) {
     andor = lstget_and_or(ast);
-    if (exec_next) {
-      del_error(error);
-      error = exec_pipeline(andor->pipeline);
-    }
+    if (exec_next)
+      exit_code = exec_pipeline(andor->pipeline, envp);
     if (andor->op_next == OP_AND)
-      exec_next = !is_error(error);
+      exec_next = exit_code == EXIT_OK;
     else if (andor->op_next == OP_OR)
       exec_next = true;
     else
       break;
     andor_list = andor_list->next;
   }
-  return error;
+  return exit_code;
 }

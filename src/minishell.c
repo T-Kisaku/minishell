@@ -3,64 +3,45 @@
 #include <stdlib.h>
 #include <readline/history.h>
 #include <readline/readline.h>
+#include <unistd.h>
 #include "error.h"
+#include "utils/ms_stdio.h"
 #include "utils/ms_string.h"
 #include "ast.h"
 #include "exit_status.h"
 #include "minishell.h"
 
-static int run_cmd(char *argv);
-static bool process_option_c(int argc, char **argv);
-static bool prompt(void);
+static bool process_option_c(int argc, char **argv, char **envp);
+static bool prompt(char **envp, int *prev_exit_code);
+static int run_cmd(char *argv, char **envp, int *prev_exit_code);
 
-int main(int argc, char **argv) {
-  if (process_option_c(argc, argv))
+int main(int argc, char **argv, char **envp) {
+  int prev_exit_code;
+  if (process_option_c(argc, argv, envp))
     return (EXIT_SUCCESS);
   if (argc > 1) {
-    user_error("minishell except only -c flags\n");
+    ms_fputs("minishell except only -c flags", STDERR_FILENO);
     return (EXIT_USER_ERR);
   }
 
+  prev_exit_code = 0;
   while (1)
-    if (prompt())
+    if (prompt(envp, &prev_exit_code))
       break;
 
   return (EXIT_SUCCESS);
 }
 
-static int run_cmd(char *input) {
-  t_ast *ast;
-  int status;
-  ast = NULL;
-  status = EXIT_OK;
-  if (!input) {
-    printf("\n");
-    return status;
-  }
-  status = str_to_ast(input, &ast);
-  if (status != EXIT_OK) {
-    return status;
-  }
-
-  status = process_expansion(ast);
-  if (status != EXIT_OK) {
-    free_ast(&ast);
-    return status;
-  }
-  status = exec_ast(ast);
-  free_ast(&ast);
-  return status;
-}
-
-static bool process_option_c(int argc, char **argv) {
+static bool process_option_c(int argc, char **argv, char **envp) {
   if (!(argc == 3 && ms_strcmp(argv[1], "-c") == 0))
     return false;
-  run_cmd(argv[2]);
+
+  run_cmd(argv[2], envp, NULL);
   return true;
 }
 
-// Return whether it should exit
-static bool prompt(void) {
+// return whether it should exit
+static bool prompt(char **envp, int *prev_exit_code) {
   /* int status; */
   char *input_str;
   input_str = readline("minishell$");
@@ -70,9 +51,39 @@ static bool prompt(void) {
   }
   if (*input_str)
     add_history(input_str);
-  /* status = run_cmd(input_str); */
-  run_cmd(input_str);
-  // TODO: make sure free input even if exit is called in run_cmd!!
+  *prev_exit_code = run_cmd(input_str, envp, prev_exit_code);
   free(input_str);
   return false;
+}
+
+static int run_cmd(char *input, char **envp, int *prev_exit_code) {
+  t_ast *ast;
+  t_error *error;
+  int exit_code;
+  error = NULL;
+  ast = NULL;
+  exit_code = EXIT_OK;
+  if (!input) {
+    printf("\n");
+    return exit_code;
+  }
+  (void)prev_exit_code; // TODO: pass this to process_expansion!!
+
+  error = str_to_ast(input, &ast);
+  if (is_error(error)) {
+    ms_fputs(error->msg, STDERR_FILENO);
+    exit_code = error->exit_code;
+    del_error(error);
+    return exit_code;
+  }
+  error = process_expansion(ast);
+  if (is_error(error)) {
+    exit_code = error->exit_code;
+    ms_fputs(error->msg, STDERR_FILENO);
+    free_ast(&ast);
+    return exit_code;
+  }
+  exit_code = exec_ast(ast, envp);
+  free_ast(&ast);
+  return exit_code;
 }

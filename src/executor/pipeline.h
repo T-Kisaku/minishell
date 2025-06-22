@@ -6,7 +6,7 @@
 #include <fcntl.h>
 #include "libft.h"
 
-void exec_cmd_list(pid_t *pids, t_list *cmd_list);
+int exec_cmd_list(pid_t *pids, t_list *cmd_list, char **envp);
 int wait_pids(pid_t *pids, int cmd_count);
 
 #endif // !PIPELINE_H

@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 18:45:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/16 15:08:00 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/22 10:59:04 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -44,4 +44,20 @@ char *ms_strndup(const char *s, size_t n) {
   ft_memcpy(res, s, n);
   res[n] = '\0';
   return res;
+}
+
+void *ms_strreduce(char const *s, void *init,
+                   void *(*f)(unsigned int, char, void *)) {
+  void *accumulated;
+  unsigned int i;
+
+  if (!s || !f)
+    return (NULL);
+  accumulated = init;
+  i = 0;
+  while (s[i]) {
+    accumulated = f(i, s[i], accumulated);
+    i++;
+  }
+  return (accumulated);
 }

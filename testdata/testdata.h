@@ -23,6 +23,20 @@ t_testdata echo_with_n_option_multiple_words(void);
 
 // builtin
 t_testdata pwd(void);
+t_testdata pwd_with_arg(void);
+t_testdata env(void);
+t_testdata env_with_arg(void);
+t_testdata exit_no_args(void);
+t_testdata exit_with_number(void);
+t_testdata exit_with_plus_prefix(void);
+t_testdata exit_with_minus_prefix(void);
+t_testdata exit_with_zero(void);
+t_testdata exit_with_multiple_args(void);
+t_testdata exit_with_invalid_arg(void);
+t_testdata exit_with_plus_invalid(void);
+t_testdata exit_with_minus_invalid(void);
+t_testdata exit_with_large_number(void);
+t_testdata exit_with_plus_large_number(void);
 // builtin edge cases
 t_testdata cd_noarg(void);
 t_testdata cd_non_existing_dir(void);
