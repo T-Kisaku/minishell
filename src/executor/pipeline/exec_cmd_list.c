@@ -16,6 +16,7 @@ typedef struct s_cmd_fd {
 
 static int ms_lst_is_last(t_list *lst) { return lst->next == NULL; }
 static void set_io_redir(t_command *cmd, t_cmd_fd cmd_fd);
+static void close_and_init_fd(int *fd);
 
 // - return exit code when last command is builtin
 // - return -1 if builtin command is not the last
@@ -42,14 +43,8 @@ int exec_cmd_list(pid_t *pids, t_list *cmd_list, char **envp) {
       pids[pid_i++] = exec_external_cmd(lstget_command(cmd_list), envp);
       builtin_exit_code = -1;
     }
-    if (cmd_fd.prev_pipe_read >= 0) {
-      close(cmd_fd.prev_pipe_read);
-      cmd_fd.prev_pipe_read = -1;
-    }
-    if (cmd_fd.current_pipe[PIPE_WRITE] >= 0) {
-      close(cmd_fd.current_pipe[PIPE_WRITE]);
-      cmd_fd.current_pipe[PIPE_WRITE] = -1;
-    }
+    close_and_init_fd(&cmd_fd.prev_pipe_read);
+    close_and_init_fd(&cmd_fd.current_pipe[PIPE_WRITE]);
     cmd_fd.prev_pipe_read = cmd_fd.current_pipe[PIPE_READ];
     cmd_fd.current_pipe[PIPE_READ] = -1;
 
@@ -59,6 +54,12 @@ int exec_cmd_list(pid_t *pids, t_list *cmd_list, char **envp) {
   cmd_fd.prev_pipe_read = -1;
   pids[pid_i++] = 0;
   return builtin_exit_code;
+}
+static void close_and_init_fd(int *fd) {
+  if (*fd >= 0) {
+    close(*fd);
+    *fd = -1;
+  }
 }
 
 static void set_io_redir(t_command *cmd, t_cmd_fd cmd_fd) {
@@ -70,10 +71,10 @@ static void set_io_redir(t_command *cmd, t_cmd_fd cmd_fd) {
     new = new_redir();
     if (new) {
       new->type = REDIR_OUTPUT;
+      new->to_be_redirected.fd = STDOUT_FILENO;
       new->to_be_redirected.is_direct_to_fd = true;
-      new->to_be_redirected.fd = cmd_fd.current_pipe[PIPE_WRITE];
+      new->redirect_source.fd = cmd_fd.current_pipe[PIPE_WRITE];
       new->redirect_source.is_direct_to_fd = true;
-      new->redirect_source.fd = STDOUT_FILENO;
       ft_lstadd_front(&cmd->redir_list, ft_lstnew((void *)new));
     } else {
       // TODO: error handling
@@ -86,9 +87,9 @@ static void set_io_redir(t_command *cmd, t_cmd_fd cmd_fd) {
     if (new) {
       new->type = REDIR_INPUT;
       new->to_be_redirected.is_direct_to_fd = true;
-      new->to_be_redirected.fd = cmd_fd.prev_pipe_read;
+      new->to_be_redirected.fd = STDIN_FILENO;
       new->redirect_source.is_direct_to_fd = true;
-      new->redirect_source.fd = STDIN_FILENO;
+      new->redirect_source.fd = cmd_fd.prev_pipe_read;
       ft_lstadd_front(&cmd->redir_list, ft_lstnew((void *)new));
     } else {
       // TODO: error handling

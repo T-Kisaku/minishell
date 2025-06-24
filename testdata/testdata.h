@@ -15,17 +15,13 @@ typedef struct s_testdata {
 t_testdata ls(void);
 t_testdata ls_with_args(void);
 
-// echo
-t_testdata echo_no_args(void);
-t_testdata echo_simple_string(void);
-t_testdata echo_with_n_option(void);
-t_testdata echo_with_n_option_multiple_words(void);
-
-// builtin
+// pwd
 t_testdata pwd(void);
 t_testdata pwd_with_arg(void);
+// env
 t_testdata env(void);
 t_testdata env_with_arg(void);
+// exit
 t_testdata exit_no_args(void);
 t_testdata exit_with_number(void);
 t_testdata exit_with_plus_prefix(void);
@@ -37,6 +33,12 @@ t_testdata exit_with_plus_invalid(void);
 t_testdata exit_with_minus_invalid(void);
 t_testdata exit_with_large_number(void);
 t_testdata exit_with_plus_large_number(void);
+// echo
+t_testdata echo_no_args(void);
+t_testdata echo_simple_string(void);
+t_testdata echo_with_n_option(void);
+t_testdata echo_with_n_option_multiple_words(void);
+
 // builtin edge cases
 t_testdata cd_noarg(void);
 t_testdata cd_non_existing_dir(void);

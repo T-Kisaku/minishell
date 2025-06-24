@@ -6,7 +6,7 @@
 #include "testdata.h"
 #include "exit_status.h"
 
-static void basic_test();
+static void easy_test();
 static void builtin_test();
 static void redirect_test();
 static void pipe_test();
@@ -19,17 +19,17 @@ char **g_envp;
 
 int main(int _, char **__, char **envp) {
   g_envp = copy_env(envp);
-  /* basic_test(); */
+  easy_test();
   builtin_test();
-  /* redirect_test(); */
-  /* pipe_test(); */
+  redirect_test();
+  pipe_test();
 
   free_env(g_envp);
   return (EXIT_SUCCESS);
 }
 
-static void basic_test() {
-  print_title("BASIC");
+static void easy_test() {
+  print_title("EASY");
   test(ls(), EXIT_SUCCESS);
   test(echo_simple_string(), EXIT_SUCCESS);
   /* test(cat_nofile(), EXIT_FAILURE); */
@@ -41,6 +41,10 @@ static void builtin_test() {
   test(pwd_with_arg(), EXIT_USER_ERR);
   test(env(), EXIT_SUCCESS);
   test(env_with_arg(), EXIT_USER_ERR);
+  test(echo_no_args(), EXIT_SUCCESS);
+  test(echo_simple_string(), EXIT_SUCCESS);
+  test(echo_with_n_option(), EXIT_SUCCESS);
+  test(echo_with_n_option_multiple_words(), EXIT_SUCCESS);
 }
 
 static void redirect_test() {
