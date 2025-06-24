@@ -1,140 +1,170 @@
-#include <stdio.h>
-#include <readline/history.h>
-#include <readline/readline.h>
+#include "error.h"
+#include "exit_status.h"
 #include "libft.h"
-#include "token.h"
-#include "utils/utils.h"
 #include "syntax_processor.h"
 #include "syntax_processor/check_syntax/check_syntax.h"
+#include "token.h"
+#include "utils/utils.h"
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <stdio.h>
 
-#define SYNTAX_OK 2
+t_error			*check_syntax(t_list *list);
+static t_error	*check_head(t_list **cur, t_list **prev);
+static t_error	*check_body(t_list **cur, t_list **prev);
+static t_error	*check_syntax_pair(e_token_group cur, e_token_group prev);
+static t_error	*check_tail(t_list *tail);
+static t_error	*set_token_group(e_token_group *group, t_token_type type);
 
-int			check_syntax(t_list *list);
-static int	check_head(t_list **cur, t_list **prev);
-static int	check_body(t_list **cur, t_list **prev);
-static int	check_syntax_pair(e_token_group cur, e_token_group prev);
-static int	check_tail(t_list *tail);
-static int	set_token_group(e_token_group *group, t_token_type type);
-
-int	check_syntax(t_list *list)
+t_error	*check_syntax(t_list *list)
 {
+	t_error	*error;
 	t_list	*cur;
 	t_list	*prev;
-	int		result;
 
 	if (!list)
-		return (1);
+		return (new_error(EXIT_INTERNAL_ERR, "list is NULL"));
 	cur = list;
 	prev = NULL;
-	if (check_head(&cur, &prev) != 0)
-		return (1);
-	while (1)
-	{
-		if (check_body(&cur, &prev) != 0)
-			return (1);
-		result = check_tail(prev);
-		if (result == 0)
-			cur = prev->next;
-		else if (result == 1)
-			return (1);
-		else if (result == SYNTAX_OK)
-			return (0);
-	}
+	error = check_head(&cur, &prev);
+	if (error)
+		return (error);
+	error = check_body(&cur, &prev);
+	if (error)
+		return (error);
+	return (check_tail(prev));
 }
 
-static int	check_head(t_list **cur, t_list **prev)
+static t_error	*check_head(t_list **cur, t_list **prev)
 {
 	e_token_group	cur_group;
+	t_error			*error;
 
-	if (set_token_group(&cur_group,
-						((t_token *)(*cur)->content)->type) != 0)
-		return (write_error("bad token group"));
+	error = set_token_group(&cur_group,
+							((t_token *)(*cur)->content)->type);
+	if (error)
+		return (error);
 	if (cur_group == TOKEN_GROUP_CONTROL_OP)
-		return (syntax_error(((t_token *)(*cur)->content)->value));
+		return (new_error(EXIT_USER_ERR,
+							"syntax error: unexpected token at the beginning"));
 	(*prev) = (*cur);
 	(*cur) = (*cur)->next;
-	return (0);
+	return (error);
 }
 
-static int	check_body(t_list **cur, t_list **prev)
+static t_error	*check_body(t_list **cur, t_list **prev)
 {
 	e_token_group	cur_group;
 	e_token_group	prev_group;
+	t_error			*error;
 
-	if (set_token_group(&prev_group,
-						((t_token *)(*prev)->content)->type))
-		return (write_error("bad token group"));
+	error = set_token_group(&prev_group,
+							((t_token *)(*prev)->content)->type);
+	if (error)
+		return (error);
 	while (*cur)
 	{
-		if (set_token_group(&cur_group,
-							((t_token *)(*cur)->content)->type))
-			return (write_error("bad token group"));
-		if (check_syntax_pair(cur_group, prev_group) != 0)
-			return (syntax_error(((t_token *)(*cur)->content)->value));
+		error = set_token_group(&cur_group,
+								((t_token *)(*cur)->content)->type);
+		if (error)
+			return (error);
+		error = check_syntax_pair(cur_group, prev_group);
+		if (error)
+			return (error);
 		(*prev) = (*cur);
 		prev_group = cur_group;
 		(*cur) = (*cur)->next;
 	}
-	return (0);
+	return (error);
 }
 
-static int	check_syntax_pair(e_token_group cur, e_token_group prev)
+static t_error	*check_syntax_pair(e_token_group cur, e_token_group prev)
 {
+	t_error	*error;
+
+	error = NULL;
 	if (prev == TOKEN_GROUP_REDIR)
 	{
 		if (cur != TOKEN_GROUP_WORD)
-			return (1);
+			return (new_error(EXIT_USER_ERR,
+								"syntax error: unexpected token after redirection"));
 	}
 	else if (prev == TOKEN_GROUP_CONTROL_OP)
 	{
 		if (cur == TOKEN_GROUP_CONTROL_OP)
-			return (1);
+			return (new_error(EXIT_USER_ERR,
+								"syntax error: unexpected token after control operator"));
 	}
-	return (0);
+	return (error);
 }
 
-static int	check_tail(t_list *tail)
+static t_error	*check_tail(t_list *tail)
 {
+	t_error			*error;
 	e_token_group	group;
 	char			*input;
 	t_list			*new;
 
-	if (set_token_group(&group, ((t_token *)tail->content)->type) != 0)
-		return (write_error("bad token group"));
+	new = NULL;
+	error = set_token_group(&group, ((t_token *)tail->content)->type);
+	if (error)
+		return (error);
 	if (group == TOKEN_GROUP_CONTROL_OP)
 	{
-		input = readline("> ");
-    str_to_token(input, &new);
-		if (!new)
-			return (1);
-		tail->next = new;
-		return (0);
+		while (1)
+		{
+			input = readline("> ");
+			if (!input)
+			{
+				printf("exit\n");
+				exit(EXIT_OK);
+			}
+			else if (!*input)
+			{
+				free(input);
+				continue ;
+			}
+			error = str_to_token(input, &new);
+			free(input);
+			if (error)
+				return (error);
+			error = check_syntax(new);
+			if (error)
+				return (error);
+			tail->next = new;
+			return (error);
+		}
 	}
 	else if (group == TOKEN_GROUP_REDIR)
-		return (syntax_error(((t_token *)tail->content)->value));
+		return (new_error(EXIT_USER_ERR,
+							"syntax error: unexpected token at the end of input"));
 	else if (group == TOKEN_GROUP_WORD)
-		return (SYNTAX_OK);
+		return (error);
 	else
-		return (write_error("bad token group"));
+		return (new_error(EXIT_INTERNAL_ERR,
+							"syntax error: token group not set"));
 }
 
-static int	set_token_group(e_token_group *group, t_token_type type)
+static t_error	*set_token_group(e_token_group *group, t_token_type type)
 {
+	t_error	*error;
+
+	error = NULL;
 	if (is_word_token(type))
 	{
 		*group = TOKEN_GROUP_WORD;
-		return (0);
+		return (error);
 	}
 	else if (is_redir_token(type))
 	{
 		*group = TOKEN_GROUP_REDIR;
-		return (0);
+		return (error);
 	}
 	else if (is_control_op_token(type))
 	{
 		*group = TOKEN_GROUP_CONTROL_OP;
-		return (0);
+		return (error);
 	}
 	else
-		return (1);
+		return (new_error(EXIT_INTERNAL_ERR, "token group not set"));
 }

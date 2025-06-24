@@ -2,14 +2,14 @@
 # define CHECK_SYNTAX_H
 
 # include "utils/utils.h"
-
+#include "error.h"
 typedef enum
 {
 	TOKEN_GROUP_WORD,
 	TOKEN_GROUP_REDIR,
 	TOKEN_GROUP_CONTROL_OP
-}					e_token_group;
+}		e_token_group;
 
-int					check_syntax(t_list *list);
+t_error	*check_syntax(t_list *list);
 
 #endif

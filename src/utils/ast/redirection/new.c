@@ -2,6 +2,8 @@
 #include <stdbool.h>
 #include "ast.h"
 #include "libft.h"
+#include "error.h"
+#include "exit_status.h"
 
 t_redir *new_redir() {
   t_redir *redir;
@@ -27,9 +29,17 @@ t_list *lstnew_redir(t_redir_type redir_type, t_token *filename_token) {
   new = new_redir();
   if (!new)
     return NULL;
-
   new->type = redir_type;
-  new->redirect_source.filename_token = filename_token;
+  new->redirect_source.filename_token = malloc(sizeof(t_token));
+  if(new->redirect_source.filename_token == NULL)
+	return NULL;
+  new->redirect_source.filename_token->value = ft_strdup(filename_token->value);
+  if(!new->redirect_source.filename_token)
+  {
+	free(new->redirect_source.filename_token);
+	return NULL;
+  }
+  new->redirect_source.filename_token->type = filename_token->type;
   new->to_be_redirected.is_direct_to_fd = true;
   if (redir_type == REDIR_INPUT || redir_type == REDIR_HERE_DOC)
     new->to_be_redirected.fd = STDIN_FILENO;
