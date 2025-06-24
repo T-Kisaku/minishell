@@ -19,6 +19,7 @@ test_all:
 	$(eval TEST_SRC := $(shell find src -type f -name "$*_test.c" | head -n 1))
 	@$(MAKE) print_compiling TARGET="$(TEST_SRC)"
 	$(CC) $(TEST_CFLAGS) $(TEST_SRC) $(TEST_OBJS) $(TESTDATA_OBJS) $(LIBFT) -lreadline -o $(TEST_BIN_DIR)/$*_test 
+	@$(MAKE) install
 	@$(MAKE) print_running TARGET="$(TEST_BIN_DIR)/$*_test"
 	@valgrind --leak-check=full --quiet ./$(TEST_BIN_DIR)/$*_test
 
