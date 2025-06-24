@@ -2,6 +2,7 @@
 #include "error.h"
 #include "exit_status.h"
 #include "minishell.h"
+#include "signal_handler.h"
 #include "utils/ms_stdio.h"
 #include "utils/ms_string.h"
 #include <readline/history.h>
@@ -11,20 +12,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "signal_handler.h"
 
 volatile sig_atomic_t	g_signal_received = 0; // 定義
 
 static bool				process_option_c(int argc, char **argv, char **envp);
 static bool				prompt(char **envp, int *prev_exit_code);
-static int				run_cmd(char *argv, char **envp, int *prev_exit_code);
+static int				run_cmd(char **input, char **envp, int *prev_exit_code);
 
 int	main(int argc, char **argv, char **envp)
 {
 	int	prev_exit_code;
 
-	if(setup_signal_handlers()!= 0)
-		return EXIT_FAILURE;
+	if (setup_signal_handlers() != 0)
+		return (EXIT_FAILURE);
 	if (process_option_c(argc, argv, envp))
 		return (EXIT_SUCCESS);
 	if (argc > 1)
@@ -43,7 +43,7 @@ static bool	process_option_c(int argc, char **argv, char **envp)
 {
 	if (!(argc == 3 && ms_strcmp(argv[1], "-c") == 0))
 		return (false);
-	run_cmd(argv[2], envp, NULL);
+	run_cmd(&argv[2], envp, NULL);
 	return (true);
 }
 
@@ -53,20 +53,29 @@ static bool	prompt(char **envp, int *prev_exit_code)
 {
 	char	*input_str;
 
-	input_str = readline("minishell$ ");
-	if (!input_str)
+	while (1)
 	{
-		printf("exit\n");
-		return (true);
+		input_str = readline("minishell$ ");
+		if (!input_str)
+		{
+			printf("exit\n");
+			return (true);
+		}
+		if (!*input_str)
+		{
+			free(input_str);
+			continue ;
+		}
+		break ;
 	}
+	*prev_exit_code = run_cmd(&input_str, envp, prev_exit_code);
 	if (*input_str)
 		add_history(input_str);
-	*prev_exit_code = run_cmd(input_str, envp, prev_exit_code);
 	free(input_str);
 	return (false);
 }
 
-static int	run_cmd(char *input, char **envp, int *prev_exit_code)
+static int	run_cmd(char **input, char **envp, int *prev_exit_code)
 {
 	t_ast	*ast;
 	t_error	*error;
@@ -75,7 +84,7 @@ static int	run_cmd(char *input, char **envp, int *prev_exit_code)
 	error = NULL;
 	ast = NULL;
 	exit_code = EXIT_OK;
-	if (!input)
+	if (!*input)
 	{
 		printf("\n");
 		return (exit_code);

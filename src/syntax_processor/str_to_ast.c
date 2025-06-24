@@ -5,17 +5,17 @@
 #include "syntax_processor/check_syntax/check_syntax.h"
 #include "token.h"
 
-t_error	*str_to_ast(char *input_str, t_ast **ast_ptr)
+t_error	*str_to_ast(char **input_str, t_ast **ast_ptr)
 {
 	t_error	*error;
 	t_list	*token_list;
 
 	error = NULL;
 	token_list = NULL;
-	error = check_quote(&input_str);
+	error = check_quote(input_str);
 	if (is_error(error))
 		return (error);
-	error = str_to_token(input_str, &token_list);
+	error = str_to_token(*input_str, &token_list);
 	if (is_error(error))
 		return (error);
 	error = check_syntax(token_list);
