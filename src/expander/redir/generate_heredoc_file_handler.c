@@ -34,7 +34,7 @@ static t_error *prepare_heredoc_file(t_redir *redir) {
     return error;
   redir->redirect_source.filename = ft_strdup(temp_filename);
   if (!redir->redirect_source.filename)
-    return new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO");
+    return new_error(EXIT_INTERNAL_ERR, "MALLOC ERROR");
   return error;
 }
 
