@@ -60,8 +60,8 @@ t_error *generate_filename_handler(t_redir *target);
 t_error *quote_remove_core(t_token *content);
 // expand_single_token.c
 t_error *expand_single_token(t_token *content);
-// process_expansion_core_core.c
-t_error *process_expansion_core_core(t_expansion_context *ctx,
+// expand_ast_core_core.c
+t_error *expand_ast_core_core(t_expansion_context *ctx,
                                      e_expander_mode mode);
 // expand_variable.c
 t_error *expand_variable(t_expansion_context *ctx);

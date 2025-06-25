@@ -80,7 +80,7 @@ static void pipe_test() {
 static void test(char *input_str, int expected_status, char *output_file) {
   t_ast *ast;
   t_error *err = str_to_ast(input_str, &ast);
-  err = process_expansion(ast);
+  err = expand_ast(ast);
   printf("== COMMAND =====================\n");
   printf("%s\n", input_str);
   printf("== STDOUT ======================\n");

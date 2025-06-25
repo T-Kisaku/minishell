@@ -89,7 +89,7 @@ static int	run_cmd(char **input, char **envp, int *prev_exit_code)
 		printf("\n");
 		return (exit_code);
 	}
-	(void)prev_exit_code; // TODO: pass this to process_expansion!!
+	(void)prev_exit_code; // TODO: pass this to expand_ast!!
 	error = str_to_ast(input, &ast);
 	if (is_error(error))
 	{
@@ -98,7 +98,7 @@ static int	run_cmd(char **input, char **envp, int *prev_exit_code)
 		del_error(error);
 		return (exit_code);
 	}
-	error = process_expansion(ast);
+	error = expand_ast(ast);
 	if (is_error(error))
 	{
 		exit_code = error->exit_code;

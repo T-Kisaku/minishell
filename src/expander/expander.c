@@ -5,7 +5,7 @@
 static t_error	*expand_command(t_ast *ast);
 static t_error	*expand_redir(t_ast *ast);
 
-t_error	*process_expansion(t_ast *ast)
+t_error	*expand_ast(t_ast *ast)
 {
 	t_error	*error;
 

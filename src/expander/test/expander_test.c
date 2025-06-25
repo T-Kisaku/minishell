@@ -24,7 +24,7 @@ int testcase(char *s) {
 
   check_error(str_to_token(s, &list));
   check_error(token_to_ast(list, &ast));
-  check_error(process_expansion(ast));
+  check_error(expand_ast(ast));
   print(ast);
   free_ast(&ast);
   return (0);

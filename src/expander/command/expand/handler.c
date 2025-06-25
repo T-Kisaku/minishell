@@ -15,7 +15,7 @@ t_error *expand_handler(t_command *cmd) {
     if (is_error(error))
       return error;
   } else if (cmd->type == CMD_SUBSHELL) {
-    error = process_expansion(cmd->u.subshell.and_or_list);
+    error = expand_ast(cmd->u.subshell.and_or_list);
     if (is_error(error))
       return error;
   }

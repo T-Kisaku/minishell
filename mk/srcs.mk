@@ -1,5 +1,4 @@
 SRCS = \
-src/minishell.c \
 src/utils/ast/and_or/del.c \
 src/utils/ast/and_or/new.c \
 src/utils/ast/and_or/other.c \
@@ -55,8 +54,8 @@ src/expander/command/word_split/word_split.c \
 src/expander/common/utils.c \
 src/expander/common/expand_single_token.c \
 src/expander/common/expand_variable.c \
-src/expander/common/process_expansion_core.c \
 src/expander/common/quote_remove_core.c \
+src/expander/common/expand_ast_core.c \
 src/expander/redir/generate_filename.c \
 src/expander/redir/generate_heredoc_file_handler.c \
 src/expander/redir/redir_expand_handler.c \
@@ -65,3 +64,4 @@ src/expander/redir/redir_split_handler.c \
 src/expander/redir/input_heredoc_content_handler.c \
 src/expander/expander.c \
 src/signal/setup_signal_handlers.c \
+src/minishell.c \

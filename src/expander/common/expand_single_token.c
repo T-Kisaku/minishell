@@ -6,7 +6,7 @@
 
 t_error *expand_single_token(t_token *content);
 static void init_expansion_context(t_expansion_context *ctx, t_token *content);
-static t_error *process_expansion_core(t_expansion_context *ctx,
+static t_error *expand_ast_core(t_expansion_context *ctx,
                                        e_expander_mode mode);
 static void set_dollar_type(t_expansion_context *ctx);
 
@@ -19,12 +19,12 @@ t_error *expand_single_token(t_token *content) {
   if (!content)
     return new_error(EXIT_INTERNAL_ERR, "arg is not good bro");
   init_expansion_context(&ctx, content);
-  error = process_expansion_core(&ctx, MODE_CALCULATE);
+  error = expand_ast_core(&ctx, MODE_CALCULATE);
   if (is_error(error))
     return error;
   ctx.cur_pos = (char *)ctx.input;
   ctx.index = 0;
-  error = process_expansion_core(&ctx, MODE_SET_VALUE);
+  error = expand_ast_core(&ctx, MODE_SET_VALUE);
   if (is_error(error))
     return error;
   free(content->value);
@@ -47,7 +47,7 @@ static void init_expansion_context(t_expansion_context *ctx, t_token *content) {
   ctx->variable = NULL;
 }
 
-static t_error *process_expansion_core(t_expansion_context *ctx,
+static t_error *expand_ast_core(t_expansion_context *ctx,
                                        e_expander_mode mode) {
 
   t_error *error;
@@ -60,7 +60,7 @@ static t_error *process_expansion_core(t_expansion_context *ctx,
   while (*ctx->cur_pos) {
     if (!ctx->in_single_quote && *ctx->cur_pos == '$') {
       set_dollar_type(ctx);
-      error = process_expansion_core_core(ctx, mode);
+      error = expand_ast_core_core(ctx, mode);
       if (is_error(error))
         return error;
     } else {

@@ -45,7 +45,7 @@ static void run_test(t_testdata d) {
   printf("== COMMAND =====================\n%s\n", d.input);
   t_ast *ast;
   token_to_ast(d.token_list, &ast);
-  process_expansion(ast);
+  expand_ast(ast);
   puts("== TEST DATA ==");
   print_ast(d.ast, 0);
   puts("== ACTUAL DATA ==");
