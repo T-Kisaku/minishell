@@ -50,7 +50,8 @@ int exec_cmd_list(pid_t *pids, t_list *cmd_list, char **envp) {
 
     cmd_list = cmd_list->next;
   }
-  close(cmd_fd.prev_pipe_read);
+  if(cmd_fd.prev_pipe_read >= 0) // fd == -1でのcloseを避けるため。
+  	close(cmd_fd.prev_pipe_read);
   cmd_fd.prev_pipe_read = -1;
   pids[pid_i++] = 0;
   return builtin_exit_code;
