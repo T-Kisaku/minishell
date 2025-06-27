@@ -9,10 +9,10 @@
 // TODO: fix echo > test.txt
 // Redirect is broken
 // space exits at the last when echo is executed
-int exec_echo(t_command *cmd, char **envp) {
+int exec_echo(t_command *cmd, t_list *env_list) {
   int i;
   bool is_new_line;
-  (void)envp;
+  (void)env_list;
   if (cmd->type != CMD_SIMPLE) {
     ms_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
     return EXIT_INTERNAL_ERR;

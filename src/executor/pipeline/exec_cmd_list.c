@@ -5,6 +5,7 @@
 #include "ast.h"
 #include "exit_status.h"
 #include "libft.h"
+#include <stdio.h>
 
 typedef struct s_cmd_fd {
   int prev_pipe_read;
@@ -20,7 +21,7 @@ static void close_and_init_fd(int *fd);
 
 // - return exit code when last command is builtin
 // - return -1 if builtin command is not the last
-int exec_cmd_list(pid_t *pids, t_list *cmd_list, char **envp) {
+int exec_cmd_list(pid_t *pids, t_list *cmd_list, t_list **env_list) {
   t_cmd_fd cmd_fd;
   int pid_i;
   int builtin_exit_code;
@@ -38,10 +39,14 @@ int exec_cmd_list(pid_t *pids, t_list *cmd_list, char **envp) {
     }
     set_io_redir(lstget_command(cmd_list), cmd_fd);
     if (is_builtin(lstget_command(cmd_list)))
-      builtin_exit_code = exec_builtin_cmd(lstget_command(cmd_list), envp);
-    else {
-      pids[pid_i++] = exec_external_cmd(lstget_command(cmd_list), envp);
+      builtin_exit_code = exec_builtin_cmd(lstget_command(cmd_list), env_list);
+    else if (set_cmd_path(lstget_command(cmd_list), *env_list) != NULL) {
+      pids[pid_i++] = exec_external_cmd(lstget_command(cmd_list), *env_list);
       builtin_exit_code = -1;
+    } else {
+      printf("command not found: %s\n",
+             lstget_command(cmd_list)->u.simple.argv[0]);
+      builtin_exit_code = EXIT_USER_ERR;
     }
     close_and_init_fd(&cmd_fd.prev_pipe_read);
     close_and_init_fd(&cmd_fd.current_pipe[PIPE_WRITE]);

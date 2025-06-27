@@ -66,6 +66,7 @@ t_testdata err_single_redirect(void);
 
 // print functions
 void print_token_list(t_list *token_list);
+void print_env_list(t_list *env_list);
 
 void print_ast(t_ast *ast, int indent);
 void print_and_or(t_and_or *and_or, int indent);

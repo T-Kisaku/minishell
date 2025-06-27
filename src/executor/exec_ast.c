@@ -8,7 +8,7 @@
 #include "exit_status.h"
 
 // same meaning as exec_and_or
-int exec_ast(t_ast *ast, char **envp) {
+int exec_ast(t_ast *ast, t_list **env_list) {
   t_list *andor_list;
   t_and_or *andor;
   int exit_code;
@@ -19,7 +19,7 @@ int exec_ast(t_ast *ast, char **envp) {
   while (andor_list) {
     andor = lstget_and_or(ast);
     if (exec_next)
-      exit_code = exec_pipeline(andor->pipeline, envp);
+      exit_code = exec_pipeline(andor->pipeline, env_list);
     if (andor->op_next == OP_AND)
       exec_next = exit_code == EXIT_OK;
     else if (andor->op_next == OP_OR)

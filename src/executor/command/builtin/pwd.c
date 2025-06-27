@@ -4,8 +4,8 @@
 #include "exit_status.h"
 #include "utils/ms_stdio.h"
 
-int exec_pwd(t_command *cmd, char **envp) {
-  (void)envp;
+int exec_pwd(t_command *cmd, t_list **env_list) {
+  (void)env_list;
   char *cwd;
   if (cmd->type != CMD_SIMPLE) {
     ms_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);

@@ -22,8 +22,9 @@ bool check_valid_ascii(char *s) {
   return is_valid;
 }
 
-int exec_exit(t_command *cmd, char **envp) {
-  (void)envp;
+// TODO: free all data
+int exec_exit(t_command *cmd, t_list *env_list) {
+  (void)env_list;
   if (cmd->type != CMD_SIMPLE) {
     ms_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
     exit(EXIT_INTERNAL_ERR);

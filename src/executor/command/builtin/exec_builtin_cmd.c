@@ -11,7 +11,7 @@
 static const t_builtin_entry *find_builtin(const char *name);
 static const t_builtin_entry *get_builtin_table(void);
 
-int exec_builtin_cmd(t_command *cmd, char **envp) {
+int exec_builtin_cmd(t_command *cmd, t_list **env_list) {
   int old_in;
   int old_out;
   int exit_code;
@@ -26,7 +26,7 @@ int exec_builtin_cmd(t_command *cmd, char **envp) {
     ms_fputs("entry data for builtin is broken", STDERR_FILENO);
     return (EXIT_INTERNAL_ERR);
   }
-  exit_code = entry->func(cmd, envp);
+  exit_code = entry->func(cmd, env_list);
   dup2(old_in, STDIN_FILENO);
   close(old_in);
   dup2(old_out, STDOUT_FILENO);
@@ -52,12 +52,9 @@ static const t_builtin_entry *find_builtin(const char *name) {
 static const t_builtin_entry *get_builtin_table(void) {
   static const t_builtin_entry table[8] = {
       /* {"cd", exec_cd},          */
-      {"echo", exec_echo},
-      {"exit", exec_exit},
-      {"env", exec_env},
-      /* {"export", exec_export}, */
-      /* {"unset", exec_unset}, */
-      {"pwd", exec_pwd},
+      {"echo", exec_echo},   {"exit", exec_exit},
+      {"env", exec_env},     {"export", exec_export},
+      {"unset", exec_unset}, {"pwd", exec_pwd},
       {NULL, NULL} // 終端
   };
   return table;

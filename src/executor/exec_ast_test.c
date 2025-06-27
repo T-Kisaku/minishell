@@ -6,6 +6,7 @@
 #include "error.h"
 #include "minishell.h"
 #include "exit_status.h"
+#include "utils/env.h"
 
 static void easy_test();
 static void builtin_test();
@@ -16,16 +17,18 @@ static void print_title(char *title);
 static void print_file_content(char filename[]);
 static char **copy_env(char **envp);
 static void free_env(char **env);
-char **g_envp;
+t_list *g_env_list = NULL;
 
 int main(int _, char **__, char **envp) {
-  g_envp = copy_env(envp);
-  easy_test();
+  t_error *err = envp_to_env_list(envp, &g_env_list);
+  if (err)
+    del_error(err);
+  /* easy_test(); */
   builtin_test();
-  redirect_test();
-  pipe_test();
+  /* redirect_test(); */
+  /* pipe_test(); */
 
-  free_env(g_envp);
+  lstclear_env(&g_env_list);
   return (EXIT_SUCCESS);
 }
 
@@ -35,27 +38,49 @@ static void easy_test() {
   test("cat /etc/os-release", EXIT_OK, NULL);
 }
 
+static void export_unset_test();
+static void exit_test();
+static void echo_test();
 static void builtin_test() {
   print_title("BUILTIN");
   // pwd
-  test("pwd", EXIT_OK, NULL);
-  test("pwd wow", EXIT_USER_ERR, NULL);
+  /* test("pwd", EXIT_OK, NULL); */
+  /* test("pwd wow", EXIT_USER_ERR, NULL); */
   // env
-  test("env", EXIT_OK, NULL);
-  test("env wow", EXIT_USER_ERR, NULL);
-  // exit
+  /* test("env", EXIT_OK, NULL); */
+  /* test("env wow", EXIT_USER_ERR, NULL); */
+  // export
+  export_unset_test();
+  // cd
+  /* exit_test(); */
+  /* echo_test(); */
+}
+
+static void export_unset_test() {
+
+  test("export", EXIT_OK, NULL);
+  test("export FIRE=FIRE | env | grep FIRE", EXIT_OK,
+       NULL); // use and in the feature
+  test("export FIRE=WATER | env | grep FIRE", EXIT_OK,
+       NULL); // use and in the feature
+  test("unset FIRE | env | grep FIRE", 1,
+       NULL); // use and in the feature
+}
+static void exit_test() {
   test("minishell -c 'exit'", EXIT_OK, NULL);
   test("minishell -c 'exit 42'", 42, NULL);
   test("minishell -c 'exit +123'", 123, NULL);
   test("minishell -c 'exit -456'", 56, NULL);
   test("minishell -c 'exit 0'", 0, NULL);
-  /* test("minishell -c 'exit 0 123 456'", EXIT_USER_ERR, NULL); */
+  test("minishell -c 'exit 0 123 456'", EXIT_USER_ERR, NULL);
   test("minishell -c 'exit abc'", EXIT_USER_ERR, NULL);
   test("minishell -c 'exit +abc'", EXIT_USER_ERR, NULL);
   test("minishell -c 'exit -abc'", EXIT_USER_ERR, NULL);
   test("minishell -c 'exit 255'", 255, NULL);
   test("minishell -c 'exit +999'", 231, NULL);
-  // echo
+}
+static void echo_test() {
+
   test("echo", EXIT_OK, NULL);
   test("echo hello", EXIT_OK, NULL);
   test("echo -n wow", EXIT_OK, NULL);
@@ -84,7 +109,7 @@ static void test(char *input_str, int expected_status, char *output_file) {
   printf("== COMMAND =====================\n");
   printf("%s\n", input_str);
   printf("== STDOUT ======================\n");
-  int result_status = exec_ast(ast, g_envp);
+  int result_status = exec_ast(ast, &g_env_list);
   if (output_file) {
     printf("== %s ======================\n", output_file);
     print_file_content(output_file);

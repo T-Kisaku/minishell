@@ -9,7 +9,7 @@
 #include "ast.h"
 #include "executor/pipeline.h"
 
-int exec_pipeline(t_pipeline *pipeline, char **envp) {
+int exec_pipeline(t_pipeline *pipeline, t_list **env_list) {
   int exit_code;
   pid_t *pids;
   int cmd_count;
@@ -19,7 +19,7 @@ int exec_pipeline(t_pipeline *pipeline, char **envp) {
     perror(ERR_MSG_MALLOC);
     return EXIT_INTERNAL_ERR;
   }
-  exit_code = exec_cmd_list(pids, pipeline->command_list, envp);
+  exit_code = exec_cmd_list(pids, pipeline->command_list, env_list);
   if (exit_code == -1)
     exit_code = wait_pids(pids, cmd_count);
   else
