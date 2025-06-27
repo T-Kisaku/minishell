@@ -71,7 +71,6 @@ t_error *envp_to_env_list(char **envp, t_list **env_list_ptr) {
 
 t_error *env_list_to_envp(t_list *env_list, char ***envp_ptr) {
   char **new_envp;
-  char *new_env_str;
   size_t new_env_str_size;
   t_env *env_tmp;
   int i;

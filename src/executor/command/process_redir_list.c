@@ -11,19 +11,19 @@ static void process(t_redir_target *target, t_redir_type type) {
   if (!target->is_direct_to_fd) {
     if (type == REDIR_INPUT)
       oflags = O_RDONLY;
-	if (type == REDIR_HERE_DOC)
-	  oflags = O_RDONLY; //heredoc用に追加
+    if (type == REDIR_HERE_DOC)
+      oflags = O_RDONLY; // heredoc用に追加
     if (type == REDIR_OUTPUT)
       oflags = O_WRONLY | O_CREAT | O_TRUNC;
     if (type == REDIR_APPEND)
       oflags = O_WRONLY | O_CREAT | O_APPEND;
     target->fd = open(target->filename, oflags, 0644);
-	if(type == REDIR_HERE_DOC) //heredocの場合はOPENした直後にunlinkして削除する。
-	{
-		if(unlink(target->filename) == -1)
-			//エラー処理
-			;
-	}
+    if (type ==
+        REDIR_HERE_DOC) // heredocの場合はOPENした直後にunlinkして削除する。
+    {
+      if (unlink(target->filename) == -1)
+        printf("エラー処理");
+    }
   }
   // TODO: error handling
   if (target->fd < 0)
