@@ -119,12 +119,7 @@ static t_error	*check_tail(t_list **list)
 		{
 			input = readline("> ");
 			if (!input)
-			{
-				printf("exit\n");
-				lstclear_token(list);
-				rl_clear_history();
-				exit(EXIT_OK);
-			}
+				return (new_error(EXIT_EOF, "exit"));
 			else if (!*input)
 			{
 				free(input);

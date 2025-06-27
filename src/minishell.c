@@ -70,6 +70,13 @@ static bool	prompt(char **envp, int *prev_exit_code)
 		break ;
 	}
 	*prev_exit_code = run_cmd(&input_str, envp, prev_exit_code);
+	if(*prev_exit_code == EXIT_EOF)
+	{
+		free(input_str);
+		rl_clear_history();
+		return (true);
+	}
+	*prev_exit_code = run_cmd(&input_str, envp, prev_exit_code);
 	if (*input_str)
 	{
 		add_history(input_str);
@@ -96,7 +103,10 @@ static int	run_cmd(char **input, char **envp, int *prev_exit_code)
 	error = str_to_ast(input, &ast);
 	if (is_error(error))
 	{
-		ms_fputs(error->msg, STDERR_FILENO);
+		if(error->exit_code == EXIT_EOF)
+			ms_fputs(error->msg, STDOUT_FILENO);
+		else
+			ms_fputs(error->msg, STDERR_FILENO);
 		exit_code = error->exit_code;
 		del_error(error);
 		return (exit_code);

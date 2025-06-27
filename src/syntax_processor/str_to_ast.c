@@ -19,11 +19,11 @@ t_error	*str_to_ast(char **input_str, t_ast **ast_ptr)
 	if (is_error(error))
 		return (error);
 	error = check_syntax(&token_list);
-	if(error)
-{
-	lstclear_token(&token_list);
-	return (error);
-}
+	if (error)
+	{
+		lstclear_token(&token_list);
+		return (error);
+	}
 	error = token_to_ast(token_list, ast_ptr);
 	lstclear_token(&token_list);
 	if (is_error(error))
