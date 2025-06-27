@@ -28,6 +28,11 @@ get-src-files:
 INSTALL_DIR := $(HOME)/.local/bin
 MINISHELL_EXEC := minishell
 
+
+dev:
+	@$(MAKE) install
+	minishell
+
 install:
 	@$(MAKE)
 	@echo "🔧 Installing minishell to $(INSTALL_DIR)..."
