@@ -31,3 +31,7 @@ int main() {
 }
 `
 ```
+
+
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp minishell
+これでreadline関連の我々ではどうしようもないメモリリークを除外できる。

@@ -22,7 +22,8 @@ t_error *quote_remove_core(t_token *content) {
     return new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO");
   error = copy_without_quotes(tmp, content->value);
   if (is_error(error))
-    return error;
+  {free(tmp);
+    return error;}
   free(content->value);
   content->value = tmp;
   return error;

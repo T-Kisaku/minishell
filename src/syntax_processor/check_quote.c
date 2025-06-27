@@ -24,6 +24,10 @@ t_error	*check_quote(char **input)
 		if (!read_str)
 		{
 			printf("exit\n");
+			if(*input)
+				free(*input);
+			*input = NULL;
+			rl_clear_history();
 			exit(EXIT_OK);
 		}
 		if (!*read_str)

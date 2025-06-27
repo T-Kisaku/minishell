@@ -59,6 +59,7 @@ static bool	prompt(char **envp, int *prev_exit_code)
 		if (!input_str)
 		{
 			printf("exit\n");
+			rl_clear_history();
 			return (true);
 		}
 		if (!*input_str)
@@ -70,8 +71,10 @@ static bool	prompt(char **envp, int *prev_exit_code)
 	}
 	*prev_exit_code = run_cmd(&input_str, envp, prev_exit_code);
 	if (*input_str)
+	{
 		add_history(input_str);
-	free(input_str);
+		free(input_str);
+	}
 	return (false);
 }
 

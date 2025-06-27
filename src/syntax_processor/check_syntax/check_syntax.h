@@ -10,6 +10,6 @@ typedef enum
 	TOKEN_GROUP_CONTROL_OP
 }		e_token_group;
 
-t_error	*check_syntax(t_list *list);
+t_error	*check_syntax(t_list **list);
 
 #endif
