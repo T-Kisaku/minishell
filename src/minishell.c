@@ -71,14 +71,10 @@ static bool prompt(t_list **env_list_ptr, int *prev_exit_code) {
   }
   *prev_exit_code = run_cmd(&input_str, env_list_ptr, prev_exit_code);
   if (*prev_exit_code == EXIT_EOF) {
+    add_history(input_str);
     free(input_str);
     rl_clear_history();
     return (true);
-  }
-  *prev_exit_code = run_cmd(&input_str, env_list_ptr, prev_exit_code);
-  if (*input_str) {
-    add_history(input_str);
-    free(input_str);
   }
   return (false);
 }
