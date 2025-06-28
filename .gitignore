@@ -8,5 +8,5 @@ obj
 test_bin
 
 .clang-format
-.vscode/
+.vscode
 
