@@ -26,6 +26,7 @@ src/utils/env/get.c \
 src/utils/env/new.c \
 src/utils/ms_list.c \
 src/utils/ms_stdlib.c \
+src/utils/path.c \
 src/syntax_processor/ast_builder/processes.c \
 src/syntax_processor/ast_builder/token_to_ast.c \
 src/syntax_processor/ast_builder/utils.c \
@@ -36,14 +37,14 @@ src/syntax_processor/tokenizer/tokenize_loop.c \
 src/syntax_processor/check_syntax/check_syntax.c \
 src/syntax_processor/str_to_ast.c \
 src/syntax_processor/check_quote.c \
-src/executor/command/builtin/cd.c \
 src/executor/command/builtin/echo.c \
 src/executor/command/builtin/env.c \
-src/executor/command/builtin/exec_builtin_cmd.c \
 src/executor/command/builtin/exit.c \
-src/executor/command/builtin/export.c \
 src/executor/command/builtin/pwd.c \
 src/executor/command/builtin/unset.c \
+src/executor/command/builtin/export.c \
+src/executor/command/builtin/exec_builtin_cmd.c \
+src/executor/command/builtin/cd.c \
 src/executor/command/external/command_path.c \
 src/executor/command/external/exec_external_cmd.c \
 src/executor/command/process_redir_list.c \

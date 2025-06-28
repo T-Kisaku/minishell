@@ -51,11 +51,9 @@ static const t_builtin_entry *find_builtin(const char *name) {
 
 static const t_builtin_entry *get_builtin_table(void) {
   static const t_builtin_entry table[8] = {
-      /* {"cd", exec_cd},          */
-      {"echo", exec_echo},   {"exit", exec_exit},
-      {"env", exec_env},     {"export", exec_export},
-      {"unset", exec_unset}, {"pwd", exec_pwd},
-      {NULL, NULL} // 終端
+      {"echo", exec_echo},     {"exit", exec_exit},   {"env", exec_env},
+      {"export", exec_export}, {"unset", exec_unset}, {"pwd", exec_pwd},
+      {"cd", exec_cd},         {NULL, NULL} // 終端
   };
   return table;
 }
