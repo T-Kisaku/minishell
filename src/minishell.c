@@ -13,7 +13,7 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 
-static bool process_option_c(int argc, char **argv, t_minishell_state *shell);
+static bool is_option_c(int argc, char **argv);
 static bool prompt(t_minishell_state *shell);
 static void run_cmd(char **input, t_minishell_state *shell);
 
@@ -23,16 +23,20 @@ int main(int argc, char **argv, char **envp) {
   t_error *error;
 
   shell.env_list = NULL;
+  shell.is_interactive = isatty(STDIN_FILENO) == 0 || is_option_c(argc, argv);
   error = envp_to_env_list(envp, &shell.env_list);
   if (is_error(error)) {
     printf("wow!!");
     del_error(error);
-	return (EXIT_INTERNAL_ERR);
+    return (EXIT_INTERNAL_ERR);
   }
   if (setup_signal_handlers() != 0)
     return (EXIT_FAILURE);
-  if (process_option_c(argc, argv, &shell))
+  if (shell.is_interactive) {
+    // TODO: this is only bash -c, adapt echo "ls" | minishell
+    run_cmd(&argv[2], &shell);
     return (EXIT_SUCCESS);
+  }
   if (argc > 1) {
     ft_fputs("minishell except only -c flags", STDERR_FILENO);
     return (EXIT_USER_ERR);
@@ -46,11 +50,8 @@ int main(int argc, char **argv, char **envp) {
   return (EXIT_SUCCESS);
 }
 
-static bool process_option_c(int argc, char **argv, t_minishell_state *shell) {
-  if (!(argc == 3 && ft_strcmp(argv[1], "-c") == 0))
-    return (false);
-  run_cmd(&argv[2], shell);
-  return (true);
+static bool is_option_c(int argc, char **argv) {
+  return argc == 3 && ft_strcmp(argv[1], "-c") == 0;
 }
 
 // TODO: display new line aftter echo -n fire
@@ -70,7 +71,7 @@ static bool prompt(t_minishell_state *shell) {
     }
     break;
   }
-run_cmd(&input_str, shell);
+  run_cmd(&input_str, shell);
   if (shell->prev_exit_code == EXIT_EOF) {
     free(input_str);
     return (true);
@@ -90,8 +91,8 @@ static void run_cmd(char **input, t_minishell_state *shell) {
     printf("\n");
     return;
   }
-//   (void)prev_exit_code; // TODO: pass this to expand_ast!!
-  error = str_to_ast(input, &ast);
+  //   (void)prev_exit_code; // TODO: pass this to expand_ast!!
+  error = str_to_ast(input, &ast, shell);
   if (is_error(error)) {
     if (error->exit_code == EXIT_EOF)
       ft_fputs(error->msg, STDOUT_FILENO);

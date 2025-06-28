@@ -16,8 +16,9 @@ static t_error *read_line_loop(char **content, char *delimiter,
 static bool is_line_EOF(char *line, char *delimiter, size_t delimiter_len);
 static t_error *append_line_to_content(char **content, char *line);
 
-t_error *input_heredoc_content_handler(t_redir *redir, t_minishell_state *shell) {
-	(void)shell; // shell is not used in this function
+t_error *input_heredoc_content_handler(t_redir *redir,
+                                       t_minishell_state *shell) {
+  (void)shell; // shell is not used in this function
   char *content;
   char *delimiter;
   size_t delimiter_len;
@@ -26,6 +27,10 @@ t_error *input_heredoc_content_handler(t_redir *redir, t_minishell_state *shell)
   error = NULL;
   if (redir->type != REDIR_HERE_DOC)
     return (error);
+  if (shell->is_interactive != 0)
+    return new_error(EXIT_USER_ERR,
+                     "syntax error: here-doc in not intetractive mode is not "
+                     "supported, sorry bro");
   error = init_heredoc_context(redir, &content, &delimiter, &delimiter_len);
   if (is_error(error))
     return (error);

@@ -1,22 +1,20 @@
 #include "error.h"
 #include "exit_status.h"
-#include "libft.h"
+#include "minishell.h"
 #include "syntax_processor.h"
 #include "syntax_processor/check_syntax/check_syntax.h"
 #include "token.h"
-#include "utils/utils.h"
 #include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 
-t_error *check_syntax(t_list **list);
 static t_error *check_head(t_list **cur, t_list **prev);
 static t_error *check_body(t_list **cur, t_list **prev);
 static t_error *check_syntax_pair(e_token_group cur, e_token_group prev);
-static t_error *check_tail(t_list **list);
+static t_error *check_tail(t_list **list, t_minishell_state *shell);
 static t_error *set_token_group(e_token_group *group, t_token_type type);
 
-t_error *check_syntax(t_list **list) {
+t_error *check_syntax(t_list **list, t_minishell_state *shell) {
   t_error *error;
   t_list *cur;
   t_list *prev;
@@ -31,7 +29,7 @@ t_error *check_syntax(t_list **list) {
   error = check_body(&cur, &prev);
   if (error)
     return (error);
-  return (check_tail(list));
+  return (check_tail(list, shell));
 }
 
 static t_error *check_head(t_list **cur, t_list **prev) {
@@ -88,7 +86,7 @@ static t_error *check_syntax_pair(e_token_group cur, e_token_group prev) {
   return (error);
 }
 
-static t_error *check_tail(t_list **list) {
+static t_error *check_tail(t_list **list, t_minishell_state *shell) {
   t_error *error;
   e_token_group group;
   char *input;
@@ -99,10 +97,13 @@ static t_error *check_tail(t_list **list) {
   if (!tail)
     return (new_error(EXIT_INTERNAL_ERR, "list is empty"));
   new = NULL;
-  error = set_token_group(&group, ((t_token *)tail->content)->type);
+  error = set_token_group(&group, lstget_token(tail)->type);
   if (error)
     return (error);
   if (group == TOKEN_GROUP_CONTROL_OP) {
+    if (shell->is_interactive != 0)
+      return new_error(EXIT_USER_ERR,
+                       "syntax error: you need to close last token bro!");
     while (1) {
       input = readline("> ");
       if (!input)
@@ -118,7 +119,7 @@ static t_error *check_tail(t_list **list) {
           lstclear_token(&new);
         return (error);
       }
-      error = check_syntax(&new);
+      error = check_syntax(&new, shell);
       if (error) {
         if (new)
           lstclear_token(&new);

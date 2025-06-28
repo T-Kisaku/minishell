@@ -1,14 +1,15 @@
 #include "error.h"
 #include "exit_status.h"
-#include "libft.h"
+#include <stdlib.h>
+#include "ft_string.h"
+#include "minishell.h"
 #include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 
-t_error *check_quote(char **input);
-static int check_quote_core(char *input);
+static bool is_quote_closed(char *input);
 
-t_error *check_quote(char **input) {
+t_error *check_quote(char **input, t_minishell_state *shell) {
   char *new_input;
   char *read_str;
   char *temp;
@@ -16,8 +17,11 @@ t_error *check_quote(char **input) {
 
   error = NULL;
   while (1) {
-    if (check_quote_core(*input) == EXIT_OK)
+    if (is_quote_closed(*input))
       return (error);
+    if (shell->is_interactive != 0)
+      return new_error(EXIT_USER_ERR,
+                       "syntax error: You need to close quote bro!!");
     read_str = readline("> ");
     if (!read_str) {
       printf("exit\n");
@@ -45,7 +49,7 @@ t_error *check_quote(char **input) {
   }
 }
 
-static int check_quote_core(char *input) {
+static bool is_quote_closed(char *input) {
   int in_quote;
   char quote;
 
@@ -63,6 +67,6 @@ static int check_quote_core(char *input) {
     input++;
   }
   if (in_quote)
-    return (EXIT_USER_ERR);
-  return (EXIT_OK);
+    return (false);
+  return true;
 }
