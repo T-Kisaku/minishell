@@ -28,11 +28,11 @@ char *ft_strndup(const char *s, size_t n);
 
 void free_and_null(void **ptr);
 
-t_error *cmd_loop(t_ast *ast, t_error *(*handler)(t_command *, t_minishell_state *), t_minishell_state* shell);
-t_error *redir_loop(t_ast *ast, t_error *(*handler)(t_redir *, t_minishell_state*), t_minishell_state *shell);
-
-// write_error.c
-int write_error(char *msg);
-int syntax_error(const char *token);
+t_error *cmd_loop(t_ast *ast,
+                  t_error *(*handler)(t_command *, t_minishell_state *),
+                  t_minishell_state *shell);
+t_error *redir_loop(t_ast *ast,
+                    t_error *(*handler)(t_redir *, t_minishell_state *),
+                    t_minishell_state *shell);
 
 #endif
