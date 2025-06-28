@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <readline/history.h>
 #include <readline/readline.h>
+#include "minishell.h"
 
 static t_error *init_heredoc_context(t_redir *redir, char **content,
                                      char **delimiter, size_t *delimiter_len);
@@ -15,8 +16,8 @@ static t_error *read_line_loop(char **content, char *delimiter,
 static bool is_line_EOF(char *line, char *delimiter, size_t delimiter_len);
 static t_error *append_line_to_content(char **content, char *line);
 
-t_error *input_heredoc_content_handler(t_redir *redir, t_list *env_list) {
-	(void)env_list; // env_list is not used in this function
+t_error *input_heredoc_content_handler(t_redir *redir, t_minishell_state *shell) {
+	(void)shell; // shell is not used in this function
   char *content;
   char *delimiter;
   size_t delimiter_len;

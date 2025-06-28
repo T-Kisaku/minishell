@@ -6,6 +6,7 @@
 #include "token.h"
 #include <stdlib.h> //for getenv,
 #include "error.h"
+#include "minishell.h"
 
 typedef enum { DOLLAR_SPECIAL, DOLLAR_VARIABLE, DOLLAR_LITERAL } e_dollar_type;
 
@@ -37,35 +38,35 @@ typedef enum {
   MODE_SET_VALUE,
 } e_expander_mode;
 
-t_error *expand_handler(t_command *cmd, t_list *env_list);
+t_error *expand_handler(t_command *cmd, t_minishell_state *shell);
 // word_split.c
-t_error *word_split_handler(t_command *cmd, t_list *env_list);
+t_error *word_split_handler(t_command *cmd, t_minishell_state *shell);
 // split_token.c
 t_error *split_token(t_list *token, int word_count);
 // quote_remove.c
-t_error *quote_removal_handler(t_command *cmd, t_list *env_list);
+t_error *quote_removal_handler(t_command *cmd, t_minishell_state *shell);
 
 // generate_argv.c
-t_error *generate_argv_handler(t_command *cmd, t_list *env_list);
+t_error *generate_argv_handler(t_command *cmd, t_minishell_state *shell);
 
 // redir
-t_error *input_heredoc_content_handler(t_redir *redir, t_list *env_list);
-t_error *redir_expand_handler(t_redir *redir, t_list *env_list);
-t_error *redir_split_handler(t_redir *redir, t_list *env_list);
-t_error *redir_quote_removal_handler(t_redir *target, t_list *env_list);
-t_error *generate_heredoc_file_handler(t_redir *redir, t_list *env_list);
-t_error *generate_filename_handler(t_redir *target, t_list *env_list);
+t_error *input_heredoc_content_handler(t_redir *redir, t_minishell_state *shell);
+t_error *redir_expand_handler(t_redir *redir, t_minishell_state *shell);
+t_error *redir_split_handler(t_redir *redir, t_minishell_state *shell);
+t_error *redir_quote_removal_handler(t_redir *target, t_minishell_state *shell);
+t_error *generate_heredoc_file_handler(t_redir *redir, t_minishell_state *shell);
+t_error *generate_filename_handler(t_redir *target, t_minishell_state *shell);
 
 // common
 t_error *quote_remove_core(t_token *content);
 // expand_single_token.c
-t_error *expand_single_token(t_token *content, t_list *env_list);
+t_error *expand_single_token(t_token *content, t_minishell_state *shell);
 // expand_ast_core_core.c
-t_error *expand_ast_core_core(t_expansion_context *ctx, t_list *env_list,
+t_error *expand_ast_core_core(t_expansion_context *ctx, t_minishell_state *shell,
                                      e_expander_mode mode);
 // expand_variable.c
-t_error *expand_variable(t_expansion_context *ctx, t_list *env_list);
-t_error *expand_special(t_expansion_context *ctx, t_list *env_list);
+t_error *expand_variable(t_expansion_context *ctx, t_minishell_state *shell);
+t_error *expand_special(t_expansion_context *ctx, t_minishell_state *shell);
 // utils.h
 void copy_and_advance(t_expansion_context *ctx, char *src, int count);
 #endif

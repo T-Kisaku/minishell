@@ -8,6 +8,7 @@
 #include "libft.h" //t_list
 #include "ast.h"   //t_ast, t_command
 #include "error.h"
+#include "minishell.h" //t_minishell_state
 
 // free_ast_1.c
 void free_ast(t_ast **ast);
@@ -27,8 +28,8 @@ char *ft_strndup(const char *s, size_t n);
 
 void free_and_null(void **ptr);
 
-t_error *cmd_loop(t_ast *ast, t_error *(*handler)(t_command *, t_list *), t_list *env_list);
-t_error *redir_loop(t_ast *ast, t_error *(*handler)(t_redir *, t_list*), t_list *env_list);
+t_error *cmd_loop(t_ast *ast, t_error *(*handler)(t_command *, t_minishell_state *), t_minishell_state* shell);
+t_error *redir_loop(t_ast *ast, t_error *(*handler)(t_redir *, t_minishell_state*), t_minishell_state *shell);
 
 // write_error.c
 int write_error(char *msg);

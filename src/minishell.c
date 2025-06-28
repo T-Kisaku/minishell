@@ -13,17 +13,17 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 
-static bool process_option_c(int argc, char **argv, t_list **env_list_ptr);
-static bool prompt(t_list **env_list_ptr, int *prev_exit_code);
-static int run_cmd(char **input, t_list **env_list_ptr,
-                   int *prev_exit_code_ptr);
+static bool process_option_c(int argc, char **argv, t_minishell_state *shell);
+static bool prompt(t_minishell_state *shell);
+static void run_cmd(char **input, t_minishell_state *shell);
 
 int main(int argc, char **argv, char **envp) {
-  int prev_exit_code;
-  t_list *env_list;
+
+  t_minishell_state shell;
   t_error *error;
-  env_list = NULL;
-  error = envp_to_env_list(envp, &env_list);
+
+  shell.env_list = NULL;
+  error = envp_to_env_list(envp, &shell.env_list);
   if (is_error(error)) {
     printf("wow!!");
     del_error(error);
@@ -31,31 +31,31 @@ int main(int argc, char **argv, char **envp) {
   }
   if (setup_signal_handlers() != 0)
     return (EXIT_FAILURE);
-  if (process_option_c(argc, argv, &env_list))
+  if (process_option_c(argc, argv, &shell))
     return (EXIT_SUCCESS);
   if (argc > 1) {
     ft_fputs("minishell except only -c flags", STDERR_FILENO);
     return (EXIT_USER_ERR);
   }
-  prev_exit_code = 0;
+  shell.prev_exit_code = 0;
   while (1)
-    if (prompt(&env_list, &prev_exit_code))
+    if (prompt(&shell))
       break;
   rl_clear_history();
-  lstclear_env(&env_list);
+  lstclear_env(&shell.env_list);
   return (EXIT_SUCCESS);
 }
 
-static bool process_option_c(int argc, char **argv, t_list **env_list_ptr) {
+static bool process_option_c(int argc, char **argv, t_minishell_state *shell) {
   if (!(argc == 3 && ft_strcmp(argv[1], "-c") == 0))
     return (false);
-  run_cmd(&argv[2], env_list_ptr, NULL);
+  run_cmd(&argv[2], shell);
   return (true);
 }
 
 // TODO: display new line aftter echo -n fire
 // return whether it should exit
-static bool prompt(t_list **env_list_ptr, int *prev_exit_code) {
+static bool prompt(t_minishell_state *shell) {
   char *input_str;
 
   while (1) {
@@ -70,9 +70,8 @@ static bool prompt(t_list **env_list_ptr, int *prev_exit_code) {
     }
     break;
   }
-  *prev_exit_code = run_cmd(&input_str, env_list_ptr, prev_exit_code);
- 
-  if (*prev_exit_code == EXIT_EOF) {
+run_cmd(&input_str, shell);
+  if (shell->prev_exit_code == EXIT_EOF) {
     free(input_str);
     return (true);
   }
@@ -81,37 +80,35 @@ static bool prompt(t_list **env_list_ptr, int *prev_exit_code) {
   return (false);
 }
 
-static int run_cmd(char **input, t_list **env_list_ptr, int *prev_exit_code) {
+static void run_cmd(char **input, t_minishell_state *shell) {
   t_ast *ast;
   t_error *error;
-  int exit_code;
 
   error = NULL;
   ast = NULL;
-  exit_code = EXIT_OK;
   if (!*input) {
     printf("\n");
-    return (exit_code);
+    return;
   }
-  (void)prev_exit_code; // TODO: pass this to expand_ast!!
+//   (void)prev_exit_code; // TODO: pass this to expand_ast!!
   error = str_to_ast(input, &ast);
   if (is_error(error)) {
     if (error->exit_code == EXIT_EOF)
       ft_fputs(error->msg, STDOUT_FILENO);
     else
       ft_fputs(error->msg, STDERR_FILENO);
-    exit_code = error->exit_code;
+    shell->prev_exit_code = error->exit_code;
     del_error(error);
-    return (exit_code);
+    return;
   }
-  error = expand_ast(ast, *env_list_ptr);
+  error = expand_ast(ast, shell);
   if (is_error(error)) {
-    exit_code = error->exit_code;
+    shell->prev_exit_code = error->exit_code;
     ft_fputs(error->msg, STDERR_FILENO);
     free_ast(&ast);
-    return (exit_code);
+    return;
   }
-  exit_code = exec_ast(ast, env_list_ptr);
+  shell->prev_exit_code = exec_ast(ast, &shell->env_list);
   free_ast(&ast);
-  return (exit_code);
+  return;
 }
