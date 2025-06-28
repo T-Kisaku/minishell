@@ -2,8 +2,8 @@
 #include <unistd.h>
 #include "ast.h"
 #include "exit_status.h"
-#include "utils/ms_string.h"
-#include "utils/ms_stdio.h"
+#include "ft_string.h"
+#include "ft_stdio.h"
 #include "executor/command.h"
 #include "executor.h"
 #include "executor/command/builtin.h"
@@ -23,7 +23,7 @@ int exec_builtin_cmd(t_command *cmd, t_list **env_list) {
   process_redir_list(cmd->redir_list);
   entry = find_builtin(cmd->u.simple.argv[0]);
   if (!entry || !entry->func) {
-    ms_fputs("entry data for builtin is broken", STDERR_FILENO);
+    ft_fputs("entry data for builtin is broken", STDERR_FILENO);
     return (EXIT_INTERNAL_ERR);
   }
   exit_code = entry->func(cmd, env_list);
@@ -43,7 +43,7 @@ bool is_builtin(t_command *cmd) {
 static const t_builtin_entry *find_builtin(const char *name) {
   const t_builtin_entry *table = get_builtin_table();
   for (int i = 0; table[i].name != NULL; i++) {
-    if (ms_strcmp(table[i].name, name) == 0)
+    if (ft_strcmp(table[i].name, name) == 0)
       return &table[i];
   }
   return NULL;

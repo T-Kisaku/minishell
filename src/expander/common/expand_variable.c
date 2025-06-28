@@ -1,5 +1,5 @@
 #include "expander.h"
-#include "utils/ms_string.h"
+#include "ft_string.h"
 #include "error.h"
 #include "exit_status.h"
 
@@ -19,7 +19,7 @@ t_error *expand_variable(t_expansion_context *ctx) {
     return new_error(EXIT_INTERNAL_ERR, "$[_a-zA-Z]");
   while (*ctx->cur_pos == '_' || ft_isalnum(*ctx->cur_pos))
     ctx->cur_pos++;
-  tmp = ms_strndup(start, ctx->cur_pos - start);
+  tmp = ft_strndup(start, ctx->cur_pos - start);
   if (!tmp)
     return new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO");
   ctx->variable = getenv(tmp);

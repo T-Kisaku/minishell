@@ -2,6 +2,6 @@
 #define MS_STDLIB_H
 
 #include <stddef.h>
-void *ms_realloc(void *ptr, size_t new_size);
+void *ft_realloc(void *ptr, size_t new_size);
 
 #endif // !MS_STDLIB_H

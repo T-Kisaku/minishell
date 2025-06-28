@@ -1,32 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 10:55:12 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/28 12:30:07 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/06/28 12:28:52 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/28 12:32:46 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
-char	*ft_strdup(const char *s)
+int	ft_isspace(int c)
 {
-	char	*str;
-	char	*p;
-	int		len;
-
-	len = 0;
-	while (s[len])
-		len++;
-	str = malloc(len + 1);
-	if (str == NULL)
-		return (NULL);
-	p = str;
-	while (*s)
-		*p++ = *s++;
-	*p = '\0';
-	return (str);
+	return (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
+		|| c == ' ');
 }

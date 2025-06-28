@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_stdio.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 10:55:12 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/28 12:30:07 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/06/28 12:31:26 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/28 12:31:28 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#ifndef FT_STDIO_H
+# define FT_STDIO_H
 
-char	*ft_strdup(const char *s)
-{
-	char	*str;
-	char	*p;
-	int		len;
+void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putendl_fd(char *s, int fd);
+void	ft_putnbr_fd(int n, int fd);
 
-	len = 0;
-	while (s[len])
-		len++;
-	str = malloc(len + 1);
-	if (str == NULL)
-		return (NULL);
-	p = str;
-	while (*s)
-		*p++ = *s++;
-	*p = '\0';
-	return (str);
-}
+// not in subject
+int		ft_fputs(const char *s, int fd);
+int		ft_puts(const char *s);
+
+#endif // !FT_STDIO_H

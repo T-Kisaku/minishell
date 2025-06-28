@@ -3,8 +3,8 @@
 #include "executor/command/builtin.h"
 #include "exit_status.h"
 #include "libft.h"
-#include "utils/ms_list.h"
-#include "utils/ms_stdio.h"
+#include "ft_list.h"
+#include "ft_stdio.h"
 #include "utils/env.h"
 
 static void set_env_entry(t_list **env_list, char *env_str);
@@ -12,7 +12,7 @@ static void print_export_entry(void *content);
 int exec_export(t_command *cmd, t_list **env_list) {
   int i;
   if (cmd->type != CMD_SIMPLE) {
-    ms_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
+    ft_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
     return EXIT_INTERNAL_ERR;
   }
   if (cmd->u.simple.argc == 1) {
@@ -41,7 +41,7 @@ static void set_env_entry(t_list **env_list, char *env_str) {
   if (!ideal_env)
     return;
 
-  found = lstfind(*env_list, ideal_env, cmp_env_key);
+  found = ft_lstfind(*env_list, ideal_env, cmp_env_key);
   if (!found) {
     ft_lstadd_back(env_list, ft_lstnew(ideal_env));
     return;

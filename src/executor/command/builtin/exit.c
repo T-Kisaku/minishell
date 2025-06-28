@@ -1,8 +1,8 @@
 #include "ast.h"
 #include "exit_status.h"
 #include "libft.h"
-#include "utils/ms_stdio.h"
-#include "utils/ms_string.h"
+#include "ft_stdio.h"
+#include "ft_string.h"
 
 void *check_is_all_digit(unsigned int i, char c, void *acc) {
   (void)i;
@@ -18,7 +18,7 @@ bool check_valid_ascii(char *s) {
   is_valid = true;
   if (*s == '-' || *s == '+')
     s++;
-  ms_strreduce(s, &is_valid, check_is_all_digit);
+  ft_strreduce(s, &is_valid, check_is_all_digit);
   return is_valid;
 }
 
@@ -26,17 +26,17 @@ bool check_valid_ascii(char *s) {
 int exec_exit(t_command *cmd, t_list *env_list) {
   (void)env_list;
   if (cmd->type != CMD_SIMPLE) {
-    ms_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
+    ft_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
     exit(EXIT_INTERNAL_ERR);
   }
   if (cmd->u.simple.argc == 1)
     exit(EXIT_OK);
   if (cmd->u.simple.argc > 2) {
-    ms_fputs("exit: expected less than 1 argument", STDERR_FILENO);
+    ft_fputs("exit: expected less than 1 argument", STDERR_FILENO);
     exit(EXIT_USER_ERR);
   }
   if (!check_valid_ascii(cmd->u.simple.argv[1])) {
-    ms_fputs("exit: expected only 1 + or - and numeric argument",
+    ft_fputs("exit: expected only 1 + or - and numeric argument",
              STDERR_FILENO);
     exit(EXIT_USER_ERR);
   }

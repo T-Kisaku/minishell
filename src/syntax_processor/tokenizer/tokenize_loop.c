@@ -2,7 +2,7 @@
 #include "exit_status.h"
 #include "syntax_processor/tokenizer.h"
 #include "token.h"
-#include "utils/ms_string.h"
+#include "ft_string.h"
 #include <stdio.h>
 
 static void		process_space(t_token_context *ctx);
@@ -42,7 +42,7 @@ t_error	*tokenize_loop(t_token_context *ctx)
 
 static void	process_space(t_token_context *ctx)
 {
-	while (ms_isspace(*ctx->cur_str))
+	while (ft_isspace(*ctx->cur_str))
 		ctx->cur_str++;
 	ctx->start_str = ctx->cur_str;
 }
@@ -54,12 +54,12 @@ static t_error	*process_unquoted_word(t_token_context *ctx)
 	char	quote;
 
 
-	if (*ctx->cur_str == '\0' || ms_isspace(*ctx->cur_str) ||
+	if (*ctx->cur_str == '\0' || ft_isspace(*ctx->cur_str) ||
 		is_special_char(*ctx->cur_str))
 		return (NULL);
 	in_quote = 0;
 	quote = '\0';
-	while ((*ctx->cur_str != '\0' && !ms_isspace(*ctx->cur_str)
+	while ((*ctx->cur_str != '\0' && !ft_isspace(*ctx->cur_str)
 			&& !is_special_char(*ctx->cur_str))|| in_quote)
 	{
 		if (*ctx->cur_str == '\'' || *ctx->cur_str == '"')

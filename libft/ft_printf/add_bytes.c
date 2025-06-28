@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   add_bytes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 10:55:12 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/28 12:30:07 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/03/05 10:52:31 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/28 11:55:24 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "ft_printf_internal.h"
 
-char	*ft_strdup(const char *s)
+int	add_bytes(int new_bytes, int *bytes)
 {
-	char	*str;
-	char	*p;
-	int		len;
-
-	len = 0;
-	while (s[len])
-		len++;
-	str = malloc(len + 1);
-	if (str == NULL)
-		return (NULL);
-	p = str;
-	while (*s)
-		*p++ = *s++;
-	*p = '\0';
-	return (str);
+	if (bytes == NULL)
+		*bytes = 0;
+	if (new_bytes == -1)
+		return (-1);
+	*bytes += new_bytes;
+	return (*bytes);
 }

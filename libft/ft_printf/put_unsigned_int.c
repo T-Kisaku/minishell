@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   put_unsigned_int.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 10:55:12 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/28 12:30:07 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/01/25 22:57:19 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/28 12:34:08 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "ft_printf_internal.h"
 
-char	*ft_strdup(const char *s)
+int	put_unsigned_int(int fd, unsigned int n)
 {
-	char	*str;
-	char	*p;
-	int		len;
+	int	bytes;
 
-	len = 0;
-	while (s[len])
-		len++;
-	str = malloc(len + 1);
-	if (str == NULL)
-		return (NULL);
-	p = str;
-	while (*s)
-		*p++ = *s++;
-	*p = '\0';
-	return (str);
+	bytes = 0;
+	if (n >= 10)
+		if (add_bytes(put_unsigned_int(fd, n / 10), &bytes) == -1)
+			return (-1);
+	if (add_bytes(put_char(fd, '0' + (n % 10)), &bytes) == -1)
+		return (-1);
+	return (bytes);
 }

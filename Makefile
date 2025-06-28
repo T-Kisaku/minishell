@@ -27,7 +27,7 @@ $(NAME): $(LIBFT) $(OBJS)
 	@$(MAKE) print_finished MSG="Minishell build complete"
 
 $(LIBFT):
-	@$(MAKE) bonus -C $(LIBFTDIR) > /dev/null
+	@$(MAKE) string ctype stdio stdlib list printf -C $(LIBFTDIR)
 	@$(MAKE) print_finished MSG="Libft build complete"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c

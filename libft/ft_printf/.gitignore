@@ -1,0 +1,4 @@
+tests
+compile_flags.txt
+*.o
+*.a

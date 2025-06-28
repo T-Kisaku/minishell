@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "libft.h"
-void *ms_realloc(void *ptr, size_t new_size) {
+void *ft_realloc(void *ptr, size_t new_size) {
   void *new_ptr;
   size_t copy_size;
   if (ptr == NULL)

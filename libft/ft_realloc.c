@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 10:55:12 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/28 12:30:07 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/06/28 12:29:49 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/28 12:29:51 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_string.h"
 #include <stdlib.h>
 
-char	*ft_strdup(const char *s)
+void	*ft_realloc(void *ptr, size_t new_size)
 {
-	char	*str;
-	char	*p;
-	int		len;
+	void	*new_ptr;
+	size_t	copy_size;
 
-	len = 0;
-	while (s[len])
-		len++;
-	str = malloc(len + 1);
-	if (str == NULL)
+	if (ptr == NULL)
+		return (malloc(new_size));
+	if (new_size == 0)
+	{
+		free(ptr);
 		return (NULL);
-	p = str;
-	while (*s)
-		*p++ = *s++;
-	*p = '\0';
-	return (str);
+	}
+	new_ptr = malloc(new_size);
+	if (new_ptr == NULL)
+		return (NULL);
+	copy_size = new_size;
+	ft_memcpy(new_ptr, ptr, copy_size);
+	free(ptr);
+	return (new_ptr);
 }

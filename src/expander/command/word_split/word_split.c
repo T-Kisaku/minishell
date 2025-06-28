@@ -1,5 +1,5 @@
 #include "expander.h"
-#include "utils/ms_string.h"
+#include "ft_string.h"
 
 t_error *word_split_handler(t_command *cmd);
 static t_error *process_simple(t_list *head);
@@ -47,11 +47,11 @@ static int count_words(char *str) {
     return (-1);
   word_count = 0;
   while (*str) {
-    while (ms_isspace(*str))
+    while (ft_isspace(*str))
       str++;
-    if (*str && !ms_isspace(*str)) {
+    if (*str && !ft_isspace(*str)) {
       word_count++;
-      while (*str && !ms_isspace(*str))
+      while (*str && !ft_isspace(*str))
         str++;
     }
   }

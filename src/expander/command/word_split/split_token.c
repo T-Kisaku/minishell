@@ -1,7 +1,7 @@
 #include "error.h"
 #include "exit_status.h"
 #include "expander.h"
-#include "utils/ms_string.h"
+#include "ft_string.h"
 
 static t_error *init_split_token_context(t_split_token_context *ctx,
                                          t_list *token_node);
@@ -53,10 +53,10 @@ static t_error *init_split_token_context(t_split_token_context *ctx,
 static t_error *generate_value(t_split_token_context *ctx) {
   t_token *cur_token_content;
 
-  while (*ctx->cur_str && ms_isspace(*ctx->cur_str))
+  while (*ctx->cur_str && ft_isspace(*ctx->cur_str))
     ctx->cur_str++;
   ctx->start_str = ctx->cur_str;
-  while (*ctx->cur_str && !ms_isspace(*ctx->cur_str))
+  while (*ctx->cur_str && !ft_isspace(*ctx->cur_str))
     ctx->cur_str++;
   cur_token_content = (t_token *)ctx->cur->content;
   cur_token_content->value =

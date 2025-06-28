@@ -3,8 +3,8 @@
 #include "exit_status.h"
 #include "minishell.h"
 #include "signal_handler.h"
-#include "utils/ms_stdio.h"
-#include "utils/ms_string.h"
+#include "ft_stdio.h"
+#include "ft_string.h"
 #include "utils/env.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -34,7 +34,7 @@ int main(int argc, char **argv, char **envp) {
   if (process_option_c(argc, argv, &env_list))
     return (EXIT_SUCCESS);
   if (argc > 1) {
-    ms_fputs("minishell except only -c flags", STDERR_FILENO);
+    ft_fputs("minishell except only -c flags", STDERR_FILENO);
     return (EXIT_USER_ERR);
   }
   prev_exit_code = 0;
@@ -45,7 +45,7 @@ int main(int argc, char **argv, char **envp) {
 }
 
 static bool process_option_c(int argc, char **argv, t_list **env_list_ptr) {
-  if (!(argc == 3 && ms_strcmp(argv[1], "-c") == 0))
+  if (!(argc == 3 && ft_strcmp(argv[1], "-c") == 0))
     return (false);
   run_cmd(&argv[2], env_list_ptr, NULL);
   return (true);
@@ -95,9 +95,9 @@ static int run_cmd(char **input, t_list **env_list_ptr, int *prev_exit_code) {
   error = str_to_ast(input, &ast);
   if (is_error(error)) {
     if (error->exit_code == EXIT_EOF)
-      ms_fputs(error->msg, STDOUT_FILENO);
+      ft_fputs(error->msg, STDOUT_FILENO);
     else
-      ms_fputs(error->msg, STDERR_FILENO);
+      ft_fputs(error->msg, STDERR_FILENO);
     exit_code = error->exit_code;
     del_error(error);
     return (exit_code);
@@ -105,7 +105,7 @@ static int run_cmd(char **input, t_list **env_list_ptr, int *prev_exit_code) {
   error = expand_ast(ast);
   if (is_error(error)) {
     exit_code = error->exit_code;
-    ms_fputs(error->msg, STDERR_FILENO);
+    ft_fputs(error->msg, STDERR_FILENO);
     free_ast(&ast);
     return (exit_code);
   }

@@ -1,6 +1,6 @@
 #include "ast.h"
 #include "token.h"
-#include "utils/ms_string.h"
+#include "ft_string.h"
 #include <stdbool.h>
 #include "error.h"
 #include "exit_status.h"
@@ -20,7 +20,7 @@ t_error *redir_split_handler(t_redir *redir) {
 
 static bool check_could_not_split(char *value) {
   while (*value) {
-    if (ms_isspace(*value))
+    if (ft_isspace(*value))
       return (true); // bashではエラーになる
     value++;
   }

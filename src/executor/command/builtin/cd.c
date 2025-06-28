@@ -2,8 +2,8 @@
 #include "executor/command/builtin.h"
 #include "exit_status.h"
 #include "libft.h"
-#include "utils/ms_list.h"
-#include "utils/ms_stdio.h"
+#include "ft_list.h"
+#include "ft_stdio.h"
 #include "utils/env.h"
 #include <stdio.h>
 #include <errno.h>
@@ -25,7 +25,7 @@ void *lstinsert(t_list **lst_ptr, void *ideal_content,
                 bool (*cmp)(void *, void *), void (*set)(void *, void *)) {
 
   void *found;
-  found = lstfind(*lst_ptr, ideal_content, cmp);
+  found = ft_lstfind(*lst_ptr, ideal_content, cmp);
   if (!found) {
     ft_lstadd_back(lst_ptr, ft_lstnew(ideal_content));
     return ft_lstlast(*lst_ptr);
@@ -39,11 +39,11 @@ int exec_cd(t_command *cmd, t_list **env_list_ptr) {
   char *oldpwd;
   t_env *ideal;
   if (cmd->type != CMD_SIMPLE) {
-    ms_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
+    ft_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
     return EXIT_INTERNAL_ERR;
   }
   if (cmd->u.simple.argc > 2) {
-    ms_fputs("cd: too many arguments", STDERR_FILENO);
+    ft_fputs("cd: too many arguments", STDERR_FILENO);
     return EXIT_USER_ERR;
   }
   if (cmd->u.simple.argc == 1)

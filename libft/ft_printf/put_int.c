@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   put_int.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 10:55:12 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/28 12:30:07 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/01/25 22:57:09 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/28 12:22:01 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <unistd.h>
+#include "ft_string.h"
+#include "ft_stdlib.h"
 
-char	*ft_strdup(const char *s)
+int	put_int(int fd, int num)
 {
-	char	*str;
-	char	*p;
+	char	*num_str;
 	int		len;
+	int		bytes;
 
-	len = 0;
-	while (s[len])
-		len++;
-	str = malloc(len + 1);
-	if (str == NULL)
-		return (NULL);
-	p = str;
-	while (*s)
-		*p++ = *s++;
-	*p = '\0';
-	return (str);
+	num_str = ft_itoa(num);
+	len = ft_strlen(num_str);
+	if (num_str)
+		bytes = write(fd, num_str, len);
+	else
+		return (-1);
+	free(num_str);
+	return (bytes);
 }

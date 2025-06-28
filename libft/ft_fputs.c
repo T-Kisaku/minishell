@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_fputs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 10:55:12 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/28 12:30:07 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/06/28 12:28:42 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/28 12:28:46 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "ft_string.h"
+#include <unistd.h>
 
-char	*ft_strdup(const char *s)
+int	ft_fputs(const char *s, int fd)
 {
-	char	*str;
-	char	*p;
-	int		len;
+	ssize_t	bytes;
+	ssize_t	ret;
 
-	len = 0;
-	while (s[len])
-		len++;
-	str = malloc(len + 1);
-	if (str == NULL)
-		return (NULL);
-	p = str;
-	while (*s)
-		*p++ = *s++;
-	*p = '\0';
-	return (str);
+	bytes = 0;
+	ret = write(fd, s, ft_strlen(s));
+	if (ret == -1)
+		return (-1);
+	bytes += ret;
+	ret = write(fd, "\n", 1);
+	if (ret == -1)
+		return (-1);
+	bytes += ret;
+	return (bytes);
 }

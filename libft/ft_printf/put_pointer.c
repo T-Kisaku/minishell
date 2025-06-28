@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   put_pointer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 10:55:12 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/28 12:30:07 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/01/25 22:57:12 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/28 12:34:42 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <unistd.h>
+#include "ft_printf_internal.h"
 
-char	*ft_strdup(const char *s)
+int	put_pointer(int fd, void *ptr)
 {
-	char	*str;
-	char	*p;
-	int		len;
+	unsigned long	address;
+	int				bytes;
 
-	len = 0;
-	while (s[len])
-		len++;
-	str = malloc(len + 1);
-	if (str == NULL)
-		return (NULL);
-	p = str;
-	while (*s)
-		*p++ = *s++;
-	*p = '\0';
-	return (str);
+	bytes = 0;
+	address = (unsigned long)ptr;
+	if (!ptr)
+		return (write(STDOUT_FILENO, "(nil)", 5));
+	if (add_bytes(put_string(fd, "0x"), &bytes) == -1)
+		return (-1);
+	if (add_bytes(put_hex(fd, address, false), &bytes) == -1)
+		return (-1);
+	return (bytes);
 }

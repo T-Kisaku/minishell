@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strreduce.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 10:55:12 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/28 12:30:07 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/06/28 12:30:25 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/28 12:30:26 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <stddef.h>
 
-char	*ft_strdup(const char *s)
+void	*ft_strreduce(char const *s, void *init, void *(*f)(unsigned int, char,
+			void *))
 {
-	char	*str;
-	char	*p;
-	int		len;
+	void			*accumulated;
+	unsigned int	i;
 
-	len = 0;
-	while (s[len])
-		len++;
-	str = malloc(len + 1);
-	if (str == NULL)
+	if (!s || !f)
 		return (NULL);
-	p = str;
-	while (*s)
-		*p++ = *s++;
-	*p = '\0';
-	return (str);
+	accumulated = init;
+	i = 0;
+	while (s[i])
+	{
+		accumulated = f(i, s[i], accumulated);
+		i++;
+	}
+	return (accumulated);
 }

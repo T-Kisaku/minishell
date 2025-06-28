@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_lstfind.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 10:55:12 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/28 12:30:07 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/06/28 12:29:07 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/28 12:29:08 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "ft_list.h"
+#include <stddef.h>
 
-char	*ft_strdup(const char *s)
+void	*ft_lstfind(t_list *lst, void *search_content, bool (*cmp)(void *,
+			void *))
 {
-	char	*str;
-	char	*p;
-	int		len;
-
-	len = 0;
-	while (s[len])
-		len++;
-	str = malloc(len + 1);
-	if (str == NULL)
-		return (NULL);
-	p = str;
-	while (*s)
-		*p++ = *s++;
-	*p = '\0';
-	return (str);
+	while (lst)
+	{
+		if (cmp(search_content, lst->content))
+		{
+			return (lst->content);
+		}
+		lst = lst->next;
+	}
+	return (NULL);
 }

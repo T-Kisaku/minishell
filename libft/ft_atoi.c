@@ -6,17 +6,11 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 10:55:11 by tkisaku           #+#    #+#             */
-/*   Updated: 2024/11/20 23:31:24 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/28 10:13:09 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int	ft_isspace(char c)
-{
-	return (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
-		|| c == ' ');
-}
 
 static int	cal(const char *nptr, int i, int sign)
 {

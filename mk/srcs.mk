@@ -18,13 +18,10 @@ src/utils/token/copy.c \
 src/utils/token/del.c \
 src/utils/token/new.c \
 src/utils/token/get.c \
-src/utils/ms_stdio.c \
-src/utils/ms_string.c \
 src/utils/argv.c \
 src/utils/env/del.c \
 src/utils/env/get.c \
 src/utils/env/new.c \
-src/utils/ms_list.c \
 src/utils/ms_stdlib.c \
 src/utils/path.c \
 src/syntax_processor/ast_builder/processes.c \
@@ -43,8 +40,8 @@ src/executor/command/builtin/exit.c \
 src/executor/command/builtin/pwd.c \
 src/executor/command/builtin/unset.c \
 src/executor/command/builtin/export.c \
-src/executor/command/builtin/exec_builtin_cmd.c \
 src/executor/command/builtin/cd.c \
+src/executor/command/builtin/exec_builtin_cmd.c \
 src/executor/command/external/command_path.c \
 src/executor/command/external/exec_external_cmd.c \
 src/executor/command/process_redir_list.c \
