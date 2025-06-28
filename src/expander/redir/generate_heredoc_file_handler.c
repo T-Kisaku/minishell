@@ -8,13 +8,14 @@
 #include "exit_status.h"
 #define HEREDOC_TEMP_PREFIX "/tmp/.minishell_heredoc_"
 
-t_error *generate_heredoc_file_handler(t_redir *redir);
+t_error *generate_heredoc_file_handler(t_redir *redir, t_list *env_list);
 static t_error *prepare_heredoc_file(t_redir *redir);
 static t_error *generate_heredoc_filename(char *buffer, size_t buffer_size);
 static t_error *create_and_write_heredoc(t_redir *redir);
 // 1時ファイル作成時にどこでエラーが発生しても問題なく関数外でファイルにアクセスできるようにできるだけ早くfilenameに代入する必要がある。
 
-t_error *generate_heredoc_file_handler(t_redir *redir) {
+t_error *generate_heredoc_file_handler(t_redir *redir, t_list *env_list) {
+	  (void)env_list; // env_listは使用されていないため、警
   t_error *error;
   error = NULL;
   if (redir->type != REDIR_HERE_DOC)

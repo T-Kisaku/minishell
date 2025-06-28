@@ -38,6 +38,8 @@ int exec_cd(t_command *cmd, t_list **env_list_ptr) {
   char *pwd;
   char *oldpwd;
   t_env *ideal;
+  t_error *error;
+error = NULL;
   if (cmd->type != CMD_SIMPLE) {
     ft_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
     return EXIT_INTERNAL_ERR;
@@ -47,9 +49,14 @@ int exec_cd(t_command *cmd, t_list **env_list_ptr) {
     return EXIT_USER_ERR;
   }
   if (cmd->u.simple.argc == 1)
-    pwd = ms_getenv(*env_list_ptr, "HOME");
+    error = ms_getenv("HOME", &pwd, *env_list_ptr);
   else
     pwd = ft_strdup(cmd->u.simple.argv[1]);
+if(is_error(error)) {
+	ft_fputs(error->msg, STDERR_FILENO);
+	del_error(error);
+	return error->exit_code;
+  }
   if (!pwd)
     return (EXIT_OK);
   if (!is_cd_target_valid(pwd)) {

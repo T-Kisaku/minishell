@@ -2,7 +2,7 @@
 #include "error.h"
 #include "exit_status.h"
 
-t_error *redir_loop(t_ast *ast, t_error *(*handler)(t_redir *)) {
+t_error *redir_loop(t_ast *ast, t_error *(*handler)(t_redir *, t_list*), t_list *env_list) {
   t_list *cur_list;
   t_list *cmd_node;
   t_list *redir_list;
@@ -17,7 +17,7 @@ t_error *redir_loop(t_ast *ast, t_error *(*handler)(t_redir *)) {
     while (cmd_node) {
       redir_list = ((t_command *)cmd_node->content)->redir_list;
       while (redir_list) {
-        error = handler((t_redir *)redir_list->content);
+        error = handler((t_redir *)redir_list->content, env_list);
         if (is_error(error))
           return error;
         redir_list = redir_list->next;

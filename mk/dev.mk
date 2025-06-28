@@ -29,6 +29,7 @@ MINISHELL_EXEC := minishell
 
 
 dev:
+	@$(MAKE) set-src-files
 	@$(MAKE) install
 	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp minishell
 

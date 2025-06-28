@@ -3,10 +3,12 @@
 #include "expander.h"
 #include "utils/argv.h"
 
-t_error *generate_argv_handler(t_command *cmd);
+t_error *generate_argv_handler(t_command *cmd, t_list *env_list);
 static t_error *process_simple(t_command *cmd);
 
-t_error *generate_argv_handler(t_command *cmd) {
+t_error *generate_argv_handler(t_command *cmd, t_list* env_list) {
+
+	(void)env_list;
   t_error *error;
   error = NULL;
   if (cmd->type == CMD_SIMPLE) {

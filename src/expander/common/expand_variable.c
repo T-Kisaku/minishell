@@ -2,16 +2,17 @@
 #include "ft_string.h"
 #include "error.h"
 #include "exit_status.h"
-
-t_error *expand_variable(t_expansion_context *ctx);
-t_error *expand_special(t_expansion_context *ctx);
+#include "utils/env.h"
+#include "stdio.h"
+t_error *expand_variable(t_expansion_context *ctx, t_list *env_list);
+t_error *expand_special(t_expansion_context *ctx, t_list *env_list);
 static t_error *set_temp(t_expansion_context *ctx, char *str,
                          e_mode_set_temp mode);
 
-t_error *expand_variable(t_expansion_context *ctx) {
+t_error *expand_variable(t_expansion_context *ctx, t_list *env_list) {
   char *start;
   char *tmp;
-
+t_error *error;
   start = ctx->cur_pos;
   if (*ctx->cur_pos == '_' || ft_isalpha(*ctx->cur_pos))
     ctx->cur_pos++;
@@ -22,8 +23,10 @@ t_error *expand_variable(t_expansion_context *ctx) {
   tmp = ft_strndup(start, ctx->cur_pos - start);
   if (!tmp)
     return new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO");
-  ctx->variable = getenv(tmp);
+   error = ms_getenv(tmp, &ctx->variable, env_list);
   free(tmp);
+  if(error)
+	return error;
   if (!ctx->variable) {
     ctx->variable = malloc(sizeof(char));
     if (!ctx->variable)
@@ -37,7 +40,8 @@ t_error *expand_variable(t_expansion_context *ctx) {
   return (NULL);
 }
 
-t_error *expand_special(t_expansion_context *ctx) {
+t_error *expand_special(t_expansion_context *ctx, t_list *env_list) {
+  (void)env_list; // env_listは未使用
   if (*ctx->cur_pos == '?') // 後で実装
     return (NULL);
   else if (*ctx->cur_pos == '$') // 後で実装
@@ -77,3 +81,5 @@ static t_error *set_temp(t_expansion_context *ctx, char *str,
     ctx->cur_pos++;
   return (NULL);
 }
+
+

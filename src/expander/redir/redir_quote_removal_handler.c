@@ -1,7 +1,8 @@
 #include "ast.h"
 #include "expander.h"
 
-t_error *redir_quote_removal_handler(t_redir *target) {
+t_error *redir_quote_removal_handler(t_redir *target, t_list *env_list) {
+	  (void)env_list; // env_list is not used in this function
   if (target->type == REDIR_HERE_DOC) // ヒアドクはなにもしない。
     return NULL;
   if (target->redirect_source.filename_token->type == TOKEN_SINGLE_QUOTED_WORD)

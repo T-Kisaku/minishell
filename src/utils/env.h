@@ -22,7 +22,7 @@ t_error *env_list_to_envp(t_list *env_list, char ***envp_ptr);
 
 t_env *lstget_env(t_list *node);
 bool cmp_env_key(void *target, void *content);
-char *ms_getenv(t_list *env_list, char *search_key);
+t_error *ms_getenv( char *search_key, char **value_ptr, t_list *env_list);
 
 void del_env(void *content);
 void lstclear_env(t_list **head);

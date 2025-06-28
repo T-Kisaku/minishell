@@ -1,11 +1,11 @@
 #include "expander.h"
 #include "ft_string.h"
 
-t_error *word_split_handler(t_command *cmd);
 static t_error *process_simple(t_list *head);
 static int count_words(char *str);
 
-t_error *word_split_handler(t_command *cmd) {
+t_error *word_split_handler(t_command *cmd, t_list *env_list) {
+	  (void)env_list; // env_list is not used in this function
   t_error *error;
   error = NULL;
 

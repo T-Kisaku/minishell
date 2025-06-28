@@ -10,7 +10,8 @@ static char *get_command_path(const char *cmd, t_list *env_list) {
   char *path_env;
   char *full_path;
   int i;
-
+  t_error *error;
+  error = NULL;
   if (!cmd || !*cmd)
     return (NULL);
 
@@ -19,7 +20,11 @@ static char *get_command_path(const char *cmd, t_list *env_list) {
     return (access(cmd, X_OK) == 0 ? ft_strdup(cmd) : NULL);
 
   // 2. PATH 環境変数を取得
-  path_env = ms_getenv(env_list, "PATH");
+  error = ms_getenv("PATH", &path_env, env_list);
+  if(is_error(error)) {
+	del_error(error);
+	return NULL;
+  }
   if (!path_env)
     return (NULL);
 

@@ -27,8 +27,8 @@ int main(int argc, char **argv, char **envp) {
   if (is_error(error)) {
     printf("wow!!");
     del_error(error);
+	return (EXIT_INTERNAL_ERR);
   }
-
   if (setup_signal_handlers() != 0)
     return (EXIT_FAILURE);
   if (process_option_c(argc, argv, &env_list))
@@ -41,6 +41,8 @@ int main(int argc, char **argv, char **envp) {
   while (1)
     if (prompt(&env_list, &prev_exit_code))
       break;
+  rl_clear_history();
+  lstclear_env(&env_list);
   return (EXIT_SUCCESS);
 }
 
@@ -60,7 +62,6 @@ static bool prompt(t_list **env_list_ptr, int *prev_exit_code) {
     input_str = readline("minishell$ ");
     if (!input_str) {
       printf("exit\n");
-      rl_clear_history();
       return (true);
     }
     if (!*input_str) {
@@ -69,13 +70,14 @@ static bool prompt(t_list **env_list_ptr, int *prev_exit_code) {
     }
     break;
   }
-  add_history(input_str);
   *prev_exit_code = run_cmd(&input_str, env_list_ptr, prev_exit_code);
+ 
   if (*prev_exit_code == EXIT_EOF) {
     free(input_str);
-    rl_clear_history();
     return (true);
   }
+  add_history(input_str);
+  free(input_str);
   return (false);
 }
 
@@ -102,7 +104,7 @@ static int run_cmd(char **input, t_list **env_list_ptr, int *prev_exit_code) {
     del_error(error);
     return (exit_code);
   }
-  error = expand_ast(ast);
+  error = expand_ast(ast, *env_list_ptr);
   if (is_error(error)) {
     exit_code = error->exit_code;
     ft_fputs(error->msg, STDERR_FILENO);

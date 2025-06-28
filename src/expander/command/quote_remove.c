@@ -2,7 +2,8 @@
 
 static t_error *process_simple(t_list *head);
 
-t_error *quote_removal_handler(t_command *cmd) {
+t_error *quote_removal_handler(t_command *cmd , t_list *env_list) {
+	(void)env_list;
   t_error *error;
   error = NULL;
   if (cmd->type == CMD_SIMPLE) {

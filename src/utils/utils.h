@@ -27,8 +27,8 @@ char *ft_strndup(const char *s, size_t n);
 
 void free_and_null(void **ptr);
 
-t_error *cmd_loop(t_ast *ast, t_error *(*handler)(t_command *));
-t_error *redir_loop(t_ast *ast, t_error *(*handler)(t_redir *));
+t_error *cmd_loop(t_ast *ast, t_error *(*handler)(t_command *, t_list *), t_list *env_list);
+t_error *redir_loop(t_ast *ast, t_error *(*handler)(t_redir *, t_list*), t_list *env_list);
 
 // write_error.c
 int write_error(char *msg);
