@@ -2,8 +2,8 @@
 #include "expander.h"
 
 t_error *redir_expand_handler(t_redir *redir, t_minishell_state *shell) {
-	(void)shell; // shell is not used in this function
   t_error *error;
+  
   error = NULL;
   if (redir->type == REDIR_HERE_DOC) {
     if (redir->redirect_source.filename_token->type == TOKEN_UNQUOTED_WORD) {

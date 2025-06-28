@@ -26,14 +26,14 @@ bool cmp_env_key(void *target, void *content) {
 t_error *ms_getenv( char *search_key, char **value_ptr, t_list *env_list) {
   t_env *search_env;
   t_env *found;
+  char *target;
   search_env = new_env(search_key, "dummy");
   found = ft_lstfind(env_list, search_env, cmp_env_key);
   if(found == NULL)
-  {
-	del_env(search_env)	;
-	return new_error(EXIT_USER_ERR, "ENVIRONMENT VARIABLE NOT FOUND");
-  }
-  *value_ptr = ft_strdup(found->value);
+	target="";
+ else
+	target =found->value;
+  *value_ptr = ft_strdup(target);
   del_env(search_env);
   if(!(*value_ptr)) {
 	return new_error(EXIT_INTERNAL_ERR, "MALLOC ERROR");

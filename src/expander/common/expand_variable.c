@@ -5,10 +5,12 @@
 #include "utils/env.h"
 #include "stdio.h"
 #include "minishell.h"
+#include "error.h"
 t_error *expand_variable(t_expansion_context *ctx, t_minishell_state *shell);
 t_error *expand_special(t_expansion_context *ctx, t_minishell_state *shell);
 static t_error *set_temp(t_expansion_context *ctx, char *str,
                          e_mode_set_temp mode);
+static t_error *set_prev_exit_code(t_expansion_context *ctx, int prev_exit_code);
 
 t_error *expand_variable(t_expansion_context *ctx, t_minishell_state *shell) {
   char *start;
@@ -44,9 +46,9 @@ t_error *error;
 t_error *expand_special(t_expansion_context *ctx, t_minishell_state *shell) {
   (void)shell; // shellは未使用
   if (*ctx->cur_pos == '?') // 後で実装
-    return (NULL);
+    return (set_prev_exit_code(ctx, shell->prev_exit_code));
   else if (*ctx->cur_pos == '$') // 後で実装
-    return (NULL);
+    return (set_temp(ctx, "", SET_MODE_NORMAL));
   else if (*ctx->cur_pos == '!')
     return (set_temp(ctx, "", SET_MODE_NORMAL));
   else if (*ctx->cur_pos == '0')
@@ -83,4 +85,17 @@ static t_error *set_temp(t_expansion_context *ctx, char *str,
   return (NULL);
 }
 
+static t_error *set_prev_exit_code(t_expansion_context *ctx, int prev_exit_code)
+{
+	char *str_exit_code;
+	size_t len;
 
+	str_exit_code = ft_itoa(prev_exit_code);
+	if(!str_exit_code) 
+		return new_error(EXIT_INTERNAL_ERR, "ft_itoa error");
+	ctx->variable = str_exit_code;
+	len = ft_strlen(str_exit_code);
+	while(len--)
+	ctx->cur_pos++;
+	return NULL;
+}
