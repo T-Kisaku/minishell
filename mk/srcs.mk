@@ -1,6 +1,4 @@
 SRCS = \
-src/minishell.c \
-src/utils/ms_list.c \
 src/utils/ast/and_or/del.c \
 src/utils/ast/and_or/new.c \
 src/utils/ast/and_or/other.c \
@@ -14,18 +12,18 @@ src/utils/ast/redirection/other.c \
 src/utils/ast/redirection/new.c \
 src/utils/ast/redir_loop.c \
 src/utils/ast/cmd_loop.c \
-src/utils/free_and_null.c \
-src/utils/write_error.c \
 src/utils/token/copy.c \
 src/utils/token/del.c \
 src/utils/token/new.c \
 src/utils/token/get.c \
-src/utils/argv.c \
 src/utils/env/del.c \
 src/utils/env/new.c \
 src/utils/env/get.c \
+src/utils/ms_list.c \
+src/utils/free_and_null.c \
+src/utils/write_error.c \
+src/utils/argv.c \
 src/utils/path.c \
-src/error.c \
 src/syntax_processor/ast_builder/processes.c \
 src/syntax_processor/ast_builder/token_to_ast.c \
 src/syntax_processor/ast_builder/utils.c \
@@ -56,9 +54,9 @@ src/expander/common/quote_remove_core.c \
 src/expander/common/expand_ast_core.c \
 src/expander/common/expand_single_token.c \
 src/expander/common/expand_variable.c \
+src/expander/redir/redir_expand_handler.c \
 src/expander/redir/generate_filename.c \
 src/expander/redir/generate_heredoc_file_handler.c \
-src/expander/redir/input_heredoc_content_handler.c \
 src/expander/redir/redir_quote_removal_handler.c \
 src/expander/redir/redir_split_handler.c \
 src/expander/redir/input_heredoc_content_handler.c \
@@ -69,3 +67,5 @@ src/expander/command/quote_remove.c \
 src/expander/command/word_split.c \
 src/expander/expander.c \
 src/signal/setup_signal_handlers.c \
+src/minishell.c \
+src/error.c \
