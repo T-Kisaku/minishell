@@ -31,7 +31,7 @@ MINISHELL_EXEC := minishell
 
 dev:
 	@$(MAKE) install
-	minishell
+	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp minishell
 
 install:
 	@$(MAKE)
