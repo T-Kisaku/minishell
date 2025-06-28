@@ -1,9 +1,10 @@
 #include "ast.h"
 #include "error.h"
 #include "exit_status.h"
+#include "minishell.h"
 
-t_error *generate_filename_handler(t_redir *target, t_list *env_list) {
-	(void)env_list;
+t_error *generate_filename_handler(t_redir *target, t_minishell_state *shell) {
+	(void)shell;
   if (target->type == REDIR_HERE_DOC)
     return (NULL);
   if (target->redirect_source.is_direct_to_fd)

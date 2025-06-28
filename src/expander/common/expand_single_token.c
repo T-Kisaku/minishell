@@ -5,12 +5,12 @@
 #include "exit_status.h"
 
 static void init_expansion_context(t_expansion_context *ctx, t_token *content);
-static t_error *expand_ast_core(t_expansion_context *ctx, t_list *env_list,
+static t_error *expand_ast_core(t_expansion_context *ctx, t_minishell_state *shell,
                                        e_expander_mode mode);
 static void set_dollar_type(t_expansion_context *ctx);
 
 // ワイルドカードの扱いでunquotedとdobule_quotedで差が出るが、ボーナス内容なので一旦スルー
-t_error *expand_single_token(t_token *content, t_list *env_list) {
+t_error *expand_single_token(t_token *content, t_minishell_state *shell) {
   t_expansion_context ctx;
   t_error *error;
 
@@ -18,12 +18,12 @@ t_error *expand_single_token(t_token *content, t_list *env_list) {
   if (!content)
     return new_error(EXIT_INTERNAL_ERR, "arg is not good bro");
   init_expansion_context(&ctx, content);
-  error = expand_ast_core(&ctx, env_list, MODE_CALCULATE);
+  error = expand_ast_core(&ctx, shell, MODE_CALCULATE);
   if (is_error(error))
     return error;
   ctx.cur_pos = (char *)ctx.input;
   ctx.index = 0;
-  error = expand_ast_core(&ctx, env_list,MODE_SET_VALUE);
+  error = expand_ast_core(&ctx, shell,MODE_SET_VALUE);
   if (is_error(error))
     return error;
   free(content->value);
@@ -46,7 +46,7 @@ static void init_expansion_context(t_expansion_context *ctx, t_token *content) {
   ctx->variable = NULL;
 }
 
-static t_error *expand_ast_core(t_expansion_context *ctx, t_list *env_list,
+static t_error *expand_ast_core(t_expansion_context *ctx, t_minishell_state *shell,
                                        e_expander_mode mode) {
 
   t_error *error;
@@ -59,7 +59,7 @@ static t_error *expand_ast_core(t_expansion_context *ctx, t_list *env_list,
   while (*ctx->cur_pos) {
     if (!ctx->in_single_quote && *ctx->cur_pos == '$') {
       set_dollar_type(ctx);
-      error = expand_ast_core_core(ctx, env_list, mode);
+      error = expand_ast_core_core(ctx, shell, mode);
       if (is_error(error))
         return error;
     } else {

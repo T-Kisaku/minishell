@@ -1,8 +1,9 @@
 #include "ast.h"
 #include "error.h"
 #include "exit_status.h"
+#include "minishell.h"
 
-t_error *cmd_loop(t_ast *ast, t_error *(*handler)(t_command *, t_list *), t_list *env_list) {
+t_error *cmd_loop(t_ast *ast, t_error *(*handler)(t_command *, t_minishell_state *), t_minishell_state *shell) {
   t_list *cur_list;
   t_and_or *cur_and_or;
   t_list *cmd_node;
@@ -18,7 +19,7 @@ t_error *cmd_loop(t_ast *ast, t_error *(*handler)(t_command *, t_list *), t_list
     cmd_node = cur_and_or->pipeline->command_list;
     while (cmd_node) {
       cmd = (t_command *)(cmd_node->content);
-      error = handler(cmd, env_list);
+      error = handler(cmd, shell);
       if (is_error(error))
         return error;
       cmd_node = cmd_node->next;

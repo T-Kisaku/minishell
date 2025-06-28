@@ -3,11 +3,12 @@
 #include "ft_string.h"
 #include <stdbool.h>
 #include "error.h"
+#include "minishell.h"
 #include "exit_status.h"
 static bool check_could_not_split(char *value);
 
-t_error *redir_split_handler(t_redir *redir, t_list *env_list) {
-	  (void)env_list; // env_list is not used in this function
+t_error *redir_split_handler(t_redir *redir, t_minishell_state *shell) {
+	  (void)shell; // shell is not used in this function
   if (redir->type == REDIR_HERE_DOC)
     return NULL;
   if (redir->redirect_source.filename_token->type == TOKEN_UNQUOTED_WORD) {

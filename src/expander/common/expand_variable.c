@@ -4,12 +4,13 @@
 #include "exit_status.h"
 #include "utils/env.h"
 #include "stdio.h"
-t_error *expand_variable(t_expansion_context *ctx, t_list *env_list);
-t_error *expand_special(t_expansion_context *ctx, t_list *env_list);
+#include "minishell.h"
+t_error *expand_variable(t_expansion_context *ctx, t_minishell_state *shell);
+t_error *expand_special(t_expansion_context *ctx, t_minishell_state *shell);
 static t_error *set_temp(t_expansion_context *ctx, char *str,
                          e_mode_set_temp mode);
 
-t_error *expand_variable(t_expansion_context *ctx, t_list *env_list) {
+t_error *expand_variable(t_expansion_context *ctx, t_minishell_state *shell) {
   char *start;
   char *tmp;
 t_error *error;
@@ -23,7 +24,7 @@ t_error *error;
   tmp = ft_strndup(start, ctx->cur_pos - start);
   if (!tmp)
     return new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO");
-   error = ms_getenv(tmp, &ctx->variable, env_list);
+   error = ms_getenv(tmp, &ctx->variable, shell->env_list);
   free(tmp);
   if(error)
 	return error;
@@ -40,8 +41,8 @@ t_error *error;
   return (NULL);
 }
 
-t_error *expand_special(t_expansion_context *ctx, t_list *env_list) {
-  (void)env_list; // env_listは未使用
+t_error *expand_special(t_expansion_context *ctx, t_minishell_state *shell) {
+  (void)shell; // shellは未使用
   if (*ctx->cur_pos == '?') // 後で実装
     return (NULL);
   else if (*ctx->cur_pos == '$') // 後で実装

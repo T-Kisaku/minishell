@@ -4,8 +4,8 @@
 static t_error *process_simple(t_list *head);
 static int count_words(char *str);
 
-t_error *word_split_handler(t_command *cmd, t_list *env_list) {
-	  (void)env_list; // env_list is not used in this function
+t_error *word_split_handler(t_command *cmd, t_minishell_state *shell) {
+	  (void)shell; // shell is not used in this function
   t_error *error;
   error = NULL;
 
