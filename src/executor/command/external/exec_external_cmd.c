@@ -37,6 +37,5 @@ pid_t exec_external_cmd(t_command *cmd, t_list *env_list) {
     // WARN: this is not supported
     exec_ast(cmd->u.subshell.and_or_list, &env_list);
   }
-  // TODO: this is forbitten func
   _exit(1);
 }

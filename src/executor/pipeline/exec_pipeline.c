@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include "error.h"
 #include "exit_status.h"
-#include "libft.h"
 #include "ast.h"
 #include "executor/pipeline.h"
 

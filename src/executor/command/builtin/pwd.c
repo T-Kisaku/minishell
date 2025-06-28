@@ -1,27 +1,37 @@
 #include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include "ast.h"
 #include "executor/command/builtin.h"
 #include "exit_status.h"
 #include "ft_stdio.h"
 
+static int print_error(const char *message) {
+  ft_fputs(message, STDERR_FILENO);
+  return EXIT_USER_ERR;
+}
+
+static int print_internal_error(const char *message) {
+  ft_fputs(message, STDERR_FILENO);
+  return EXIT_INTERNAL_ERR;
+}
+
 int exec_pwd(t_command *cmd, t_list **env_list) {
   (void)env_list;
   char *cwd;
+
   if (cmd->type != CMD_SIMPLE) {
-    ft_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
-    return EXIT_INTERNAL_ERR;
+    return print_internal_error("pwd: invalid command type\n");
   }
   if (cmd->u.simple.argc != 1) {
-    ft_fputs("pwd: expected no arguments", STDERR_FILENO);
-    return EXIT_USER_ERR;
+    return print_error("pwd: too many arguments\n");
   }
   cwd = getcwd(NULL, 0);
   if (cwd == NULL) {
-    ft_fputs("strerror for cwd bro", STDERR_FILENO);
-    return EXIT_INTERNAL_ERR;
+    return print_internal_error(
+        "pwd: failed to get current working directory\n");
   }
-
   printf("%s\n", cwd);
   free(cwd);
-  return (EXIT_OK);
+  return EXIT_OK;
 }
