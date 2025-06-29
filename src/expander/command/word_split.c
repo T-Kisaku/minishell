@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 14:35:20 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 15:58:08 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 static t_error	*process_simple(t_list *head);
 static int		count_words(char *str);
+static char		*count_words_core(char *str, int *word_count);
+static void		handle_quote_state(char c, bool *in_quote, char *quote_char);
 
 t_error	*word_split_handler(t_command *cmd, t_minishell_state *shell)
 {
@@ -60,6 +62,26 @@ t_error	*process_simple(t_list *head)
 	return (error);
 }
 
+// static int	count_words(char *str)
+// {
+// 	int	word_count;
+
+// 	if (!str)
+// 		return (-1);
+// 	word_count = 0;
+// 	while (*str)
+// 	{
+// 		while (ft_isspace(*str))
+// 			str++;
+// 		if (*str && !ft_isspace(*str))
+// 		{
+// 			word_count++;
+// 			while (*str && !ft_isspace(*str))
+// 				str++;
+// 		}
+// 	}
+// 	return (word_count);
+// }
 static int	count_words(char *str)
 {
 	int	word_count;
@@ -71,12 +93,45 @@ static int	count_words(char *str)
 	{
 		while (ft_isspace(*str))
 			str++;
-		if (*str && !ft_isspace(*str))
-		{
-			word_count++;
-			while (*str && !ft_isspace(*str))
-				str++;
-		}
+		str = count_words_core(str, &word_count);
 	}
 	return (word_count);
+}
+
+static char	*count_words_core(char *str, int *word_count)
+{
+	bool	in_quote;
+	char	quote;
+
+	in_quote = false;
+	if (*str && !ft_isspace(*str))
+	{
+		(*word_count)++;
+		while (*str && (!ft_isspace(*str) || in_quote))
+		{
+			handle_quote_state(*str, &in_quote, &quote);
+			str++;
+		}
+	}
+	return (str);
+}
+
+static void	handle_quote_state(char c, bool *in_quote, char *quote_char)
+{
+	if (*in_quote)
+	{
+		if (c == *quote_char)
+		{
+			*in_quote = false;
+			*quote_char = '\0';
+		}
+	}
+	else
+	{
+		if (c == '\'' || c == '"')
+		{
+			*in_quote = true;
+			*quote_char = c;
+		}
+	}
 }

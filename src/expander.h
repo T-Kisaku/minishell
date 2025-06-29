@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:54 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:54 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 15:34:23 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_expansion_context
 	int				in_single_quote;
 	char			*variable;
 	e_dollar_type	cur_dollar_type;
+	t_token_type	*type;
 }					t_expansion_context;
 
 typedef struct s_split_token_context

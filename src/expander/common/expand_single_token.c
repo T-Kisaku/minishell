@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 12:04:35 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 15:35:34 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static void	init_expansion_context(t_expansion_context *ctx, t_token *content)
 	ctx->in_single_quote = 0;
 	ctx->cur_dollar_type = DOLLAR_LITERAL;
 	ctx->variable = NULL;
+	ctx->type = &content->type;
 }
 
 static t_error	*expand_ast_core(t_expansion_context *ctx,
