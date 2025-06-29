@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_extraction.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:51:38 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 14:47:29 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "exit_status.h"
 #include "syntax_processor/tokenizer.h"
 #include "token.h"
+#include "ft_string.h"
 #include <stdio.h>
 
 t_error	*extract_and_add_token(t_token_context *ctx, t_token_type type)
