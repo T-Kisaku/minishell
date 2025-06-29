@@ -1,6 +1,7 @@
 PHONY_TARGETS += norm lsp-setup get-src-files format stdheader
 norm:
-	@norminette $(SRCS) | grep -v "OK!" || true
+	@norminette $(SRCS) | grep -v "OK" || true
+	@norminette $(wildcard src/*.h) $(wildcard src/**/*.h) | grep -v "OK"
 	@$(MAKE) norm -C $(LIBFTDIR)
 
 lsp-setup:
