@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:28:57 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 15:52:40 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "exit_status.h"
 #include "ft_stdio.h"
 #include "ft_string.h"
+#include "ft_ctype.h"
+#include "ft_stdlib.h"
 
 void	*check_is_all_digit(unsigned int i, char c, void *acc)
 {

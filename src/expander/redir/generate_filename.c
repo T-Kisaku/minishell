@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 09:09:11 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 15:52:55 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "error.h"
 #include "exit_status.h"
 #include "minishell.h"
+#include "ft_string.h"
 
 t_error	*generate_filename_handler(t_redir *target, t_minishell_state *shell)
 {

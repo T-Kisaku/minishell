@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 13:14:30 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 15:52:19 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 #include "exit_status.h"
 #include "ft_list.h"
 #include "ft_stdio.h"
+#include "ft_string.h"
 #include "utils/env.h"
 #include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 static void	set_env_entry(t_list **env_list, char *env_str);
 static void	print_export_entry(void *content);

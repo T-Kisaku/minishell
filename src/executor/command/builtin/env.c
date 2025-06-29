@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 09:43:33 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 15:50:48 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "ft_stdio.h"
 #include "utils/env.h"
 #include <stdio.h>
+#include <unistd.h>
 
 static void	print_env_etry(void *content);
 

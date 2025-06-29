@@ -6,13 +6,15 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:45:18 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 15:48:21 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 #include "token.h"
 #include "utils/argv.h"
+#include <limits.h>
+#include <stdlib.h>
 
 void	del_command(void *content)
 {
@@ -28,7 +30,7 @@ void	del_command(void *content)
 		free_argv(&cmd->u.simple.argv, INT_MAX);
 	}
 	else if (cmd->type == CMD_SUBSHELL)
-		;
+    free_ast(&cmd->u.subshell.and_or_list);
 	free(cmd);
 }
 

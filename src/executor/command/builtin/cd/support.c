@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:16:03 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 15:50:27 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 #include "exit_status.h"
 #include "ft_list.h"
 #include "ft_printf.h"
+#include "ft_string.h"
 #include "ft_stdio.h"
 #include "utils/env.h"
 #include "utils/path.h"
 #include <errno.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

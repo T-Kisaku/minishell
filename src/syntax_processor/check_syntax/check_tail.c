@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 14:19:21 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 14:19:21 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 15:49:21 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "syntax_processor.h"
 #include "token.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 

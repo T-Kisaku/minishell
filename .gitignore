@@ -4,6 +4,7 @@
 vgcore.*
 
 minishell
+!minishell/
 obj
 test_bin
 

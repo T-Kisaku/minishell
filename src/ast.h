@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:54 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:54 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 15:46:45 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@
 #ifndef AST_H
 # define AST_H
 
-# include "libft.h"
 # include "token.h"
 # include <stdbool.h>
 # include <stddef.h>

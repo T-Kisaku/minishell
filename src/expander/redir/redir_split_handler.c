@@ -6,16 +6,16 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 12:01:56 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 15:53:20 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 #include "error.h"
 #include "exit_status.h"
-#include "ft_string.h"
 #include "minishell.h"
 #include "token.h"
+#include "ft_ctype.h"
 #include <stdbool.h>
 
 static bool	check_could_split(char *value);

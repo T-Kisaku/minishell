@@ -6,11 +6,12 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:56 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:56 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 15:48:45 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
+#include <stdlib.h>
 
 t_command	*new_command(t_cmd_type cmd_type)
 {
