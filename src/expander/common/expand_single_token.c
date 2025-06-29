@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:05:28 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 12:04:35 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 #include "expander.h"
 #include <stdio.h>
 
-static void	init_expansion_context(t_expansion_context *ctx,
-									t_token *content);
+static void		init_expansion_context(t_expansion_context *ctx,
+					t_token *content);
 static t_error	*expand_ast_core(t_expansion_context *ctx,
-								t_minishell_state *shell,
-								e_expander_mode mode);
+					t_minishell_state *shell, e_expander_mode mode);
 static t_error	*expand_ast_core_loop(t_expansion_context *ctx,
-										t_minishell_state *shell,
-										e_expander_mode mode);
+					t_minishell_state *shell, e_expander_mode mode);
 static void		set_dollar_type(t_expansion_context *ctx);
 
 t_error	*expand_single_token(t_token *content, t_minishell_state *shell)

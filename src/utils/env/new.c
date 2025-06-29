@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:56 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:56 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 11:21:48 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_env	*str_to_new_env(char *env_str)
 		return (NULL);
 	equal_pos = ft_strchr(env_str, '=');
 	if (!equal_pos)
-		return (NULL); // Invalid env string
+		return (NULL);
 	key = ft_substr(env_str, 0, equal_pos - env_str);
 	if (!key)
 		return (NULL);
@@ -60,6 +60,7 @@ t_env	*str_to_new_env(char *env_str)
 	free(key);
 	return (new);
 }
+// Invalid env string
 
 t_list	*lstnew_env(char *env_str)
 {
@@ -88,36 +89,5 @@ t_error	*envp_to_env_list(char **envp, t_list **env_list_ptr)
 		ft_lstadd_back(env_list_ptr, new_env_node);
 		env_i++;
 	}
-	return (NULL);
-}
-
-t_error	*env_list_to_envp(t_list *env_list, char ***envp_ptr)
-{
-	char	**new_envp;
-	size_t	new_env_str_size;
-	t_env	*env_tmp;
-	int		i;
-
-	new_envp = ft_calloc(ft_lstsize(env_list) + 1, sizeof(char *));
-	i = 0;
-	while (env_list)
-	{
-		env_tmp = lstget_env(env_list);
-		new_env_str_size = (ft_strlen(env_tmp->key) + ft_strlen(env_tmp->value)
-				+ 1 + 1) * sizeof(char);
-		new_envp[i] = malloc(new_env_str_size);
-		if (!new_envp[i])
-		{
-			free_argv(&new_envp, i);
-			return (NULL);
-		}
-		new_envp[i][0] = '\0';
-		ft_strlcat(new_envp[i], env_tmp->key, new_env_str_size);
-		ft_strlcat(new_envp[i], "=", new_env_str_size);
-		ft_strlcat(new_envp[i], env_tmp->value, new_env_str_size);
-		i++;
-		env_list = env_list->next;
-	}
-	*envp_ptr = new_envp;
 	return (NULL);
 }

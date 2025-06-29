@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:55 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:45:18 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ void	del_command(void *content)
 		free_argv(&cmd->u.simple.argv, INT_MAX);
 	}
 	else if (cmd->type == CMD_SUBSHELL)
-	{
-		// TODO:
-	}
+		;
 	free(cmd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 09:47:26 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 14:00:52 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "stdio.h"
 #include "utils/env.h"
 
-static t_error	*allocate_variable_value(t_expansion_context *ctx);
+// static t_error	*allocate_variable_value(t_expansion_context *ctx);
 t_error			*expand_special(t_expansion_context *ctx,
 					t_minishell_state *shell);
 static t_error	*set_temp(t_expansion_context *ctx, char *str,
@@ -46,26 +46,26 @@ t_error	*expand_variable(t_expansion_context *ctx, t_minishell_state *shell)
 	free(tmp);
 	if (error)
 		return (error);
-	return (allocate_variable_value(ctx));
-}
-
-static t_error	*allocate_variable_value(t_expansion_context *ctx)
-{
-	if (!ctx->variable)
-	{
-		ctx->variable = malloc(sizeof(char));
-		if (!ctx->variable)
-			return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO"));
-		*ctx->variable = '\0';
-	}
-	else
-	{
-		ctx->variable = ft_strdup(ctx->variable);
-		if (!ctx->variable)
-			return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO"));
-	}
 	return (NULL);
 }
+
+// static t_error	*allocate_variable_value(t_expansion_context *ctx)
+// {
+// 	if (!ctx->variable)
+// 	{
+// 		ctx->variable = malloc(sizeof(char));
+// 		if (!ctx->variable)
+// 			return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO"));
+// 		*ctx->variable = '\0';
+// 	}
+// 	else
+// 	{
+// 		ctx->variable = ft_strdup(ctx->variable);
+// 		if (!ctx->variable)
+// 			return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO"));
+// 	}
+// 	return (NULL);
+// }
 
 t_error	*expand_special(t_expansion_context *ctx, t_minishell_state *shell)
 {
@@ -113,7 +113,7 @@ static t_error	*set_temp(t_expansion_context *ctx, char *str,
 }
 
 static t_error	*set_prev_exit_code(t_expansion_context *ctx,
-		int prev_exit_code)
+									int prev_exit_code)
 {
 	char	*str_exit_code;
 	size_t	len;

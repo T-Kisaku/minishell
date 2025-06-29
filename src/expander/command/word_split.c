@@ -6,12 +6,13 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 09:34:32 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 14:35:20 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 #include "ft_string.h"
+#include <stdio.h>
 
 static t_error	*process_simple(t_list *head);
 static int		count_words(char *str);

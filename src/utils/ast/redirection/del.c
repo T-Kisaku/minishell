@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:56 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:56 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:45:38 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	del_redir(void *ptr)
 	redir = (t_redir *)ptr;
 	if (!redir)
 		return ;
-	// TODO: free filename_token here
 	free(redir->redirect_source.filename);
 	del_token(redir->redirect_source.filename_token);
 	free(redir->to_be_redirected.filename);
 	del_token(redir->to_be_redirected.filename_token);
 	free(redir);
 }
+// TODO: free filename_token here
 
 void	clear_redir_list(t_list **head)
 {

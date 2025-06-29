@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:56 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:56 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:45:56 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ t_list	*lstnew_redir(t_redir_type redir_type, t_token *filename_token)
 	new->redirect_source.filename_token = malloc(sizeof(t_token));
 	if (new->redirect_source.filename_token == NULL)
 		return (NULL);
-	new->redirect_source.filename_token->value = ft_strdup(filename_token->value);
+	new->redirect_source.filename_token->value
+		= ft_strdup(filename_token->value);
 	if (!new->redirect_source.filename_token)
 	{
 		free(new->redirect_source.filename_token);
@@ -63,6 +64,7 @@ t_list	*lstnew_redir(t_redir_type redir_type, t_token *filename_token)
 		return (NULL);
 	return (ft_lstnew((void *)new));
 }
+
 t_list	*lstadd_back_redir(t_list **redir_list_ptr, t_redir_type redir_type,
 		t_token *filename_token)
 {

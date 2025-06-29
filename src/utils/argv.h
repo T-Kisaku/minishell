@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argv.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:55 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:35:41 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	free_argv(char ***argv, int num);
 void	free_argv_null(char ***argv);
-char	**copy_argv(char **argv);
+// char	**copy_argv(char **argv);
 void	str_arr_iter(char **arr, void (*f)(char **, int));
 
 void	set_env(t_list *env_list, const char *key, const char *value);

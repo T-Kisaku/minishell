@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argv.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:56 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:56 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:35:47 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ void	free_argv(char ***argv, int num)
 		return ;
 	i = 0;
 	if (num == INT_MAX)
+	{
 		while ((*argv)[i])
 		{
 			free((*argv)[i]);
 			(*argv)[i] = NULL;
 			i++;
 		}
+	}
 	else
 	{
 		while (i < num)
@@ -59,17 +61,17 @@ void	free_argv_null(char ***argv)
 	*argv = NULL;
 }
 
-char	**copy_argv(char **argv)
-{
-	int		i;
-	char	**copy;
+// char	**copy_argv(char **argv)
+// {
+// 	int		i;
+// 	char	**copy;
 
-	i = 0;
-	while (argv[i])
-		i++;
-	copy = malloc(sizeof(char *) * (i + 1));
-	for (int j = 0; j < i; j++)
-		copy[j] = ft_strdup(argv[j]);
-	copy[i] = NULL;
-	return (copy);
-}
+// 	i = 0;
+// 	while (argv[i])
+// 		i++;
+// 	copy = malloc(sizeof(char *) * (i + 1));
+// 	for (int j = 0; j < i; j++)
+// 		copy[j] = ft_strdup(argv[j]);
+// 	copy[i] = NULL;
+// 	return (copy);
+// }

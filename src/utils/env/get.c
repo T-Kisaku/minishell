@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:57 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:46:37 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ t_env	*lstget_env(t_list *node)
 		return (NULL);
 	return ((t_env *)node->content);
 }
-
-#include <stdio.h>
 
 bool	cmp_env_key(void *target, void *content)
 {
@@ -59,22 +57,3 @@ t_error	*ms_getenv(char *search_key, char **value_ptr, t_list *env_list)
 	}
 	return (NULL);
 }
-
-// t_error *ms_getenv(char *search_key, char **value_ptr, t_list *env_list) {
-//     t_env search_env;
-//     t_env *found;
-
-//     // 比較用の一時オブジェクトをスタック領域で作る（malloc/free不要）
-//     search_env.key = search_key;
-//     search_env.value = NULL; // valueは比較に不要ならNULLでOK
-
-//     found = lstfind(env_list, &search_env, cmp_env_key);
-//     if(found == NULL) {
-//         return (new_error(EXIT_USER_ERR, "ENVIRONMENT VARIABLE NOT FOUND"));
-//     }
-//     *value_ptr = ft_strdup(found->value);
-//     if(!(*value_ptr)) {
-//         return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERROR"));
-//     }
-//     return (NULL);
-// }

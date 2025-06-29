@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:46:15 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 12:02:55 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static t_error	*read_line_loop(char **content, char *delimiter,
 			continue ;
 		}
 		if (is_line_eof(line, delimiter, delimiter_len))
-			return (free_return_null((void**)&line));
+			return (free_return_null((void **)&line));
 		append_result = append_line_to_content(content, line);
 		free(line);
 		if (append_result)

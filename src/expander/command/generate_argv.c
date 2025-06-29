@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:47:20 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 14:35:13 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "expander.h"
 #include "minishell.h"
 #include "utils/argv.h"
+#include <stdio.h>
 
 static t_error	*process_simple(t_command *cmd);
 
@@ -53,6 +54,7 @@ static t_error	*process_simple(t_command *cmd)
 	{
 		cur_token_content = cur_token->content;
 		cmd->u.simple.argv[index] = ft_strdup(cur_token_content->value);
+		printf("%d: %s\n", index, cmd->u.simple.argv[index]);
 		if (!cmd->u.simple.argv[index])
 		{
 			free_argv(&cmd->u.simple.argv, index);

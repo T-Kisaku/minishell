@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:55 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:45:02 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	del_and_or(void *content)
 	del_pipeline(and_or->pipeline);
 	free(and_or);
 }
+
 void	lstclear_and_or(t_list **and_or_list)
 {
 	if (!and_or_list || !*and_or_list)

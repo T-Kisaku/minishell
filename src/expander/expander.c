@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:59 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 13:28:30 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "minishell.h"
 #include "utils/env.h"
 #include "utils/utils.h"
+#include <stdio.h>
 
 static t_error	*expand_command(t_ast *ast, t_minishell_state *shell);
 static t_error	*expand_redir(t_ast *ast, t_minishell_state *shell);
