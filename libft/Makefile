@@ -58,8 +58,7 @@ fclean: clean
 re: fclean all
 
 norm:
-	@norminette $(addprefix $(SRC_DIR)/, $(SRCS)) | grep -v "OK!" || true
-	@norminette $(addprefix $(SRC_DIR)/, $(BONUS_SRCS)) | grep -v "OK!" || true
+	@norminette . | grep -v "OK!" || true
 
 format:
 	c_formatter_42 $(addprefix $(SRC_DIR)/, $(SRCS))
