@@ -52,8 +52,10 @@ src/executor/command/builtin/export.c \
 src/executor/command/external/command_path.c \
 src/executor/command/external/exec_external_cmd.c \
 src/executor/command/process_redir_list.c \
-src/executor/pipeline/wait_pids.c \
-src/executor/pipeline/exec_cmd_list.c \
+src/executor/pipeline/cmd_list/cmd_fd.c \
+src/executor/pipeline/cmd_list/redir.c \
+src/executor/pipeline/cmd_list/exec_cmd_list.c \
+src/executor/pipeline/pids.c \
 src/executor/pipeline/exec_pipeline.c \
 src/executor/exec_ast.c \
 src/expander/common/quote_remove_core.c \

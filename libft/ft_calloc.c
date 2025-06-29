@@ -6,11 +6,13 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 10:41:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2024/11/20 23:01:16 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 17:26:25 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_string.h"
+#include <stdlib.h>
+#include <stddef.h>
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {

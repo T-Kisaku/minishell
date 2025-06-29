@@ -6,11 +6,11 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 10:55:11 by tkisaku           #+#    #+#             */
-/*   Updated: 2024/11/13 10:55:11 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 17:25:36 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_string.h"
 #include <string.h>
 
 void	ft_bzero(void *s, size_t n)
