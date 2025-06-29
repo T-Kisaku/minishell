@@ -7,10 +7,10 @@ lsp-setup:
 	@echo "$(TEST_CFLAGS)" | tr ' ' '\n' > compile_flags.txt
 	@printf "${GREEN}✔${RESET} compile_flags.txt generated.\n"
 
+# TODO: adapt for libft
 format:
 	@c_formatter_42 $(wildcard src/*.h) $(wildcard src/**/*.h)
 	@c_formatter_42 $(SRCS)
-	@$(MAKE) format -C $(LIBFTDIR)
 
 stdheader:
 	@stdheader $(wildcard src/*.h) $(wildcard src/**/*.h)

@@ -11,14 +11,14 @@
 /* ************************************************************************** */
 
 #ifndef PIPELINE_H
-#define PIPELINE_H
+# define PIPELINE_H
 
-#include <unistd.h>
-#include <sys/wait.h>
-#include <fcntl.h>
-#include "libft.h"
+# include "libft.h"
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
-int exec_cmd_list(pid_t *pids, t_list *cmd_list, t_list **env_list);
-int wait_pids(pid_t *pids, int cmd_count);
+int	exec_cmd_list(pid_t *pids, t_list *cmd_list, t_list **env_list);
+int	wait_pids(pid_t *pids, int cmd_count);
 
 #endif // !PIPELINE_H

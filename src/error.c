@@ -6,59 +6,71 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:57 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 09:00:51 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "error.h"
+#include "ft_string.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "libft.h"
-#include "error.h"
 
 // Return 0 if usr_error succed
-int user_error(char *msg) {
-  if (write(STDERR_FILENO, msg, ft_strlen(msg)) < 0) {
-    perror(ERR_MSG_WRITE);
-    return -1;
-  }
-  return (0);
+int	user_error(char *msg)
+{
+	if (write(STDERR_FILENO, msg, ft_strlen(msg)) < 0)
+	{
+		perror(ERR_MSG_WRITE);
+		return (-1);
+	}
+	return (0);
 }
 
-void dev_error() {
-  if (write(STDERR_FILENO, ERR_MSG_DEV, ft_strlen(ERR_MSG_DEV)) < 0) {
-    perror(ERR_MSG_WRITE);
-  }
+void	dev_error(void)
+{
+	if (write(STDERR_FILENO, ERR_MSG_DEV, ft_strlen(ERR_MSG_DEV)) < 0)
+	{
+		perror(ERR_MSG_WRITE);
+	}
 }
 
 // TODO: think about when malloc is failed
-t_error *new_error(int exit_code, const char *msg) {
-  t_error *err;
-  err = malloc(sizeof(t_error));
-  if (!err)
-    return NULL;
-  err->exit_code = exit_code;
-  err->msg = ft_strdup(msg);
-  if (!err->msg) {
-    free(err);
-    return NULL;
-  }
-  return err;
+t_error	*new_error(int exit_code, const char *msg)
+{
+	t_error	*err;
+
+	err = malloc(sizeof(t_error));
+	if (!err)
+		return (NULL);
+	err->exit_code = exit_code;
+	err->msg = ft_strdup(msg);
+	if (!err->msg)
+	{
+		free(err);
+		return (NULL);
+	}
+	return (err);
 }
-void del_error(t_error *error) {
-  if (error != NULL) {
-    free(error->msg);
-    free(error);
-  }
+void	del_error(t_error *error)
+{
+	if (error != NULL)
+	{
+		free(error->msg);
+		free(error);
+	}
 };
-ssize_t print_error(const char *msg) {
-  ssize_t bytes;
-
-  bytes = write(STDERR_FILENO, msg, ft_strlen(msg));
-  if (bytes < 0)
-    perror(ERR_MSG_WRITE);
-  return bytes;
+ssize_t	print_error(const char *msg)
+{
+	ssize_t	bytes;
+	bytes = write(STDERR_FILENO, msg, ft_strlen(msg));
+	if (bytes < 0)
+		perror(ERR_MSG_WRITE);
+	return (bytes);
 }
 
-bool is_error(t_error *error) { return error != NULL; }
+bool	is_error(t_error *error)
+{
+	return (error != NULL);
+}

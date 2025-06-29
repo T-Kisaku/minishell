@@ -12,9 +12,9 @@
 
 #include "error.h"
 #include "exit_status.h"
+#include "ft_string.h"
 #include "syntax_processor/tokenizer.h"
 #include "token.h"
-#include "ft_string.h"
 #include <stdio.h>
 
 static void		process_space(t_token_context *ctx);
@@ -65,14 +65,13 @@ static t_error	*process_unquoted_word(t_token_context *ctx)
 	int		in_quote;
 	char	quote;
 
-
-	if (*ctx->cur_str == '\0' || ft_isspace(*ctx->cur_str) ||
-		is_special_char(*ctx->cur_str))
+	if (*ctx->cur_str == '\0' || ft_isspace(*ctx->cur_str)
+		|| is_special_char(*ctx->cur_str))
 		return (NULL);
 	in_quote = 0;
 	quote = '\0';
 	while ((*ctx->cur_str != '\0' && !ft_isspace(*ctx->cur_str)
-			&& !is_special_char(*ctx->cur_str))|| in_quote)
+			&& !is_special_char(*ctx->cur_str)) || in_quote)
 	{
 		if (*ctx->cur_str == '\'' || *ctx->cur_str == '"')
 		{
@@ -103,7 +102,7 @@ static t_error	*process_quoted_word(t_token_context *ctx)
 	quote = *ctx->cur_str;
 	if (quote != '\'' && quote != '"')
 		return (new_error(EXIT_INTERNAL_ERR,
-							"minishell: syntax error: invalid quote type\n"));
+				"minishell: syntax error: invalid quote type\n"));
 	if (quote == '\'')
 		type = TOKEN_SINGLE_QUOTED_WORD;
 	else if (quote == '"')

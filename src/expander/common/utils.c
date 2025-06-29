@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "expander.h"
+#include "libft.h"
 
 void	copy_and_advance(t_expansion_context *ctx, char *src, int count);
 
