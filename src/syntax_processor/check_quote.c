@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:16:33 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 10:49:25 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,69 +19,97 @@
 #include <readline/readline.h>
 #include <stdlib.h>
 
-static bool	is_quote_closed(char *input);
+static bool		is_quote_closed(char *input);
+static t_error	*read_and_append_line(char **input);
+static t_error	*read_line_from_readline(char **read_str);
+static t_error	*append_line_to_input(char **input, const char *read_str);
 
+// check if quote is closed and require addtional input if needed
 t_error	*check_quote(char **input, t_minishell_state *shell)
 {
-	char	*new_input;
-	char	*read_str;
-	char	*temp;
 	t_error	*error;
 
-	error = NULL;
+	if (!input || !*input || !shell)
+		return (new_error(EXIT_INTERNAL_ERR,
+				"Invalid arguments to check_quote"));
 	while (1)
 	{
 		if (is_quote_closed(*input))
-			return (error);
-		if (shell->is_interactive != 0)
+			return (NULL);
+		if (shell->is_interactive)
 			return (new_error(EXIT_USER_ERR,
 					"syntax error: You need to close quote bro!!"));
-		read_str = readline("> ");
-		if (!read_str)
-			return (new_error(EXIT_EOF,"exit"));
-		if (!*read_str)
-		{
-			free(read_str);
-			continue ;
-		}
-		new_input = ft_strjoin(*input, "\n");
-		free(*input);
-		if (!new_input)
-			return (new_error(EXIT_INTERNAL_ERR, "Memory allocation failed"));
-		temp = new_input;
-		new_input = ft_strjoin(new_input, read_str);
-		free(read_str);
-		free(temp);
-		if (!new_input)
-			return (new_error(EXIT_INTERNAL_ERR, "Memory allocation failed"));
-		*input = new_input;
+		error = read_and_append_line(input);
+		if (error)
+			return (error);
 	}
+}
+
+static t_error	*read_and_append_line(char **input)
+{
+	char	*read_str;
+	t_error	*error;
+
+	error = read_line_from_readline(&read_str);
+	if (error)
+		return (error);
+	if (!read_str)
+		return (NULL);
+	error = append_line_to_input(input, read_str);
+	free(read_str);
+	return (error);
+}
+
+static t_error	*read_line_from_readline(char **read_str)
+{
+	*read_str = readline("> ");
+	if (!*read_str)
+		return (new_error(EXIT_EOF, "exit"));
+	return (NULL);
+}
+
+static t_error	*append_line_to_input(char **input, const char *read_str)
+{
+	char	*new_input;
+	char	*temp;
+
+	new_input = ft_strjoin(*input, "\n");
+	if (!new_input)
+		return (new_error(EXIT_INTERNAL_ERR, "Memory allocation failed"));
+	free(*input);
+	temp = new_input;
+	new_input = ft_strjoin(temp, read_str);
+	free(temp);
+	if (!new_input)
+		return (new_error(EXIT_INTERNAL_ERR, "Memory allocation failed"));
+	*input = new_input;
+	return (NULL);
 }
 
 static bool	is_quote_closed(char *input)
 {
-	int		in_quote;
+	bool	in_quote;
 	char	quote;
 
-	in_quote = 0;
+	if (!input)
+		return (true);
+	in_quote = false;
 	while (*input)
 	{
 		if (in_quote)
 		{
 			if (*input == quote)
-				in_quote = 0;
+				in_quote = false;
 		}
 		else
 		{
 			if (*input == '\'' || *input == '"')
 			{
-				in_quote = 1;
+				in_quote = true;
 				quote = *input;
 			}
 		}
 		input++;
 	}
-	if (in_quote)
-		return (false);
-	return (true);
+	return (!in_quote);
 }

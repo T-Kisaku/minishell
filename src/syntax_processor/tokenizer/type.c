@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_processor.h                                 :+:      :+:    :+:   */
+/*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 08:52:54 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 13:23:47 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/06/29 11:55:26 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/29 11:56:49 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SYNTAX_PROCESSOR_H
-# define SYNTAX_PROCESSOR_H
+#include <stdbool.h>
 
-# include "ast.h"
-# include "error.h"
-# include "minishell.h"
+int	is_quote_char(char c)
+{
+	return (c == '\'' || c == '"');
+}
 
-t_error	*str_to_token(char *input_str, t_list **token_list_ptr);
-t_error	*check_syntax(t_list **list, t_minishell_state *shell);
-t_error	*token_to_ast(t_list *token_list, t_ast **ast_ptr);
-
-#endif
+bool	is_special_char(char c)
+{
+	return (c == '|' || c == '<' || c == '>');
+}

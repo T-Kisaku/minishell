@@ -6,17 +6,16 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:55 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 13:16:48 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
 
-# include "libft.h"
+# include "ft_list.h"
 # include <stdbool.h>
 
-// クォート内の文字は特殊文字として扱われないため("<"の場合リダイレクトしない）、一つの列挙型で管理したほうが好ましいらしい。念の為"TOKEN_"とつけたが、なしでも良いと思う。
 typedef enum e_token_type
 {
 	TOKEN_UNQUOTED_WORD,
@@ -32,6 +31,13 @@ typedef enum e_token_type
 	TOKEN_REDIR_APPEND,       // >>
 }					t_token_type;
 
+typedef enum e_token_group
+{
+	TOKEN_GROUP_WORD,
+	TOKEN_GROUP_REDIR,
+	TOKEN_GROUP_CONTROL_OP
+}					t_token_group;
+
 typedef struct t_token
 {
 	char			*value;
@@ -41,6 +47,7 @@ typedef struct t_token
 void				del_token(void *content);
 void				lstclear_token(t_list **head);
 t_token				*lstget_token(t_list *node);
+t_token_group		lstget_token_group(t_list *node);
 t_token				*new_token(char *value, t_token_type type);
 t_list				*lstnew_token(char *value, t_token_type type);
 t_list				*lstadd_back_token(t_list **token_list_ptr, char *value,
