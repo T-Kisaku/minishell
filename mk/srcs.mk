@@ -74,7 +74,7 @@ src/expander/command/split_token.c \
 src/expander/command/word_split.c \
 src/expander/expander.c \
 src/signal/setup_signal_handlers.c \
-src/error.c \
 src/minishell/main.c \
 src/minishell/prompt.c \
 src/minishell/run_cmd.c \
+src/error.c \

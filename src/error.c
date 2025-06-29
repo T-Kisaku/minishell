@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 09:00:51 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 16:07:29 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-// Return 0 if usr_error succed
-int	user_error(char *msg)
-{
-	if (write(STDERR_FILENO, msg, ft_strlen(msg)) < 0)
-	{
-		perror(ERR_MSG_WRITE);
-		return (-1);
-	}
-	return (0);
-}
-
-void	dev_error(void)
-{
-	if (write(STDERR_FILENO, ERR_MSG_DEV, ft_strlen(ERR_MSG_DEV)) < 0)
-	{
-		perror(ERR_MSG_WRITE);
-	}
-}
 
 // TODO: think about when malloc is failed
 t_error	*new_error(int exit_code, const char *msg)
@@ -53,6 +34,7 @@ t_error	*new_error(int exit_code, const char *msg)
 	}
 	return (err);
 }
+
 void	del_error(t_error *error)
 {
 	if (error != NULL)
@@ -60,14 +42,6 @@ void	del_error(t_error *error)
 		free(error->msg);
 		free(error);
 	}
-};
-ssize_t	print_error(const char *msg)
-{
-	ssize_t	bytes;
-	bytes = write(STDERR_FILENO, msg, ft_strlen(msg));
-	if (bytes < 0)
-		perror(ERR_MSG_WRITE);
-	return (bytes);
 }
 
 bool	is_error(t_error *error)
