@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:59:41 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:19:42 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ static void	run_cmd(char **input, t_minishell_state *shell)
 	{
 		shell->prev_exit_code = error->exit_code;
 		ft_fputs(error->msg, STDERR_FILENO);
+		del_error(error);
 		free_ast(&ast);
 		return ;
 	}

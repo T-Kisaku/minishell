@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_quote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:58:40 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:16:33 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,7 @@ t_error	*check_quote(char **input, t_minishell_state *shell)
 					"syntax error: You need to close quote bro!!"));
 		read_str = readline("> ");
 		if (!read_str)
-		{
-			printf("exit\n");
-			if (*input)
-				free(*input);
-			*input = NULL;
-			rl_clear_history();
-			exit(EXIT_OK);
-		}
+			return (new_error(EXIT_EOF,"exit"));
 		if (!*read_str)
 		{
 			free(read_str);
