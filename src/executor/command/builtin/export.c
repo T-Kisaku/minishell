@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:58 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 09:44:07 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include "exit_status.h"
 #include "ft_list.h"
 #include "ft_stdio.h"
-#include "libft.h"
 #include "utils/env.h"
 #include <stdio.h>
 
 static void	set_env_entry(t_list **env_list, char *env_str);
 static void	print_export_entry(void *content);
+
 int	exec_export(t_command *cmd, t_list **env_list)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:57 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:28:57 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "exit_status.h"
 #include "ft_stdio.h"
 #include "ft_string.h"
-#include "libft.h"
 
 void	*check_is_all_digit(unsigned int i, char c, void *acc)
 {
@@ -27,6 +26,7 @@ void	*check_is_all_digit(unsigned int i, char c, void *acc)
 	*is_valid = ft_isdigit(c);
 	return (acc);
 }
+
 bool	check_valid_ascii(char *s)
 {
 	bool	is_valid;

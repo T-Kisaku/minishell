@@ -1,21 +1,34 @@
-#ifndef BUILTIN
-#define BUILTIN
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/29 09:40:02 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/29 09:40:28 by tkisaku          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "ast.h"
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-typedef int (*builtin_func)(t_command *, t_list **env_list);
+# include "ast.h"
 
-typedef struct s_builtin_entry {
-  const char *name;
-  builtin_func func;
-} t_builtin_entry;
+typedef int			(*t_builtin_func)(t_command *, t_list **env_list);
 
-int exec_pwd(t_command *cmd, t_list **env_list);
-int exec_env(t_command *cmd, t_list **env_list);
-int exec_export(t_command *cmd, t_list **env_list);
-int exec_unset(t_command *cmd, t_list **env_list);
-int exec_exit(t_command *cmd, t_list **env_list);
-int exec_cd(t_command *cmd, t_list **env_list);
-int exec_echo(t_command *cmd, t_list **env_list);
+typedef struct s_builtin_entry
+{
+	const char		*name;
+	t_builtin_func	func;
+}					t_builtin_entry;
 
-#endif // !BUILTIN
+int					exec_pwd(t_command *cmd, t_list **env_list);
+int					exec_env(t_command *cmd, t_list **env_list);
+int					exec_export(t_command *cmd, t_list **env_list);
+int					exec_unset(t_command *cmd, t_list **env_list);
+int					exec_exit(t_command *cmd, t_list **env_list);
+int					exec_cd(t_command *cmd, t_list **env_list);
+int					exec_echo(t_command *cmd, t_list **env_list);
+
+#endif // !BUILTIN_H

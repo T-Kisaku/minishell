@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:58 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 09:41:48 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+// TODO: error handling at exit
 static void	process(t_redir_target *target, t_redir_type type)
 {
 	int	oflags;
@@ -27,19 +28,18 @@ static void	process(t_redir_target *target, t_redir_type type)
 		if (type == REDIR_INPUT)
 			oflags = O_RDONLY;
 		if (type == REDIR_HERE_DOC)
-			oflags = O_RDONLY; // heredoc用に追加
+			oflags = O_RDONLY;
 		if (type == REDIR_OUTPUT)
 			oflags = O_WRONLY | O_CREAT | O_TRUNC;
 		if (type == REDIR_APPEND)
 			oflags = O_WRONLY | O_CREAT | O_APPEND;
 		target->fd = open(target->filename, oflags, 0644);
-		if (type == REDIR_HERE_DOC) // heredocの場合はOPENした直後にunlinkして削除する。
+		if (type == REDIR_HERE_DOC)
 		{
 			if (unlink(target->filename) == -1)
 				printf("エラー処理");
 		}
 	}
-	// TODO: error handling
 	if (target->fd < 0)
 		exit(1);
 }

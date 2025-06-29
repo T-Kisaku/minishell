@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:58 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:31:02 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	exec_pwd(t_command *cmd, t_list **env_list)
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 	{
-		return (print_internal_error("pwd: failed to get current working directory\n"));
+		return (print_internal_error("pwd: failed to get cwd\n"));
 	}
 	printf("%s\n", cwd);
 	free(cwd);

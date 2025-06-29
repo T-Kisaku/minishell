@@ -6,14 +6,13 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:57 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 09:43:33 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 #include "exit_status.h"
 #include "ft_stdio.h"
-#include "libft.h"
 #include "utils/env.h"
 #include <stdio.h>
 
@@ -34,6 +33,7 @@ int	exec_env(t_command *cmd, t_list **env_list)
 	ft_lstiter(*env_list, print_env_etry);
 	return (EXIT_OK);
 }
+
 static void	print_env_etry(void *content)
 {
 	t_env	*env;

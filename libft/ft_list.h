@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 12:28:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/28 15:20:28 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 09:55:15 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void				*ft_lstfind(t_list *lst, void *search, bool (*cmp)(void *,
 							void *));
 void				ft_lstunset(t_list **lst, void *search_content,
 						bool (*cmp)(void *, void *), void (*del)(void *));
-int	ft_lst_is_last(t_list *lst);
+int					ft_lst_is_last(t_list *lst);
+void				*ft_lstinsert(t_list **lst_ptr, void *ideal_content,
+						bool (*cmp)(void *, void *), void (*set)(void *,
+							void *));
 
 #endif // !FT_LIST_H

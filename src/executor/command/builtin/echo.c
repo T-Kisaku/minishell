@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:57 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:18:36 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,25 @@
 #include <stdio.h>
 #include <string.h>
 
-// TODO: fix echo > test.txt
-// Redirect is broken
-// space exits at the last when echo is executed
+static void	process_echo(t_command *cmd);
+
 int	exec_echo(t_command *cmd, t_list *env_list)
 {
-	int		i;
-	bool	is_new_line;
-
 	(void)env_list;
 	if (cmd->type != CMD_SIMPLE)
 	{
 		ft_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
 		return (EXIT_INTERNAL_ERR);
 	}
+	process_echo(cmd);
+	return (EXIT_OK);
+}
+
+static void	process_echo(t_command *cmd)
+{
+	int		i;
+	bool	is_new_line;
+
 	i = 1;
 	is_new_line = true;
 	while (i < cmd->u.simple.argc && cmd->u.simple.argv[i] != NULL)
@@ -50,5 +55,4 @@ int	exec_echo(t_command *cmd, t_list *env_list)
 	}
 	if (is_new_line)
 		printf("\n");
-	return (EXIT_OK);
 }

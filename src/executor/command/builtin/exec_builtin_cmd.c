@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:57 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:22:52 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,22 +58,32 @@ bool	is_builtin(t_command *cmd)
 
 static const t_builtin_entry	*find_builtin(const char *name)
 {
-	const t_builtin_entry	*table = get_builtin_table();
+	const t_builtin_entry	*table;
+	int						i;
 
-	for (int i = 0; table[i].name != NULL; i++)
+	table = get_builtin_table();
+	i = 0;
+	while (table[i].name != NULL)
 	{
 		if (ft_strcmp(table[i].name, name) == 0)
 			return (&table[i]);
+		i++;
 	}
 	return (NULL);
 }
 
 static const t_builtin_entry	*get_builtin_table(void)
 {
-	static const t_builtin_entry table[8] = {
-		{"echo", exec_echo}, {"exit", exec_exit}, {"env", exec_env}, {"export",
-			exec_export}, {"unset", exec_unset}, {"pwd", exec_pwd}, {"cd",
-			exec_cd}, {NULL, NULL} // 終端
+	static const t_builtin_entry	table[8] = {
+	{"echo", exec_echo},
+	{"exit", exec_exit},
+	{"env", exec_env},
+	{"export", exec_export},
+	{"unset", exec_unset},
+	{"pwd", exec_pwd},
+	{"cd", exec_cd},
+	{NULL, NULL}
 	};
+
 	return (table);
 }

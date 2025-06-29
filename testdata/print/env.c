@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "libft.h"
 #include "utils/env.h"
 
 void print_env(void *content) {

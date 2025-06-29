@@ -83,7 +83,8 @@ ft_lstmap_bonus.c \
 ft_lstnew_bonus.c \
 ft_lstsize_bonus.c \
 ft_lstunset.c \
-ft_lst_is_last.c
+ft_lst_is_last.c \
+ft_lstinsert.c
 LIST_OBJS    = $(patsubst %.c, $(OBJ_DIR)/%.o, $(LIST_SRCS))
 
 

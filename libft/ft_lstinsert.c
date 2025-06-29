@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.h                                          :+:      :+:    :+:   */
+/*   ft_lstinsert.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 09:39:04 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/06/29 09:54:38 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/29 09:54:50 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMAND_H
-# define COMMAND_H
+#include "ft_list.h"
 
-# include "ft_list.h"
+void	*ft_lstinsert(t_list **lst_ptr, void *ideal_content, bool (*cmp)(void *,
+			void *), void (*set)(void *, void *))
+{
+	void	*found;
 
-void	process_redir_list(t_list *redir_list);
-
-#endif // !COMMAND_H
+	found = ft_lstfind(*lst_ptr, ideal_content, cmp);
+	if (!found)
+	{
+		ft_lstadd_back(lst_ptr, ft_lstnew(ideal_content));
+		return (ft_lstlast(*lst_ptr));
+	}
+	set(found, ideal_content);
+	return (found);
+}

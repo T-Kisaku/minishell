@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.h                                          :+:      :+:    :+:   */
+/*   cd.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 09:39:04 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/06/29 10:05:32 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/29 10:15:33 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMAND_H
-# define COMMAND_H
+#ifndef CD_H
+# define CD_H
 
-# include "ft_list.h"
+# include "ast.h"
+# include "error.h"
 
-void	process_redir_list(t_list *redir_list);
+int		validate_cd_args(t_command *cmd);
+char	*get_target_path(t_command *cmd, t_list *env_list, t_error **error);
 
-#endif // !COMMAND_H
+int		change_directory(const char *path);
+void	update_environment_variables(t_list **env_list_ptr,
+			const char *new_pwd);
+
+#endif // !CD_H
