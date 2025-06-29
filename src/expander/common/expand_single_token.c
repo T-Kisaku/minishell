@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_single_token.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:58 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:05:28 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 #include "expander.h"
 #include <stdio.h>
 
-static void		init_expansion_context(t_expansion_context *ctx,
-					t_token *content);
+static void	init_expansion_context(t_expansion_context *ctx,
+									t_token *content);
 static t_error	*expand_ast_core(t_expansion_context *ctx,
-					t_minishell_state *shell, e_expander_mode mode);
+								t_minishell_state *shell,
+								e_expander_mode mode);
+static t_error	*expand_ast_core_loop(t_expansion_context *ctx,
+										t_minishell_state *shell,
+										e_expander_mode mode);
 static void		set_dollar_type(t_expansion_context *ctx);
 
-// ワイルドカードの扱いでunquotedとdobule_quotedで差が出るが、ボーナス内容なので一旦スルー
 t_error	*expand_single_token(t_token *content, t_minishell_state *shell)
 {
 	t_expansion_context	ctx;
@@ -61,7 +64,8 @@ static void	init_expansion_context(t_expansion_context *ctx, t_token *content)
 }
 
 static t_error	*expand_ast_core(t_expansion_context *ctx,
-		t_minishell_state *shell, e_expander_mode mode)
+								t_minishell_state *shell,
+								e_expander_mode mode)
 {
 	t_error	*error;
 
@@ -72,6 +76,22 @@ static t_error	*expand_ast_core(t_expansion_context *ctx,
 		if (!ctx->output)
 			return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO"));
 	}
+	error = expand_ast_core_loop(ctx, shell, mode);
+	if (error)
+		return (error);
+	if (mode == MODE_CALCULATE)
+		ctx->required_len = ctx->index;
+	else if (mode == MODE_SET_VALUE)
+		ctx->output[ctx->index] = '\0';
+	return (error);
+}
+
+static t_error	*expand_ast_core_loop(t_expansion_context *ctx,
+										t_minishell_state *shell,
+										e_expander_mode mode)
+{
+	t_error	*error;
+
 	while (*ctx->cur_pos)
 	{
 		if (!ctx->in_single_quote && *ctx->cur_pos == '$')
@@ -91,11 +111,7 @@ static t_error	*expand_ast_core(t_expansion_context *ctx,
 			ctx->cur_pos++;
 		}
 	}
-	if (mode == MODE_CALCULATE)
-		ctx->required_len = ctx->index;
-	else if (mode == MODE_SET_VALUE)
-		ctx->output[ctx->index] = '\0';
-	return (error);
+	return (NULL);
 }
 
 static void	set_dollar_type(t_expansion_context *ctx)

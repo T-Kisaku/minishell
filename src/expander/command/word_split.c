@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:59 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 09:34:32 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_error	*word_split_handler(t_command *cmd, t_minishell_state *shell)
 {
 	t_error	*error;
 
-	(void)shell; // shell is not used in this function
+	(void)shell;
 	error = NULL;
 	if (cmd->type == CMD_SIMPLE)
 	{
@@ -58,6 +58,7 @@ t_error	*process_simple(t_list *head)
 	}
 	return (error);
 }
+
 static int	count_words(char *str)
 {
 	int	word_count;

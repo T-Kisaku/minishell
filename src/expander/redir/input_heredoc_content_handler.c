@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_heredoc_content_handler.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:59:06 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:09:43 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,20 @@
 #include "error.h"
 #include "exit_status.h"
 #include "minishell.h"
+#include "utils/utils.h"
 #include <libft.h>
-#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
+#define MSG "syntax error: here-doc in not intetractive mode is not supported"
 
 static t_error	*init_heredoc_context(t_redir *redir, char **content,
 					char **delimiter, size_t *delimiter_len);
 static t_error	*read_line_loop(char **content, char *delimiter,
 					size_t delimiter_len);
-static bool		is_line_EOF(char *line, char *delimiter, size_t delimiter_len);
+static bool		is_line_eof(char *line, char *delimiter, size_t delimiter_len);
 static t_error	*append_line_to_content(char **content, char *line);
 
 t_error	*input_heredoc_content_handler(t_redir *redir, t_minishell_state *shell)
@@ -35,14 +37,12 @@ t_error	*input_heredoc_content_handler(t_redir *redir, t_minishell_state *shell)
 	size_t	delimiter_len;
 	t_error	*error;
 
-	(void)shell; // shell is not used in this function
+	(void)shell;
 	error = NULL;
 	if (redir->type != REDIR_HERE_DOC)
 		return (error);
 	if (shell->is_interactive != 0)
-		return new_error(EXIT_USER_ERR,
-							"syntax error: here-doc in not intetractive mode is not "
-							"supported, sorry bro");
+		return (new_error(EXIT_USER_ERR, MSG));
 	error = init_heredoc_context(redir, &content, &delimiter, &delimiter_len);
 	if (is_error(error))
 		return (error);
@@ -77,21 +77,15 @@ static t_error	*read_line_loop(char **content, char *delimiter,
 	while (1)
 	{
 		line = readline("> ");
-		if (!line) // EOF(Ctrl + D)
-		{
-			printf("exit\n");
-			exit(EXIT_OK);
-		}
+		if (!line)
+			return (new_error(EXIT_EOF, "exit"));
 		if (!*line)
 		{
 			free(line);
 			continue ;
 		}
-		if (is_line_EOF(line, delimiter, delimiter_len))
-		{
-			free(line);
-			return (NULL);
-		}
+		if (is_line_eof(line, delimiter, delimiter_len))
+			return (free_return_null((void**)&line));
 		append_result = append_line_to_content(content, line);
 		free(line);
 		if (append_result)
@@ -99,7 +93,7 @@ static t_error	*read_line_loop(char **content, char *delimiter,
 	}
 }
 
-static bool	is_line_EOF(char *line, char *delimiter, size_t delimiter_len)
+static bool	is_line_eof(char *line, char *delimiter, size_t delimiter_len)
 {
 	if (delimiter_len != ft_strlen(line))
 		return (false);

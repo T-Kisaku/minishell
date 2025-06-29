@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   generate_filename.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:58 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 09:09:11 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_error	*generate_filename_handler(t_redir *target, t_minishell_state *shell)
 		return (NULL);
 	if (target->redirect_source.is_direct_to_fd)
 		return (NULL);
-	target->redirect_source.filename = ft_strdup(target->redirect_source.filename_token->value);
+	target->redirect_source.filename
+		= ft_strdup(target->redirect_source.filename_token->value);
 	if (!target->redirect_source.filename)
 		return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO"));
 	return (NULL);

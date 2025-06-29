@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:58 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 09:47:26 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 #include "stdio.h"
 #include "utils/env.h"
 
-t_error			*expand_variable(t_expansion_context *ctx,
-					t_minishell_state *shell);
+static t_error	*allocate_variable_value(t_expansion_context *ctx);
 t_error			*expand_special(t_expansion_context *ctx,
 					t_minishell_state *shell);
 static t_error	*set_temp(t_expansion_context *ctx, char *str,
@@ -47,6 +46,11 @@ t_error	*expand_variable(t_expansion_context *ctx, t_minishell_state *shell)
 	free(tmp);
 	if (error)
 		return (error);
+	return (allocate_variable_value(ctx));
+}
+
+static t_error	*allocate_variable_value(t_expansion_context *ctx)
+{
 	if (!ctx->variable)
 	{
 		ctx->variable = malloc(sizeof(char));
@@ -65,10 +69,10 @@ t_error	*expand_variable(t_expansion_context *ctx, t_minishell_state *shell)
 
 t_error	*expand_special(t_expansion_context *ctx, t_minishell_state *shell)
 {
-	(void)shell;              // shellは未使用
-	if (*ctx->cur_pos == '?') // 後で実装
+	(void)shell;
+	if (*ctx->cur_pos == '?')
 		return (set_prev_exit_code(ctx, shell->prev_exit_code));
-	else if (*ctx->cur_pos == '$') // 後で実装
+	else if (*ctx->cur_pos == '$')
 		return (set_temp(ctx, "", SET_MODE_NORMAL));
 	else if (*ctx->cur_pos == '!')
 		return (set_temp(ctx, "", SET_MODE_NORMAL));

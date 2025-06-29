@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:55 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:03:26 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	free_argv(char ***argv, int num);
 char	*ft_strndup(const char *s, size_t n);
 
 void	free_and_null(void **ptr);
+void	*free_return_null(void **ptr);
 
 t_error	*cmd_loop(t_ast *ast, t_error *(*handler)(t_command *,
 				t_minishell_state *), t_minishell_state *shell);

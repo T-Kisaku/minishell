@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_remove_core.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:58 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 09:07:23 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_error	*quote_remove_core(t_token *content)
 	content->value = tmp;
 	return (error);
 }
+
 static int	count_quotes(char *s)
 {
 	int	quote_count;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   generate_heredoc_file_handler.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:58 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 09:10:13 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@ t_error			*generate_heredoc_file_handler(t_redir *redir,
 static t_error	*prepare_heredoc_file(t_redir *redir);
 static t_error	*generate_heredoc_filename(char *buffer, size_t buffer_size);
 static t_error	*create_and_write_heredoc(t_redir *redir);
-// 1時ファイル作成時にどこでエラーが発生しても問題なく関数外でファイルにアクセスできるようにできるだけ早くfilenameに代入する必要がある。
 
 t_error	*generate_heredoc_file_handler(t_redir *redir, t_minishell_state *shell)
 {
 	t_error	*error;
 
-	(void)shell; // shellは使用されていないため、警
+	(void)shell;
 	error = NULL;
 	if (redir->type != REDIR_HERE_DOC)
 		return (error);
@@ -99,7 +98,6 @@ static t_error	*create_and_write_heredoc(t_redir *redir)
 	close(fd);
 	if (write_result == -1)
 	{
-		// 適切な表示 perror?
 		if (unlink(redir->redirect_source.filename) == -1)
 		{
 		}
