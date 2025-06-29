@@ -6,16 +6,16 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 16:04:38 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 17:47:52 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <signal.h>
 #include <stddef.h>
-#include <stdio.h>
 #include <unistd.h>
 
 int			setup_signal_handlers(void);

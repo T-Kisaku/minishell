@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 17:43:29 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 17:47:33 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	exec_pipeline(t_pipeline *pipeline, t_list **env_list)
 	pids = get_pids(cmd_count);
 	if (!pids)
 	{
-		perror(ERR_MSG_MALLOC);
+		perror("malloc");
 		return (EXIT_INTERNAL_ERR);
 	}
 	exit_code = exec_cmd_list(pids, pipeline->command_list, env_list);

@@ -18,9 +18,9 @@
 static void		init_expansion_context(t_expansion_context *ctx,
 					t_token *content);
 static t_error	*expand_ast_core(t_expansion_context *ctx,
-					t_minishell_state *shell, e_expander_mode mode);
+					t_minishell_state *shell, t_expander_mode mode);
 static t_error	*expand_ast_core_loop(t_expansion_context *ctx,
-					t_minishell_state *shell, e_expander_mode mode);
+					t_minishell_state *shell, t_expander_mode mode);
 static void		set_dollar_type(t_expansion_context *ctx);
 
 t_error	*expand_single_token(t_token *content, t_minishell_state *shell)
@@ -64,7 +64,7 @@ static void	init_expansion_context(t_expansion_context *ctx, t_token *content)
 
 static t_error	*expand_ast_core(t_expansion_context *ctx,
 								t_minishell_state *shell,
-								e_expander_mode mode)
+								t_expander_mode mode)
 {
 	t_error	*error;
 
@@ -87,7 +87,7 @@ static t_error	*expand_ast_core(t_expansion_context *ctx,
 
 static t_error	*expand_ast_core_loop(t_expansion_context *ctx,
 										t_minishell_state *shell,
-										e_expander_mode mode)
+										t_expander_mode mode)
 {
 	t_error	*error;
 

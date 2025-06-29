@@ -15,10 +15,10 @@
 static t_error	*expand_ast_core_core_core(t_expansion_context *ctx,
 					t_error *(*func)(t_expansion_context *,
 						t_minishell_state *), t_minishell_state *shell,
-					e_expander_mode mode);
+					t_expander_mode mode);
 
 t_error	*expand_ast_core_core(t_expansion_context *ctx,
-		t_minishell_state *shell, e_expander_mode mode)
+		t_minishell_state *shell, t_expander_mode mode)
 {
 	t_error	*error;
 
@@ -42,7 +42,7 @@ t_error	*expand_ast_core_core(t_expansion_context *ctx,
 
 t_error	*expand_ast_core_core_core(t_expansion_context *ctx,
 		t_error *(*func)(t_expansion_context *, t_minishell_state *),
-		t_minishell_state *shell, e_expander_mode mode)
+		t_minishell_state *shell, t_expander_mode mode)
 {
 	int		len;
 	t_error	*error;

@@ -6,12 +6,12 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:54 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:54 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 17:48:22 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MS_EXIT_STATUS_H
-# define MS_EXIT_STATUS_H
+#ifndef EXIT_STATUS_H
+# define EXIT_STATUS_H
 
 # define EXIT_OK 0            // Success
 # define EXIT_INTERNAL_ERR 1  // Internal error (e.g., malloc failure)
@@ -21,4 +21,4 @@
 # define EXIT_NOT_FOUND 127   // Command not found
 # define EXIT_SIGNAL_BASE 128 // Exit caused by signal (add signal number)
 
-#endif // !MS_EXIT_STATUS_H
+#endif // !EXIT_STATUS_H

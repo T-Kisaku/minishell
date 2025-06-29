@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 16:37:18 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 17:47:20 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	exec(t_command *cmd, char **envp, t_list *env_list)
 	if (cmd->type == CMD_SIMPLE)
 	{
 		execve(cmd->u.simple.argv[0], cmd->u.simple.argv, envp);
-		perror(ERR_MSG_EXECVP);
+		perror("execve");
 		free_argv_null(&envp);
 	}
 	else if (cmd->type == CMD_SUBSHELL)

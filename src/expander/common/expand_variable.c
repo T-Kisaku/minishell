@@ -22,7 +22,7 @@
 t_error			*expand_special(t_expansion_context *ctx,
 					t_minishell_state *shell);
 static t_error	*set_temp(t_expansion_context *ctx, char *str,
-					e_mode_set_temp mode);
+					t_mode_set_temp mode);
 static t_error	*set_prev_exit_code(t_expansion_context *ctx,
 					int prev_exit_code);
 
@@ -95,7 +95,7 @@ t_error	*expand_special(t_expansion_context *ctx, t_minishell_state *shell)
 }
 
 static t_error	*set_temp(t_expansion_context *ctx, char *str,
-		e_mode_set_temp mode)
+		t_mode_set_temp mode)
 {
 	if (mode == SET_MODE_FIGURE)
 		while (ft_isdigit((int)*ctx->cur_pos))

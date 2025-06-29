@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:54 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 15:34:23 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 17:49:39 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 # include "token.h"
 # include <stdlib.h> //for getenv,
 
-typedef enum
+typedef enum e_dollar_type
 {
 	DOLLAR_SPECIAL,
 	DOLLAR_VARIABLE,
 	DOLLAR_LITERAL
-}					e_dollar_type;
+}					t_dollar_type;
 
 typedef struct s_expansion_context
 {
@@ -37,7 +37,7 @@ typedef struct s_expansion_context
 	size_t			required_len;
 	int				in_single_quote;
 	char			*variable;
-	e_dollar_type	cur_dollar_type;
+	t_dollar_type	cur_dollar_type;
 	t_token_type	*type;
 }					t_expansion_context;
 
@@ -51,17 +51,17 @@ typedef struct s_split_token_context
 	char			*cur_str;
 }					t_split_token_context;
 
-typedef enum
+typedef enum e_mode_set_temp
 {
 	SET_MODE_NORMAL,
 	SET_MODE_FIGURE
-}					e_mode_set_temp;
+}					t_mode_set_temp;
 
-typedef enum
+typedef enum e_expander_mode
 {
 	MODE_CALCULATE,
 	MODE_SET_VALUE,
-}					e_expander_mode;
+}					t_expander_mode;
 
 t_error				*expand_handler(t_command *cmd, t_minishell_state *shell);
 // word_split.c
@@ -98,7 +98,7 @@ t_error				*expand_single_token(t_token *content,
 						t_minishell_state *shell);
 // expand_ast_core_core.c
 t_error				*expand_ast_core_core(t_expansion_context *ctx,
-						t_minishell_state *shell, e_expander_mode mode);
+						t_minishell_state *shell, t_expander_mode mode);
 // expand_variable.c
 t_error				*expand_variable(t_expansion_context *ctx,
 						t_minishell_state *shell);

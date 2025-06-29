@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 13:16:48 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 17:53:36 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@
 typedef enum e_token_type
 {
 	TOKEN_UNQUOTED_WORD,
-	TOKEN_SINGLE_QUOTED_WORD, // '
-	TOKEN_DOUBLE_QUOTED_WORD, // "
-	TOKEN_PIPE,               // |
-	TOKEN_AND_IF,             // &&
-	TOKEN_OR_IF,              // ||
-	TOKEN_REDIR_INPUT,        // <
-	TOKEN_REDIR_OUTPUT,       // >
-	TOKEN_REDIR_HERE_DOC,     // <<
-	TOKEN_REDIR_HERE_STRINGS, // <<<
-	TOKEN_REDIR_APPEND,       // >>
+	TOKEN_SINGLE_QUOTED_WORD,
+	TOKEN_DOUBLE_QUOTED_WORD,
+	TOKEN_PIPE,
+	TOKEN_AND_IF,
+	TOKEN_OR_IF,
+	TOKEN_REDIR_INPUT,
+	TOKEN_REDIR_OUTPUT,
+	TOKEN_REDIR_HERE_DOC,
+	TOKEN_REDIR_HERE_STRINGS,
+	TOKEN_REDIR_APPEND,
 }					t_token_type;
 
 typedef enum e_token_group
