@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   setup_signal_handlers.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:59:27 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 16:04:38 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <signal.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <unistd.h>
 
 int			setup_signal_handlers(void);
@@ -48,8 +48,8 @@ int	setup_signal_handlers(void)
 static void	handle_sigint(int sig)
 {
 	(void)sig;
-	write(1, "\n", 1);      // 改行
-	rl_on_new_line();       // readlineの内部状態を新しい行に
-	rl_replace_line("", 0); // 入力行を空に
-	rl_redisplay();         // プロンプトを再描画
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
