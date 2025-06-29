@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:57 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 11:57:18 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,3 @@ static t_error	*process_greater_than(t_token_context *ctx)
 	}
 	return (NULL);
 }
-bool	is_special_char(char c)
-{
-	return (c == '|' || c == '<' || c == '>');
-};

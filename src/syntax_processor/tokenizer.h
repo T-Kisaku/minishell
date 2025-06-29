@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:55 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 11:56:14 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 # define TOKENIZER_H
 
 # include "error.h"
-# include "libft.h"
 # include "token.h"
 # include <stdbool.h> //for bool,
 # include <stddef.h>  //for NULL,
 # include <unistd.h>  //for write
 
-// 構造体リストを作成するために関数内で使用する構造体
 typedef struct s_token_context
 {
 	t_list	**head;
@@ -34,4 +32,5 @@ t_error		*tokenize_loop(t_token_context *ctx);
 
 t_error		*process_special_char(t_token_context *lc);
 bool		is_special_char(char c);
+bool		is_quote_char(char c);
 #endif

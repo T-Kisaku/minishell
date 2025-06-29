@@ -1,4 +1,4 @@
-#include "check_syntax.h"
+#include "syntax_processor.h"
 #include "minishell.h"
 #include "syntax_processor.h"
 #include "token.h"

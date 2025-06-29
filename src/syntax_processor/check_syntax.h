@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_processor.h                                 :+:      :+:    :+:   */
+/*   check_syntax.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 08:52:54 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 13:23:47 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/06/29 13:15:50 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/29 13:22:47 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SYNTAX_PROCESSOR_H
-# define SYNTAX_PROCESSOR_H
+#ifndef CHECK_SYNTAX_H
+# define CHECK_SYNTAX_H
 
-# include "ast.h"
 # include "error.h"
+# include "ft_list.h"
 # include "minishell.h"
 
-t_error	*str_to_token(char *input_str, t_list **token_list_ptr);
-t_error	*check_syntax(t_list **list, t_minishell_state *shell);
-t_error	*token_to_ast(t_list *token_list, t_ast **ast_ptr);
+t_error	*check_body(t_list **cur, t_list **prev);
+t_error	*check_tail(t_list **list, t_minishell_state *shell);
 
-#endif
+#endif // !CHECK_SYNTAX_H

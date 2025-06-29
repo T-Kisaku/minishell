@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 09:33:17 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 10:47:20 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_error	*generate_argv_handler(t_command *cmd, t_minishell_state *shell)
 			return (error);
 	}
 	else if (cmd->type == CMD_SUBSHELL)
-		;
+    return NULL;
 	if (cmd->u.simple.argv == NULL)
 		return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO"));
 	else

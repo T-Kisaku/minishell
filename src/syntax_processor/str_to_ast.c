@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:57 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 13:23:51 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "error.h"
 #include "minishell.h"
 #include "syntax_processor.h"
-#include "syntax_processor/check_syntax/check_syntax.h"
 #include "token.h"
 
 t_error	*str_to_ast(char **input_str, t_ast **ast_ptr, t_minishell_state *shell)

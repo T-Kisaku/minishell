@@ -6,14 +6,13 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:57 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 14:35:56 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 #include "error.h"
 #include "exit_status.h"
-#include "libft.h"
 #include "syntax_processor/ast_builder.h"
 #include <stdbool.h> //bool,
 
@@ -46,11 +45,13 @@ t_command	*get_last_cmd(t_list **and_or_list_ptr)
 	t_list		*last_cmd_node;
 
 	last_and_or = get_last_and_or(and_or_list_ptr);
-	if (!last_and_or) // TODO: error handling
+	if (!last_and_or)
 		return (NULL);
 	last_cmd_node = ft_lstlast(last_and_or->pipeline->command_list);
 	if (last_cmd_node == NULL)
-		return (lstget_command(lstadd_back_command(&last_and_or->pipeline->command_list,
-					CMD_SIMPLE)));
+		last_cmd_node = lstadd_back_command(
+				&last_and_or->pipeline->command_list,
+				CMD_SIMPLE
+				);
 	return (lstget_command(last_cmd_node));
 }

@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:09:43 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/29 10:46:15 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 #include "minishell.h"
 #include "utils/utils.h"
 #include <libft.h>
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include <stdlib.h>
 #define MSG "syntax error: here-doc in not intetractive mode is not supported"
 
