@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 15:48:21 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/29 16:03:46 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	del_command(void *content)
 		free_argv(&cmd->u.simple.argv, INT_MAX);
 	}
 	else if (cmd->type == CMD_SUBSHELL)
-    free_ast(&cmd->u.subshell.and_or_list);
+		free_ast(&cmd->u.subshell.and_or_list);
 	free(cmd);
 }
 
