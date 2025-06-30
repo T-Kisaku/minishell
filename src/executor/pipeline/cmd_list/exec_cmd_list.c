@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/30 12:35:17 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/30 14:32:49 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ static int	loop_cmd_list(t_list *cmd_list, int *pids, t_cmd_fd *cmd_fd,
 			return (EXIT_INTERNAL_ERR);
 		}
 		set_io_redir(cmd, *cmd_fd);
+		if(!cmd->u.simple.argv[0])
+			return (EXIT_NOT_FOUND);
 		result = execute_single_command(cmd, env_list_ptr, pids);
 		if (result != BUILTIN_NOT_LAST)
 			builtin_exit_code = result;
