@@ -11,7 +11,7 @@ PHONY_TARGETS += test_all test_fclean %_test
 test: test_all
 test_all:
 	$(MAKE) $(TEST_MODS)
-#add -lreadline
+
 %_test: | $(TEST_BIN_DIR)
 	@$(MAKE) $(LIBFT)
 	@$(MAKE) $(TEST_OBJS) CFLAGS="$(TEST_CFLAGS)"

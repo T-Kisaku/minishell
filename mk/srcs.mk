@@ -28,8 +28,8 @@ src/utils/free_and_null.c \
 src/utils/argv.c \
 src/utils/path.c \
 src/syntax_processor/ast_builder/processes.c \
-src/syntax_processor/ast_builder/token_to_ast.c \
 src/syntax_processor/ast_builder/utils.c \
+src/syntax_processor/ast_builder/token_to_ast.c \
 src/syntax_processor/tokenizer/str_to_token.c \
 src/syntax_processor/tokenizer/process_special_char.c \
 src/syntax_processor/tokenizer/tokenize_loop.c \
@@ -76,7 +76,7 @@ src/expander/command/split_token.c \
 src/expander/command/word_split.c \
 src/expander/expander.c \
 src/signal/setup_signal_handlers.c \
-src/minishell/main.c \
 src/minishell/prompt.c \
+src/minishell/main.c \
 src/minishell/run_cmd.c \
 src/error.c \
