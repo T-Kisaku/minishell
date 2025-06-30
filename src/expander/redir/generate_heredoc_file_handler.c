@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 09:10:13 by saueda           ###   ########.fr       */
+/*   Updated: 2025/06/30 12:10:52 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,13 @@ static t_error	*generate_heredoc_filename(char *buffer, size_t buffer_size)
 {
 	static int	counter = 0;
 	char		*counter_str;
-	char		*pid_str;
 
-	pid_str = ft_itoa(getpid());
-	if (!pid_str)
-		return (new_error(EXIT_INTERNAL_ERR, "itoa ERRO"));
 	counter_str = ft_itoa(++counter);
 	if (!counter_str)
-	{
-		free(pid_str);
 		return (new_error(EXIT_INTERNAL_ERR, "itoa ERRO"));
-	}
 	ft_strlcpy(buffer, HEREDOC_TEMP_PREFIX, buffer_size);
-	ft_strlcat(buffer, pid_str, buffer_size);
 	ft_strlcat(buffer, "_", buffer_size);
 	ft_strlcat(buffer, counter_str, buffer_size);
-	free(pid_str);
 	free(counter_str);
 	return (NULL);
 }
