@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:59:33 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 16:00:51 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/30 10:22:01 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void	run_cmd(char **input, t_minishell_state *shell)
 	if (ast == NULL)
 		return ;
 	shell->prev_exit_code = exec_ast(ast, &shell->env_list);
-	lstclear_and_or
-(&ast);
+	lstclear_and_or(&ast);
 	return ;
 }
 
@@ -59,8 +58,7 @@ static t_ast	*get_ast(char **input, t_minishell_state *shell)
 		shell->prev_exit_code = error->exit_code;
 		ft_fputs(error->msg, STDERR_FILENO);
 		del_error(error);
-		lstclear_and_or
-(&ast);
+		lstclear_and_or(&ast);
 		return (NULL);
 	}
 	return (ast);

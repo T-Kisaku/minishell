@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 14:24:19 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/30 10:21:47 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ t_error	*token_to_ast(t_list *token_list, t_ast **ast_ptr)
 	error = build_ast_from_token_list(&token_list, ast_ptr);
 	if (is_error(error))
 	{
-		lstclear_and_or
-(ast_ptr);
+		lstclear_and_or(ast_ptr);
 		return (error);
 	}
 	return (error);
