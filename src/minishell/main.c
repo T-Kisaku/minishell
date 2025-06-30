@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 15:54:14 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/30 09:21:01 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+volatile sig_atomic_t	g_signal_received = 0;
 
 static int	init_shell_state(int argc, char **argv, char **envp,
 				t_minishell_state *shell);
