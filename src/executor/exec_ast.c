@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:58 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/30 12:28:35 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	exec_ast(t_ast *ast, t_list **env_list)
 	exit_code = EXIT_OK;
 	while (andor_list)
 	{
-		andor = lstget_and_or(ast);
+		andor = lstget_and_or(andor_list);
 		if (exec_next)
 			exit_code = exec_pipeline(andor->pipeline, env_list);
 		if (andor->op_next == OP_AND)

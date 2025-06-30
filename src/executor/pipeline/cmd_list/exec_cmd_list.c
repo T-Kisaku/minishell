@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/30 12:24:39 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/30 12:35:17 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static int	loop_cmd_list(t_list *cmd_list, int *pids, t_cmd_fd *cmd_fd,
 	int			result;
 	t_command	*cmd;
 
+	builtin_exit_code = EXIT_OK;
 	while (cmd_list)
 	{
 		cmd = lstget_command(cmd_list);

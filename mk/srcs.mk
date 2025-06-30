@@ -65,9 +65,9 @@ src/expander/common/expand_single_token.c \
 src/expander/common/expand_variable.c \
 src/expander/redir/redir_split_handler.c \
 src/expander/redir/generate_filename.c \
+src/expander/redir/generate_heredoc_file_handler.c \
 src/expander/redir/redir_expand_handler.c \
 src/expander/redir/redir_quote_removal_handler.c \
-src/expander/redir/generate_heredoc_file_handler.c \
 src/expander/redir/input_heredoc_content_handler.c \
 src/expander/command/expand.c \
 src/expander/command/quote_remove.c \
