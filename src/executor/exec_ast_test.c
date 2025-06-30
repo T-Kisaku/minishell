@@ -119,7 +119,8 @@ static void test(char *input_str, int expected_status, char *output_file) {
   printf("Result  : %d\n", result_status);
   assert(expected_status == result_status);
   printf("\n");
-  free_ast(&ast);
+  lstclear_and_or
+(&ast);
   del_error(err);
 }
 

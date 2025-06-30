@@ -3,5 +3,6 @@
 #include "token.h"
 void free_testdata(t_testdata *d) {
   lstclear_token(&d->token_list);
-  free_ast(&d->ast);
+  lstclear_and_or
+(&d->ast);
 }

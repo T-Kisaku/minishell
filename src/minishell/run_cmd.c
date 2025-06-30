@@ -31,7 +31,8 @@ void	run_cmd(char **input, t_minishell_state *shell)
 	if (ast == NULL)
 		return ;
 	shell->prev_exit_code = exec_ast(ast, &shell->env_list);
-	free_ast(&ast);
+	lstclear_and_or
+(&ast);
 	return ;
 }
 
@@ -58,7 +59,8 @@ static t_ast	*get_ast(char **input, t_minishell_state *shell)
 		shell->prev_exit_code = error->exit_code;
 		ft_fputs(error->msg, STDERR_FILENO);
 		del_error(error);
-		free_ast(&ast);
+		lstclear_and_or
+(&ast);
 		return (NULL);
 	}
 	return (ast);

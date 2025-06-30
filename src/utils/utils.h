@@ -29,7 +29,8 @@ typedef struct s_redir_loop_context
 }			t_redir_loop_context;
 
 // free_ast_1.c
-void		free_ast(t_ast **ast);
+void		lstclear_and_or
+(t_ast **ast);
 void		del_and_or(void *content);
 void		free_command_list(t_list **command_list);
 void		del_command(void *content);

@@ -34,7 +34,8 @@ t_error	*token_to_ast(t_list *token_list, t_ast **ast_ptr)
 	error = build_ast_from_token_list(&token_list, ast_ptr);
 	if (is_error(error))
 	{
-		free_ast(ast_ptr);
+		lstclear_and_or
+(ast_ptr);
 		return (error);
 	}
 	return (error);

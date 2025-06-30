@@ -51,7 +51,8 @@ static void run_test(t_testdata d) {
   puts("== ACTUAL DATA ==");
   print_ast(ast, 0);
   assert_ast_equal(d.ast, ast);
-  free_ast(&ast);
+  lstclear_and_or
+(&ast);
   free_testdata(&d);
   printf("\n");
 }

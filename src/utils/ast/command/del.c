@@ -30,7 +30,8 @@ void	del_command(void *content)
 		free_argv(&cmd->u.simple.argv, INT_MAX);
 	}
 	else if (cmd->type == CMD_SUBSHELL)
-		free_ast(&cmd->u.subshell.and_or_list);
+		lstclear_and_or
+(&cmd->u.subshell.and_or_list);
 	free(cmd);
 }
 
