@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_redir_list.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/30 12:31:03 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/30 13:37:28 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	process(t_redir_target *target, t_redir_type type)
 
 	if (!target->is_direct_to_fd)
 	{
-		if (type == REDIR_INPUT || REDIR_HERE_DOC)
+		if (type == REDIR_INPUT || type == REDIR_HERE_DOC)
 		{
 			if (validate_infile(target->filename) != 0)
 				return (EXIT_USER_ERR);
