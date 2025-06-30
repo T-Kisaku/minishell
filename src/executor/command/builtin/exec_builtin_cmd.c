@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:22:52 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/06/30 11:52:37 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,14 @@
 static const t_builtin_entry	*find_builtin(const char *name);
 static const t_builtin_entry	*get_builtin_table(void);
 
+
 int	exec_builtin_cmd(t_command *cmd, t_list **env_list)
 {
-	int						old_in;
-	int						old_out;
 	int						exit_code;
 	const t_builtin_entry	*entry;
 
 	if (!is_builtin(cmd))
 		return (false);
-	old_in = dup(STDIN_FILENO);
-	old_out = dup(STDOUT_FILENO);
-	process_redir_list(cmd->redir_list);
 	entry = find_builtin(cmd->u.simple.argv[0]);
 	if (!entry || !entry->func)
 	{
@@ -42,10 +38,6 @@ int	exec_builtin_cmd(t_command *cmd, t_list **env_list)
 		return (EXIT_INTERNAL_ERR);
 	}
 	exit_code = entry->func(cmd, env_list);
-	dup2(old_in, STDIN_FILENO);
-	close(old_in);
-	dup2(old_out, STDOUT_FILENO);
-	close(old_out);
 	return (exit_code);
 }
 
@@ -74,16 +66,9 @@ static const t_builtin_entry	*find_builtin(const char *name)
 
 static const t_builtin_entry	*get_builtin_table(void)
 {
-	static const t_builtin_entry	table[8] = {
-	{"echo", exec_echo},
-	{"exit", exec_exit},
-	{"env", exec_env},
-	{"export", exec_export},
-	{"unset", exec_unset},
-	{"pwd", exec_pwd},
-	{"cd", exec_cd},
-	{NULL, NULL}
-	};
+	static const t_builtin_entry	table[8] = {{"echo", exec_echo}, {"exit",
+			exec_exit}, {"env", exec_env}, {"export", exec_export}, {"unset",
+			exec_unset}, {"pwd", exec_pwd}, {"cd", exec_cd}, {NULL, NULL}};
 
 	return (table);
 }

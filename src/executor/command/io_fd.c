@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.h                                          :+:      :+:    :+:   */
+/*   io_fd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/30 12:12:24 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/06/30 11:13:42 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/06/30 11:14:03 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMAND_H
-# define COMMAND_H
+#include "executor/command.h"
+#include <unistd.h>
 
-# include "ft_list.h"
-
-typedef struct s_io_fd
+void	dup_io(t_io_fd *io_fd)
 {
-	int							in;
-	int							out;
-}								t_io_fd;
+	io_fd->in = dup(STDIN_FILENO);
+	io_fd->out = dup(STDOUT_FILENO);
+}
 
-void	dup_io(t_io_fd *io_fd);
-int	process_redir_list(t_list *redir_list);
-void	restore_close_io(t_io_fd io_fd);
-
-#endif // !COMMAND_H
+void	restore_close_io(t_io_fd io_fd)
+{
+	dup2(io_fd.in, STDIN_FILENO);
+	close(io_fd.in);
+	dup2(io_fd.out, STDOUT_FILENO);
+	close(io_fd.out);
+}
