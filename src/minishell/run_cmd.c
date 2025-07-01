@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:59:33 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 13:11:04 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/01 16:09:21 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	run_cmd(char **input, t_minishell_state *shell)
 	if (ast == NULL)
 		return ;
 	shell->prev_exit_code = exec_ast(ast, shell);
+	printf("after exec_ast: %d\n", shell->prev_exit_code);
 	lstclear_and_or(&ast);
 	return ;
 }
