@@ -6,3 +6,4 @@ mk/testdata.mk
 
 doc
 .vogsphereignore
+readline.supp

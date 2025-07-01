@@ -51,9 +51,9 @@ fclean:
 
 re: fclean all
 
-include mk/testdata.mk
-include mk/test.mk
-include mk/dev.mk
-include mk/print.mk
+-include mk/testdata.mk
+-include mk/test.mk
+-include mk/dev.mk
+-include mk/print.mk
 
 .PHONY: $(PHONY_TARGETS)
