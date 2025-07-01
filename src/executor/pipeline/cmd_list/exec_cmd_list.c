@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 11:26:07 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 12:58:36 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-static int loop_cmd_list(t_list *cmd_list,t_cmd_fd *cmd_fd,
-                         t_minishell_state *shell);
+static int	loop_cmd_list(t_list *cmd_list, t_cmd_fd *cmd_fd,
+				t_minishell_state *shell);
 
 /**
  * execute list of commands
@@ -30,42 +30,46 @@ static int loop_cmd_list(t_list *cmd_list,t_cmd_fd *cmd_fd,
  * @param env_list env list
  * @return return exit code when last command is builtin, otherwise -1
  */
-int exec_cmd_list(t_list *cmd_list, t_minishell_state *shell) {
-  t_cmd_fd cmd_fd;
-  int builtin_exit_code;
+int	exec_cmd_list(t_list *cmd_list, t_minishell_state *shell)
+{
+	t_cmd_fd	cmd_fd;
+	int			builtin_exit_code;
 
-  if (!shell  ||!shell->pids || !cmd_list ||  !shell->env_list)
-    return (EXIT_INTERNAL_ERR);
-  builtin_exit_code = BUILTIN_NOT_LAST;
-  if (init_cmd_fd(&cmd_fd) != 0)
-    return (EXIT_INTERNAL_ERR);
-  builtin_exit_code = loop_cmd_list(cmd_list, &cmd_fd, shell);
-  return (builtin_exit_code);
+	if (!shell || !shell->pids || !cmd_list || !shell->env_list)
+		return (EXIT_INTERNAL_ERR);
+	builtin_exit_code = BUILTIN_NOT_LAST;
+	if (init_cmd_fd(&cmd_fd) != 0)
+		return (EXIT_INTERNAL_ERR);
+	builtin_exit_code = loop_cmd_list(cmd_list, &cmd_fd, shell);
+	return (builtin_exit_code);
 }
 
-static int loop_cmd_list(t_list *cmd_list, t_cmd_fd *cmd_fd,
-                         t_minishell_state *shell) {
-  int builtin_exit_code;
-  int result;
-  t_command *cmd;
-  int cmd_list_size;
+static int	loop_cmd_list(t_list *cmd_list, t_cmd_fd *cmd_fd,
+		t_minishell_state *shell)
+{
+	int			builtin_exit_code;
+	int			result;
+	t_command	*cmd;
+	int			cmd_list_size;
 
-  cmd_list_size = ft_lstsize(cmd_list);
-  builtin_exit_code = EXIT_OK;
-  while (cmd_list) {
-    cmd = lstget_command(cmd_list);
-    if (create_pipe_if_needed(cmd_fd, cmd_list) != 0) {
-      cleanup_pipe_fds(cmd_fd);
-      return (EXIT_INTERNAL_ERR);
-    }
-    set_io_redir(cmd, *cmd_fd);
-    result = exec_command(cmd, cmd_list_size > 1, shell);
-    if (result != BUILTIN_NOT_LAST)
-      builtin_exit_code = result;
-    cleanup_pipe_fds(cmd_fd);
-    cmd_list = cmd_list->next;
-  }
-  if (cmd_fd->prev_pipe_read >= 0)
-    close(cmd_fd->prev_pipe_read);
-  return (builtin_exit_code);
+	cmd_list_size = ft_lstsize(cmd_list);
+	builtin_exit_code = EXIT_OK;
+	while (cmd_list)
+	{
+		cmd = lstget_command(cmd_list);
+		if (create_pipe_if_needed(cmd_fd, cmd_list) != 0)
+		{
+			cleanup_pipe_fds(cmd_fd);
+			return (EXIT_INTERNAL_ERR);
+		}
+		set_io_redir(cmd, *cmd_fd);
+		result = exec_command(cmd, cmd_list_size > 1, shell);
+		if (result != BUILTIN_NOT_LAST)
+			builtin_exit_code = result;
+		cleanup_pipe_fds(cmd_fd);
+		cmd_list = cmd_list->next;
+	}
+	if (cmd_fd->prev_pipe_read >= 0)
+		close(cmd_fd->prev_pipe_read);
+	return (builtin_exit_code);
 }

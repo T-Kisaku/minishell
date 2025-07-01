@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:11:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 11:17:01 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:06:22 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_minishell_state
 {
 	t_ast						*ast;
 	t_list						*env_list;
-  pid_t *pids;
+	pid_t						*pids;
 	int							prev_exit_code;
 	bool						is_interactive;
 }								t_minishell_state;

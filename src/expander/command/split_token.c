@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 15:37:44 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/01 13:14:43 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,13 @@ t_error			*generate_token(t_split_token_context *ctx);
 t_error	*split_token(t_list *token, int word_count)
 {
 	t_split_token_context	ctx;
-	t_token					*token_content;
 	t_error					*error;
 
 	error = NULL;
 	error = init_split_token_context(&ctx, token);
 	if (is_error(error))
 		return (error);
-	token_content = (t_token *)token->content;
-	free(token_content->value);
+	free(((t_token *)token->content)->value);
 	error = generate_value(&ctx);
 	if (is_error(error))
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:59:33 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 11:08:08 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:11:04 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	run_cmd(char **input, t_minishell_state *shell)
 		return ;
 	}
 	ast = get_ast(input, shell);
-  shell->ast = ast;
+	shell->ast = ast;
 	if (ast == NULL)
 		return ;
 	shell->prev_exit_code = exec_ast(ast, shell);

@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 11:19:59 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:11:40 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@
 #include "minishell.h"
 #include "signal_handler.h"
 #include "utils/env.h"
-#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
 volatile sig_atomic_t	g_signal_received = 0;
 
-static int	init_shell_state(int argc, char **argv, char **envp,
-				t_minishell_state *shell);
-static bool	is_option_c(int argc, char **argv);
-static int	is_executable(int argc);
+static int				init_shell_state(int argc, char **argv, char **envp,
+							t_minishell_state *shell);
+static bool				is_option_c(int argc, char **argv);
+static int				is_executable(int argc);
 
 // TODO: this is only bash -c, adapt echo "ls" | minishell
 // TODO: return exit code of bash -c
@@ -66,9 +66,9 @@ static int	init_shell_state(int argc, char **argv, char **envp,
 {
 	t_error	*error;
 
-  shell->ast = NULL;
+	shell->ast = NULL;
 	shell->env_list = NULL;
-  shell->pids = NULL;
+	shell->pids = NULL;
 	shell->prev_exit_code = 0;
 	shell->is_interactive = isatty(STDIN_FILENO) == 0 || is_option_c(argc,
 			argv);

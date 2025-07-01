@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 10:59:36 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:02:02 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	process_echo(t_command *cmd);
 
 int	exec_echo(t_command *cmd, t_minishell_state *shell)
 {
-  (void)shell;
+	(void)shell;
 	if (cmd->type != CMD_SIMPLE)
 	{
 		ft_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 11:01:55 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 12:59:20 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	print_internal_error(const char *message)
 	return (EXIT_INTERNAL_ERR);
 }
 
-int	exec_pwd(t_command *cmd,  t_minishell_state *shell)
+int	exec_pwd(t_command *cmd, t_minishell_state *shell)
 {
 	char	*cwd;
 

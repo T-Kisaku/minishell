@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 14:23:44 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:15:23 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 static t_error	*process_and_or(t_list **token_list_ptr, t_list **cmd_list);
 static t_error	*process_pipe(t_list **token_list_ptr, t_list **andor_list_ptr);
 static t_error	*process_word(t_list **token_list_ptr, t_list **andor_list_ptr);
-static t_error	*process_redirs(t_list **token_list_ptr, t_list **andor_list_ptr);
+static t_error	*process_redirs(t_list **token_list_ptr,
+					t_list **andor_list_ptr);
 
 t_error	*handle_token_for_ast(t_list **token_list_ptr, t_list **ast_ptr)
 {

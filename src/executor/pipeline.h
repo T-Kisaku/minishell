@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 11:23:52 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:02:30 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PIPELINE_H
 
 # include "ft_list.h"
-#include "minishell.h"
+# include "minishell.h"
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <unistd.h>
