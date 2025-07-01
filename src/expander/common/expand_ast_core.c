@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 15:53:26 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/01 14:17:36 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,13 @@ t_error	*expand_ast_core_core(t_expansion_context *ctx,
 		if (is_error(error))
 			return (error);
 	}
-	else if (ctx->cur_dollar_type == DOLLAR_LITERAL && mode == MODE_SET_VALUE)
-		copy_and_advance(ctx, --ctx->cur_pos, 1);
+	else if (ctx->cur_dollar_type == DOLLAR_LITERAL)
+	{
+		if (mode == MODE_CALCULATE)
+			ctx->index++;
+		else if (mode == MODE_SET_VALUE)
+			copy_and_advance(ctx, --ctx->cur_pos, 1);
+	}
 	return (error);
 }
 

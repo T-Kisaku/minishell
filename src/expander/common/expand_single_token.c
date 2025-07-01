@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 12:50:57 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/01 14:17:20 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static t_error	*expand_ast_core(t_expansion_context *ctx,
 	error = NULL;
 	if (mode == MODE_SET_VALUE)
 	{
-		ctx->output = malloc(sizeof(char) * (ctx->required_len + 2));
+		ctx->output = malloc(sizeof(char) * (ctx->required_len + 1));
 		if (!ctx->output)
 			return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO"));
 	}
