@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:02:18 by saueda            #+#    #+#             */
-/*   Updated: 2025/07/01 15:31:42 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 16:16:48 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	exec_command(t_command *cmd, bool is_in_pipeline, t_minishell_state *shell)
 		restore_close_io(old_io_fd);
 		return (exit_code);
 	}
-	exec_builtin_or_external(cmd, is_in_pipeline, shell);
+	exit_code = exec_builtin_or_external(cmd, is_in_pipeline, shell);
 	restore_close_io(old_io_fd);
 	return (exit_code);
 }
@@ -58,6 +58,8 @@ static int	exec_builtin_or_external(t_command *cmd, bool is_in_pipeline,
 		pid = exec_builtin_cmd(cmd, &exit_code, is_in_pipeline, shell);
 		if (exit_code == BUILTIN_NOT_LAST && pid > 0)
 			set_last_pid(shell->pids, pid);
+		else if (exit_code != BUILTIN_NOT_LAST)
+			return (exit_code);
 	}
 	else if (set_cmd_path(cmd, shell->env_list) != NULL)
 	{
