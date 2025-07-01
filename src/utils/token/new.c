@@ -18,6 +18,8 @@ t_token	*new_token(char *value, t_token_type type)
 {
 	t_token	*new;
 
+	if (!value)
+		return (NULL);
 	new = malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
@@ -41,7 +43,10 @@ t_list	*lstnew_token(char *value, t_token_type type)
 		return (NULL);
 	new_list = ft_lstnew((void *)new);
 	if (!new_list)
-		free(new);
+	{
+		del_token(new);
+		return (NULL);
+	}
 	return (new_list);
 }
 

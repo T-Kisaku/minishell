@@ -43,7 +43,7 @@ static char	*get_command_path(const char *cmd_str, t_list *env_list)
 	if (ft_strchr(cmd_str, '/'))
 	{
 		if (access(cmd_str, X_OK) == 0)
-			ft_strdup(cmd_str);
+			return (ft_strdup(cmd_str));
 		else
 			return (NULL);
 	}

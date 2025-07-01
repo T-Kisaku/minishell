@@ -25,7 +25,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-static void	exec(t_command *cmd, char **envp_tmp, t_list *env_list);
+static void	exec(t_command *cmd, char **envp, t_list *env_list);
 
 // TODO: error handling for execve, when it fails, free all
 pid_t	exec_external_cmd(t_command *cmd, t_list *env_list)
@@ -59,9 +59,12 @@ static void	exec(t_command *cmd, char **envp, t_list *env_list)
 		execve(cmd->u.simple.argv[0], cmd->u.simple.argv, envp);
 		perror("execve");
 		free_argv_null(&envp);
+		exit(EXIT_INTERNAL_ERR);
 	}
 	else if (cmd->type == CMD_SUBSHELL)
 	{
 		exec_ast(cmd->u.subshell.and_or_list, &env_list);
+		free_argv_null(&envp);
+		exit(EXIT_INTERNAL_ERR);
 	}
 }

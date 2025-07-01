@@ -21,6 +21,8 @@ t_env	*new_env(char *key, char *value)
 {
 	t_env	*new_env;
 
+	if (!key || !value)
+		return (NULL);
 	new_env = malloc(sizeof(t_env));
 	if (!new_env)
 		return (NULL);
@@ -65,11 +67,18 @@ t_env	*str_to_new_env(char *env_str)
 t_list	*lstnew_env(char *env_str)
 {
 	t_env	*new;
+	t_list	*new_list;
 
 	new = str_to_new_env(env_str);
 	if (!new)
 		return (NULL);
-	return (ft_lstnew(new));
+	new_list = ft_lstnew(new);
+	if (!new_list)
+	{
+		del_env(new);
+		return (NULL);
+	}
+	return (new_list);
 }
 
 t_error	*envp_to_env_list(char **envp, t_list **env_list_ptr)
@@ -83,8 +92,8 @@ t_error	*envp_to_env_list(char **envp, t_list **env_list_ptr)
 		new_env_node = lstnew_env(envp[env_i]);
 		if (!new_env_node)
 		{
-			ft_lstclear(env_list_ptr, del_env);
-			return (new_error(EXIT_INTERNAL_ERR, "WOW"));
+			lstclear_env(env_list_ptr);
+			return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERROR"));
 		}
 		ft_lstadd_back(env_list_ptr, new_env_node);
 		env_i++;

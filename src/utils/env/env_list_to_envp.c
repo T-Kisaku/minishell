@@ -26,6 +26,8 @@ t_error	*env_list_to_envp(t_list *env_list, char ***envp_ptr)
 	int		i;
 
 	new_envp = ft_calloc(ft_lstsize(env_list) + 1, sizeof(char *));
+	if (!new_envp)
+		return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERROR"));
 	i = 0;
 	while (env_list)
 	{
@@ -51,7 +53,7 @@ static t_error	*create_env_string(char **env_str, t_env *env)
 		* sizeof(char);
 	*env_str = malloc(env_str_size);
 	if (!*env_str)
-		return (new_error(EXIT_INTERNAL_ERR, "malloc error"));
+		return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERROR"));
 	(*env_str)[0] = '\0';
 	ft_strlcat(*env_str, env->key, env_str_size);
 	ft_strlcat(*env_str, "=", env_str_size);

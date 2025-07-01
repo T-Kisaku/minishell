@@ -27,7 +27,9 @@ t_error	*split_token(t_list *token, int word_count)
 	t_error					*error;
 
 	error = NULL;
-	init_split_token_context(&ctx, token);
+	error = init_split_token_context(&ctx, token);
+	if (is_error(error))
+		return (error);
 	token_content = (t_token *)token->content;
 	free(token_content->value);
 	error = generate_value(&ctx);
@@ -63,7 +65,7 @@ static t_error	*init_split_token_context(t_split_token_context *ctx,
 		return (new_error(EXIT_INTERNAL_ERR, "MALLOC Error"));
 	ctx->start_str = ctx->original;
 	ctx->cur_str = ctx->original;
-	return (0);
+	return (NULL);
 }
 
 static t_error	*generate_value(t_split_token_context *ctx)
@@ -99,7 +101,10 @@ t_error	*generate_token(t_split_token_context *ctx)
 	ctx->next = ctx->cur->next;
 	ctx->cur->content = malloc(sizeof(t_token));
 	if (!ctx->cur->content)
+	{
+		free(ctx->tmp);
 		return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERRO"));
+	}
 	cur_token_content = (t_token *)ctx->cur->content;
 	cur_token_content->type = TOKEN_UNQUOTED_WORD;
 	return (generate_value(ctx));

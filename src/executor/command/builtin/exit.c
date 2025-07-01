@@ -47,20 +47,27 @@ int	exec_exit(t_command *cmd, t_list *env_list)
 	if (cmd->type != CMD_SIMPLE)
 	{
 		ft_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
+		// TODO: free all data before exit
 		exit(EXIT_INTERNAL_ERR);
 	}
 	if (cmd->u.simple.argc == 1)
+	{
+		// TODO: free all data before exit
 		exit(EXIT_OK);
+	}
 	if (cmd->u.simple.argc > 2)
 	{
 		ft_fputs("exit: expected less than 1 argument", STDERR_FILENO);
+		// TODO: free all data before exit
 		exit(EXIT_USER_ERR);
 	}
 	if (!check_valid_ascii(cmd->u.simple.argv[1]))
 	{
 		ft_fputs("exit: expected only 1 + or - and numeric argument",
 			STDERR_FILENO);
+		// TODO: free all data before exit
 		exit(EXIT_USER_ERR);
 	}
+	// TODO: free all data before exit
 	exit(ft_atoi(cmd->u.simple.argv[1]));
 }

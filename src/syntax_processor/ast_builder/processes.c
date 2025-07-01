@@ -18,8 +18,8 @@
 
 static t_error	*process_and_or(t_list **token_list_ptr, t_list **cmd_list);
 static t_error	*process_pipe(t_list **token_list_ptr, t_list **andor_list_ptr);
-static t_error	*process_word(t_list **token, t_list **andor_list_ptr);
-static t_error	*process_redirs(t_list **token, t_list **andor_list_ptr);
+static t_error	*process_word(t_list **token_list_ptr, t_list **andor_list_ptr);
+static t_error	*process_redirs(t_list **token_list_ptr, t_list **andor_list_ptr);
 
 t_error	*handle_token_for_ast(t_list **token_list_ptr, t_list **ast_ptr)
 {
@@ -45,6 +45,7 @@ static t_error	*process_and_or(t_list **token_list_ptr,
 {
 	t_and_or	*last_and_or;
 	t_token		*current_token;
+	t_error		*error;
 
 	last_and_or = get_last_and_or(andor_list_ptr);
 	current_token = lstget_token(*token_list_ptr);
@@ -52,9 +53,13 @@ static t_error	*process_and_or(t_list **token_list_ptr,
 		last_and_or->op_next = OP_AND;
 	else if (current_token->type == TOKEN_OR_IF)
 		last_and_or->op_next = OP_OR;
-	return (new_error(EXIT_INTERNAL_ERR,
-			"Token type has to be TOKEN_AND_IF or TOKEN_OR_IF at "
-			"process_and_or,  bro!!"));
+	else
+		return (new_error(EXIT_INTERNAL_ERR,
+				"Token type has to be TOKEN_AND_IF or TOKEN_OR_IF at "
+				"process_and_or,  bro!!"));
+	error = advance_token(token_list_ptr);
+	if (is_error(error))
+		return (error);
 	lstadd_back_and_or(andor_list_ptr, OP_NONE);
 	return (NULL);
 }
@@ -63,6 +68,7 @@ static t_error	*process_pipe(t_list **token_list_ptr, t_list **andor_list_ptr)
 {
 	t_error		*error;
 	t_and_or	*last_andor;
+	t_list		*new_cmd;
 
 	last_andor = get_last_and_or(andor_list_ptr);
 	error = NULL;
@@ -74,8 +80,9 @@ static t_error	*process_pipe(t_list **token_list_ptr, t_list **andor_list_ptr)
 	error = advance_token(token_list_ptr);
 	if (is_error(error))
 		return (error);
-	if (lstadd_back_command(&last_andor->pipeline->command_list,
-			CMD_SIMPLE) == NULL)
+	new_cmd = lstadd_back_command(&last_andor->pipeline->command_list,
+			CMD_SIMPLE);
+	if (new_cmd == NULL)
 		return (new_error(EXIT_INTERNAL_ERR, "Malloc is failed"));
 	return (NULL);
 }
@@ -83,13 +90,15 @@ static t_error	*process_pipe(t_list **token_list_ptr, t_list **andor_list_ptr)
 static t_error	*process_word(t_list **token_list_ptr, t_list **andor_list_ptr)
 {
 	t_command	*last_cmd;
+	t_list		*new_token;
 
 	last_cmd = get_last_cmd(andor_list_ptr);
 	if (!token_list_ptr || !*token_list_ptr || !last_cmd)
 		return (new_error(EXIT_INTERNAL_ERR,
 				"It's not appropriate args at process_word , bro"));
-	if (lstcopy_back_token(&last_cmd->u.simple.token_list,
-			*lstget_token(*token_list_ptr)) == NULL)
+	new_token = lstcopy_back_token(&last_cmd->u.simple.token_list,
+			*lstget_token(*token_list_ptr));
+	if (new_token == NULL)
 		return (new_error(EXIT_INTERNAL_ERR, "Malloc error bro"));
 	last_cmd->u.simple.argc++;
 	return (advance_token(token_list_ptr));
@@ -101,6 +110,7 @@ static t_error	*process_redirs(t_list **token_list_ptr,
 	t_error			*error;
 	t_redir_type	type;
 	t_command		*last_cmd;
+	t_list			*new_redir;
 
 	error = NULL;
 	last_cmd = get_last_cmd(andor_list_ptr);
@@ -111,8 +121,9 @@ static t_error	*process_redirs(t_list **token_list_ptr,
 	error = advance_token(token_list_ptr);
 	if (is_error(error))
 		return (error);
-	if (lstadd_back_redir(&last_cmd->redir_list, type,
-			lstget_token(*token_list_ptr)) == NULL)
+	new_redir = lstadd_back_redir(&last_cmd->redir_list, type,
+			lstget_token(*token_list_ptr));
+	if (new_redir == NULL)
 		return (new_error(EXIT_INTERNAL_ERR, "Malloc error bro!!"));
 	return (advance_token(token_list_ptr));
 }

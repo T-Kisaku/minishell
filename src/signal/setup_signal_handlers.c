@@ -6,16 +6,16 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 09:35:37 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/01 10:32:37 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <signal.h>
 #include <stddef.h>
-#include <stdio.h>
 #include <unistd.h>
 
 static void	handle_sigint(int sig);

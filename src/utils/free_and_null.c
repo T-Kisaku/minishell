@@ -17,7 +17,7 @@ void	free_and_null(void **ptr)
 	if (!ptr || !*ptr)
 		return ;
 	free(*ptr);
-	ptr = NULL;
+	*ptr = NULL;
 }
 
 void	*free_return_null(void **ptr)
