@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:02:18 by saueda            #+#    #+#             */
-/*   Updated: 2025/07/01 13:50:06 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:56:16 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	print_command_not_found_error(t_command *cmd);
 int	exec_command(t_command *cmd, bool is_in_pipeline, t_minishell_state *shell)
 {
 	int		exit_code;
-	pid_t	pid;
 	t_io_fd	old_io_fd;
 
 	exit_code = BUILTIN_NOT_LAST;

@@ -1,17 +1,20 @@
 PHONY_TARGETS += norm format stdheader dev install lsp-setup get-src-files set-src-files
-norm:
+check:
+	@$(MAKE) check-norm
+	@$(MAKE) check-undef-syms
+	@$(MAKE) check-non-ascii
+
+check-norm:
 	@$(MAKE) print_running TARGET="norminette"
 	@norminette $(SRCS) $(wildcard src/*.h) $(wildcard src/**/*.h) | grep -v "OK" || true
 	@$(MAKE) norm -C $(LIBFTDIR)
-	@$(MAKE) print_running TARGET="function validation"
-	@$(MAKE) check-undef-syms
-	@$(MAKE) print_running TARGET="ascii validation"
-	@$(MAKE) check-non-ascii
 
 check-non-ascii:
+	@$(MAKE) print_running TARGET="ascii validation"
 	@! grep -P "[^\x00-\x7F]" $(SRCS) $(wildcard src/*.h) $(wildcard src/**/*.h) || (echo "Non-ASCII characters found!" && false)
 
 check-undef-syms:
+	@$(MAKE) print_running TARGET="function validation"
 	@nm minishell | \
 	awk '$$1 == "U" {print $$2}' | \
 	cut -d'@' -f1 | \

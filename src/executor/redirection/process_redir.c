@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:37:30 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 13:47:03 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:57:00 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "exit_status.h"
 #include "token.h"
 #include "utils/path.h"
+#include "ft_printf.h"
 #include <fcntl.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -24,12 +25,10 @@
 static int	get_oflags(t_redir_type type);
 static int	open_target(t_redir_target *target, t_redir_type type, int oflags);
 static int	unlink_heredoc_tmp(t_redir_type type, char *filename);
-static void	close_opened_fd(t_redir_target *target);
 
 int	process_redir(t_redir_target *target, t_redir_type type)
 {
 	int	oflags;
-	int	exit_code;
 
 	if (target->is_direct_to_fd)
 		return (EXIT_OK);
@@ -81,6 +80,6 @@ static int	unlink_heredoc_tmp(t_redir_type type, char *filename)
 		return (EXIT_OK);
 	if (unlink(filename) == 0)
 		return (EXIT_OK);
-	dprintf(STDERR_FILENO, "unlink error");
+	ft_dprintf(STDERR_FILENO, "unlink error");
 	return (EXIT_INTERNAL_ERR);
 }

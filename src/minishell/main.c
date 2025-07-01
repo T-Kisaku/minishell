@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 13:11:40 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/01 13:57:18 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 #include "minishell.h"
 #include "signal_handler.h"
 #include "utils/env.h"
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
