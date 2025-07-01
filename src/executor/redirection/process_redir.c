@@ -6,15 +6,15 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:37:30 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 13:57:00 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 15:27:07 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 #include "exit_status.h"
+#include "ft_printf.h"
 #include "token.h"
 #include "utils/path.h"
-#include "ft_printf.h"
 #include <fcntl.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -32,7 +32,8 @@ int	process_redir(t_redir_target *target, t_redir_type type)
 
 	if (target->is_direct_to_fd)
 		return (EXIT_OK);
-	if (validate_infile(target->filename) != 0)
+	if ((type == REDIR_INPUT || type == REDIR_HERE_DOC)
+		&& validate_infile(target->filename) != 0)
 		return (EXIT_USER_ERR);
 	oflags = get_oflags(type);
 	return (open_target(target, type, oflags));

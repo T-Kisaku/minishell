@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:02:18 by saueda            #+#    #+#             */
-/*   Updated: 2025/07/01 13:56:16 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 15:31:42 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ static int	exec_builtin_or_external(t_command *cmd, bool is_in_pipeline,
 	int	pid;
 
 	exit_code = EXIT_OK;
-	if (is_builtin(cmd))
+	if (cmd->type == CMD_SIMPLE && cmd->u.simple.argc == 0)
+		exit_code = EXIT_OK;
+	else if (is_builtin(cmd))
 	{
 		pid = exec_builtin_cmd(cmd, &exit_code, is_in_pipeline, shell);
 		if (exit_code == BUILTIN_NOT_LAST && pid > 0)
