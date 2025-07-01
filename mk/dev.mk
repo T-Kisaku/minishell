@@ -15,6 +15,7 @@ check-non-ascii:
 
 check-undef-syms:
 	@$(MAKE) print_running TARGET="function validation"
+	@$(MAKE) re > /dev/null
 	@nm minishell | \
 	awk '$$1 == "U" {print $$2}' | \
 	cut -d'@' -f1 | \
