@@ -6,14 +6,13 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/30 13:37:28 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/01 13:47:00 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
+#include "executor/redirection.h"
 #include "exit_status.h"
-#include "token.h"
-#include "utils/path.h"
 #include <fcntl.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -21,10 +20,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-static int	process(t_redir_target *target, t_redir_type type);
 static void	close_opened_fd(t_redir_target *target);
 
-// TODO: handle error for dup, open, close or any other funcitons related to fd
 /*
  *  # Behaviour
  *  - get fd with filename
@@ -44,10 +41,10 @@ int	process_redir_list(t_list *redir_list)
 	while (redir_list)
 	{
 		redir = lstget_redir(redir_list);
-		exit_code = process(&redir->redirect_source, redir->type);
+		exit_code = process_redir(&redir->redirect_source, redir->type);
 		if (exit_code != 0)
 			return (exit_code);
-		exit_code = process(&redir->to_be_redirected, redir->type);
+		exit_code = process_redir(&redir->to_be_redirected, redir->type);
 		if (exit_code != 0)
 		{
 			close_opened_fd(&redir->redirect_source);
@@ -59,47 +56,6 @@ int	process_redir_list(t_list *redir_list)
 		redir_list = redir_list->next;
 	}
 	return (exit_code);
-}
-
-static int	process(t_redir_target *target, t_redir_type type)
-{
-	int	oflags;
-
-	if (!target->is_direct_to_fd)
-	{
-		if (type == REDIR_INPUT || type == REDIR_HERE_DOC)
-		{
-			if (validate_infile(target->filename) != 0)
-				return (EXIT_USER_ERR);
-			oflags = O_RDONLY;
-		}
-		if (type == REDIR_OUTPUT)
-			oflags = O_WRONLY | O_CREAT | O_TRUNC;
-		if (type == REDIR_APPEND)
-			oflags = O_WRONLY | O_CREAT | O_APPEND;
-		target->fd = open(target->filename, oflags, 0644);
-		if (target->fd < 0)
-		{
-			perror("open");
-			return (EXIT_INTERNAL_ERR);
-		}
-		target->is_direct_to_fd = true;
-		del_token(target->filename_token);
-		target->filename_token = NULL;
-		if (type == REDIR_HERE_DOC)
-		{
-			if (unlink(target->filename) == -1)
-			{
-				dprintf(STDERR_FILENO, "unlink error");
-				free(target->filename);
-				target->filename = NULL;
-				return (EXIT_INTERNAL_ERR);
-			}
-		}
-		free(target->filename);
-		target->filename = NULL;
-	}
-	return (EXIT_OK);
 }
 
 static void	close_opened_fd(t_redir_target *target)

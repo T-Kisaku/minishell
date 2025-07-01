@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 12:58:36 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/01 13:15:11 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static int	loop_cmd_list(t_list *cmd_list, t_cmd_fd *cmd_fd,
 		t_minishell_state *shell)
 {
 	int			builtin_exit_code;
-	int			result;
 	t_command	*cmd;
 	int			cmd_list_size;
 
@@ -63,9 +62,7 @@ static int	loop_cmd_list(t_list *cmd_list, t_cmd_fd *cmd_fd,
 			return (EXIT_INTERNAL_ERR);
 		}
 		set_io_redir(cmd, *cmd_fd);
-		result = exec_command(cmd, cmd_list_size > 1, shell);
-		if (result != BUILTIN_NOT_LAST)
-			builtin_exit_code = result;
+		builtin_exit_code = exec_command(cmd, cmd_list_size > 1, shell);
 		cleanup_pipe_fds(cmd_fd);
 		cmd_list = cmd_list->next;
 	}

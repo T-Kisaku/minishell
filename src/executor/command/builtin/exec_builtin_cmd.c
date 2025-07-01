@@ -6,13 +6,14 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 13:01:54 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/01 13:45:23 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 #include "executor/command.h"
 #include "executor/command/builtin.h"
+#include "executor/pipeline/cmd_list.h"
 #include "exit_status.h"
 #include "ft_stdio.h"
 #include "ft_string.h"
@@ -44,7 +45,10 @@ pid_t	exec_builtin_cmd(t_command *cmd, int *exit_code, bool is_in_pipeline,
 	}
 	pid = fork();
 	if (pid != 0)
+	{
+		*exit_code = BUILTIN_NOT_LAST;
 		return (pid);
+	}
 	*exit_code = entry->func(cmd, shell);
 	del_shell_state(shell);
 	exit(*exit_code);
@@ -76,9 +80,15 @@ static const t_builtin_entry	*find_builtin(const char *name)
 static const t_builtin_entry	*get_builtin_table(void)
 {
 	static const t_builtin_entry	table[8] = {
-	{"echo", exec_echo}, {"exit", exec_exit}, {"env", exec_env},
-	{"export", exec_export}, {"unset", exec_unset}, {"pwd", exec_pwd},
-	{"cd", exec_cd}, {NULL, NULL}};
+	{"echo", exec_echo},
+	{"exit", exec_exit},
+	{"env", exec_env},
+	{"export", exec_export},
+	{"unset", exec_unset},
+	{"pwd", exec_pwd},
+	{"cd", exec_cd},
+	{NULL, NULL}
+	};
 
 	return (table);
 }

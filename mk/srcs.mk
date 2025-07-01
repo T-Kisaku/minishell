@@ -7,7 +7,6 @@ src/executor/command/builtin/env.c \
 src/executor/command/builtin/exec_builtin_cmd.c \
 src/executor/command/builtin/exit.c \
 src/executor/command/builtin/export.c \
-src/executor/command/builtin/pwd.c \
 src/executor/command/builtin/unset.c \
 src/executor/command/exec_command.c \
 src/executor/command/external/command_path.c \

@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:02:18 by saueda            #+#    #+#             */
-/*   Updated: 2025/07/01 13:05:00 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/01 13:50:06 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+static int	exec_builtin_or_external(t_command *cmd, bool is_in_pipeline,
+				t_minishell_state *shell);
 static void	print_command_not_found_error(t_command *cmd);
 
 int	exec_command(t_command *cmd, bool is_in_pipeline, t_minishell_state *shell)
@@ -30,11 +32,26 @@ int	exec_command(t_command *cmd, bool is_in_pipeline, t_minishell_state *shell)
 	pid_t	pid;
 	t_io_fd	old_io_fd;
 
-	exit_code = -1;
+	exit_code = BUILTIN_NOT_LAST;
 	dup_io(&old_io_fd);
 	exit_code = process_redir_list(cmd->redir_list);
 	if (exit_code != 0)
+	{
+		restore_close_io(old_io_fd);
 		return (exit_code);
+	}
+	exec_builtin_or_external(cmd, is_in_pipeline, shell);
+	restore_close_io(old_io_fd);
+	return (exit_code);
+}
+
+static int	exec_builtin_or_external(t_command *cmd, bool is_in_pipeline,
+		t_minishell_state *shell)
+{
+	int	exit_code;
+	int	pid;
+
+	exit_code = EXIT_OK;
 	if (is_builtin(cmd))
 	{
 		pid = exec_builtin_cmd(cmd, &exit_code, is_in_pipeline, shell);
@@ -51,7 +68,6 @@ int	exec_command(t_command *cmd, bool is_in_pipeline, t_minishell_state *shell)
 		print_command_not_found_error(cmd);
 		exit_code = (EXIT_USER_ERR);
 	}
-	restore_close_io(old_io_fd);
 	return (exit_code);
 }
 
