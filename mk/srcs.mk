@@ -38,8 +38,8 @@ src/syntax_processor/tokenizer/type.c \
 src/syntax_processor/check_syntax/check_body.c \
 src/syntax_processor/check_syntax/check_syntax.c \
 src/syntax_processor/check_syntax/check_tail.c \
-src/syntax_processor/str_to_ast.c \
 src/syntax_processor/check_quote.c \
+src/syntax_processor/str_to_ast.c \
 src/executor/command/builtin/cd/exec_cd.c \
 src/executor/command/builtin/cd/support.c \
 src/executor/command/builtin/echo.c \
@@ -59,10 +59,10 @@ src/executor/pipeline/cmd_list/exec_cmd_list.c \
 src/executor/pipeline/pids.c \
 src/executor/pipeline/exec_pipeline.c \
 src/executor/exec_ast.c \
-src/expander/common/quote_remove_core.c \
 src/expander/common/utils.c \
-src/expander/common/expand_ast_core.c \
 src/expander/common/expand_single_token.c \
+src/expander/common/expand_ast_core.c \
+src/expander/common/quote_remove_core.c \
 src/expander/common/expand_variable.c \
 src/expander/redir/redir_split_handler.c \
 src/expander/redir/generate_filename.c \

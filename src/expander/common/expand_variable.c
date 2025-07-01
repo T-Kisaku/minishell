@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 14:00:52 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/01 08:39:29 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ static t_error	*set_prev_exit_code(t_expansion_context *ctx,
 		return (new_error(EXIT_INTERNAL_ERR, "ft_itoa error"));
 	ctx->variable = str_exit_code;
 	len = ft_strlen(str_exit_code);
-	while (len--)
-		ctx->cur_pos++;
+	ctx->cur_pos++;
 	return (NULL);
 }
