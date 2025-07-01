@@ -6,16 +6,17 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 15:52:40 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 11:15:14 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 #include "exit_status.h"
-#include "ft_stdio.h"
-#include "ft_string.h"
 #include "ft_ctype.h"
+#include "ft_stdio.h"
 #include "ft_stdlib.h"
+#include "ft_string.h"
+#include "minishell.h"
 
 void	*check_is_all_digit(unsigned int i, char c, void *acc)
 {
@@ -40,34 +41,31 @@ bool	check_valid_ascii(char *s)
 	return (is_valid);
 }
 
-// TODO: free all data
-int	exec_exit(t_command *cmd, t_list *env_list)
+int	exec_exit(t_command *cmd, t_minishell_state *shell)
 {
-	(void)env_list;
+	int	exit_code;
+
+	exit_code = EXIT_OK;
 	if (cmd->type != CMD_SIMPLE)
 	{
 		ft_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);
-		// TODO: free all data before exit
-		exit(EXIT_INTERNAL_ERR);
+		exit_code = EXIT_INTERNAL_ERR;
 	}
-	if (cmd->u.simple.argc == 1)
-	{
-		// TODO: free all data before exit
-		exit(EXIT_OK);
-	}
-	if (cmd->u.simple.argc > 2)
+	else if (cmd->u.simple.argc == 1)
+		exit_code = EXIT_OK;
+	else if (cmd->u.simple.argc > 2)
 	{
 		ft_fputs("exit: expected less than 1 argument", STDERR_FILENO);
-		// TODO: free all data before exit
-		exit(EXIT_USER_ERR);
+		exit_code = EXIT_USER_ERR;
 	}
-	if (!check_valid_ascii(cmd->u.simple.argv[1]))
+	else if (!check_valid_ascii(cmd->u.simple.argv[1]))
 	{
 		ft_fputs("exit: expected only 1 + or - and numeric argument",
 			STDERR_FILENO);
-		// TODO: free all data before exit
-		exit(EXIT_USER_ERR);
+		exit_code = EXIT_USER_ERR;
 	}
-	// TODO: free all data before exit
-	exit(ft_atoi(cmd->u.simple.argv[1]));
+  if(cmd->u.simple.argc != 1)
+    exit_code = ft_atoi(cmd->u.simple.argv[1]);
+  del_shell_state(shell);
+  exit(exit_code);
 }

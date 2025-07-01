@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 15:52:19 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 11:01:30 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "ft_list.h"
 #include "ft_stdio.h"
 #include "ft_string.h"
+#include "minishell.h"
 #include "utils/env.h"
 #include <stdio.h>
 #include <unistd.h>
@@ -24,7 +25,7 @@
 static void	set_env_entry(t_list **env_list, char *env_str);
 static void	print_export_entry(void *content);
 
-int	exec_export(t_command *cmd, t_list **env_list)
+int	exec_export(t_command *cmd, t_minishell_state *shell)
 {
 	int	i;
 
@@ -35,13 +36,13 @@ int	exec_export(t_command *cmd, t_list **env_list)
 	}
 	if (cmd->u.simple.argc == 1)
 	{
-		ft_lstiter(*env_list, print_export_entry);
+		ft_lstiter(shell->env_list, print_export_entry);
 		return (EXIT_OK);
 	}
 	i = 1;
 	while (i < cmd->u.simple.argc && cmd->u.simple.argv[i] != NULL)
 	{
-		set_env_entry(env_list, cmd->u.simple.argv[i]);
+		set_env_entry(&shell->env_list, cmd->u.simple.argv[i]);
 		i++;
 	}
 	return (EXIT_OK);

@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:18:36 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 10:59:36 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 #include "exit_status.h"
 #include "ft_stdio.h"
 #include "ft_string.h"
+#include "minishell.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
 static void	process_echo(t_command *cmd);
 
-int	exec_echo(t_command *cmd, t_list *env_list)
+int	exec_echo(t_command *cmd, t_minishell_state *shell)
 {
-	(void)env_list;
+  (void)shell;
 	if (cmd->type != CMD_SIMPLE)
 	{
 		ft_fputs("cmd->type should be CMD_SIMPLE bro", STDERR_FILENO);

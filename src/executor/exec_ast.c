@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/30 12:28:35 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/01 10:52:02 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <unistd.h>
 
 // same meaning as exec_and_or
-int	exec_ast(t_ast *ast, t_list **env_list)
+int	exec_ast(t_ast *ast, t_minishell_state *shell)
 {
 	t_list		*andor_list;
 	t_and_or	*andor;
@@ -34,7 +34,7 @@ int	exec_ast(t_ast *ast, t_list **env_list)
 	{
 		andor = lstget_and_or(andor_list);
 		if (exec_next)
-			exit_code = exec_pipeline(andor->pipeline, env_list);
+			exit_code = exec_pipeline(andor->pipeline, shell);
 		if (andor->op_next == OP_AND)
 			exec_next = exit_code == EXIT_OK;
 		else if (andor->op_next == OP_OR)

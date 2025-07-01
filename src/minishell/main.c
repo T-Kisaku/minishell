@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/30 09:21:01 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/01 11:19:59 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,10 @@ static int	init_shell_state(int argc, char **argv, char **envp,
 {
 	t_error	*error;
 
-	shell->prev_exit_code = 0;
+  shell->ast = NULL;
 	shell->env_list = NULL;
+  shell->pids = NULL;
+	shell->prev_exit_code = 0;
 	shell->is_interactive = isatty(STDIN_FILENO) == 0 || is_option_c(argc,
 			argv);
 	error = envp_to_env_list(envp, &shell->env_list);

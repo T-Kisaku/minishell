@@ -6,13 +6,12 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 17:47:20 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 10:57:24 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 #include "error.h"
-#include "executor.h"
 #include "executor/command.h"
 #include "exit_status.h"
 #include "minishell.h"
@@ -25,17 +24,17 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-static void	exec(t_command *cmd, char **envp, t_list *env_list);
+static void	exec(t_command *cmd, char **envp, t_minishell_state *shell);
 
 // TODO: error handling for execve, when it fails, free all
-pid_t	exec_external_cmd(t_command *cmd, t_list *env_list)
+pid_t	exec_external_cmd(t_command *cmd, t_minishell_state *shell)
 {
 	t_error	*error;
 	char	**envp_tmp;
 	pid_t	pid;
 
 	envp_tmp = NULL;
-	error = env_list_to_envp(env_list, &envp_tmp);
+	error = env_list_to_envp(shell->env_list, &envp_tmp);
 	if (is_error(error))
 	{
 		del_error(error);
@@ -47,11 +46,11 @@ pid_t	exec_external_cmd(t_command *cmd, t_list *env_list)
 		free_argv_null(&envp_tmp);
 		return (pid);
 	}
-	exec(cmd, envp_tmp, env_list);
+	exec(cmd, envp_tmp, shell);
 	exit(EXIT_INTERNAL_ERR);
 }
 
-static void	exec(t_command *cmd, char **envp, t_list *env_list)
+static void	exec(t_command *cmd, char **envp, t_minishell_state *shell)
 {
 	process_redir_list(cmd->redir_list);
 	if (cmd->type == CMD_SIMPLE)
@@ -63,7 +62,7 @@ static void	exec(t_command *cmd, char **envp, t_list *env_list)
 	}
 	else if (cmd->type == CMD_SUBSHELL)
 	{
-		exec_ast(cmd->u.subshell.and_or_list, &env_list);
+		exec_ast(cmd->u.subshell.and_or_list, shell);
 		free_argv_null(&envp);
 		exit(EXIT_INTERNAL_ERR);
 	}

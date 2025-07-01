@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipeline.h                                         :+:      :+:    :+:   */
+/*   shell_state.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 11:23:52 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/07/01 11:03:50 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/07/01 11:21:02 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPELINE_H
-# define PIPELINE_H
-
-# include "ft_list.h"
+#include "ast.h"
 #include "minishell.h"
-# include <fcntl.h>
-# include <sys/wait.h>
-# include <unistd.h>
+#include "utils/env.h"
+#include <stdlib.h>
 
-int		exec_cmd_list(t_list *cmd_list, t_minishell_state *shell);
-pid_t	*get_pids(int cmd_count);
-void	set_last_pid(int *pids, int pid_to_set);
-int		wait_pids(pid_t *pids);
+void del_shell_state(t_minishell_state *shell)
+{
+  lstclear_env(&shell->env_list);
+  lstclear_and_or(&shell->ast);
+  free(shell->pids);
+}
 
-#endif // !PIPELINE_H

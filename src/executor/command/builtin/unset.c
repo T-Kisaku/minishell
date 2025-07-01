@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 09:44:26 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 11:02:16 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 #include "exit_status.h"
 #include "ft_list.h"
 #include "ft_stdio.h"
+#include "minishell.h"
 #include "utils/env.h"
 #include <stdio.h>
 #include <unistd.h>
 
 static void	set_env_entry(t_list **env_list, char *env_key);
 
-int	exec_unset(t_command *cmd, t_list **env_list)
+int	exec_unset(t_command *cmd, t_minishell_state *shell)
 {
 	int	i;
 
@@ -33,7 +34,7 @@ int	exec_unset(t_command *cmd, t_list **env_list)
 	i = 1;
 	while (i < cmd->u.simple.argc && cmd->u.simple.argv[i] != NULL)
 	{
-		set_env_entry(env_list, cmd->u.simple.argv[i]);
+		set_env_entry(&shell->env_list, cmd->u.simple.argv[i]);
 		i++;
 	}
 	return (EXIT_OK);

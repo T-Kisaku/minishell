@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:31:02 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/01 11:01:55 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "executor/command/builtin.h"
 #include "exit_status.h"
 #include "ft_stdio.h"
+#include "minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -30,11 +31,11 @@ static int	print_internal_error(const char *message)
 	return (EXIT_INTERNAL_ERR);
 }
 
-int	exec_pwd(t_command *cmd, t_list **env_list)
+int	exec_pwd(t_command *cmd,  t_minishell_state *shell)
 {
 	char	*cwd;
 
-	(void)env_list;
+	(void)shell;
 	if (cmd->type != CMD_SIMPLE)
 	{
 		return (print_internal_error("pwd: invalid command type\n"));

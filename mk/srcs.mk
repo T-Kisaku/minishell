@@ -27,6 +27,7 @@ src/utils/write_error.c \
 src/utils/argv.c \
 src/utils/path.c \
 src/utils/free_and_null.c \
+src/utils/shell_state.c \
 src/syntax_processor/ast_builder/utils.c \
 src/syntax_processor/ast_builder/token_to_ast.c \
 src/syntax_processor/ast_builder/processes.c \
@@ -40,15 +41,15 @@ src/syntax_processor/check_syntax/check_syntax.c \
 src/syntax_processor/check_syntax/check_tail.c \
 src/syntax_processor/check_quote.c \
 src/syntax_processor/str_to_ast.c \
-src/executor/command/builtin/cd/exec_cd.c \
 src/executor/command/builtin/cd/support.c \
+src/executor/command/builtin/cd/exec_cd.c \
 src/executor/command/builtin/echo.c \
-src/executor/command/builtin/pwd.c \
-src/executor/command/builtin/unset.c \
 src/executor/command/builtin/env.c \
 src/executor/command/builtin/export.c \
-src/executor/command/builtin/exec_builtin_cmd.c \
+src/executor/command/builtin/pwd.c \
+src/executor/command/builtin/unset.c \
 src/executor/command/builtin/exit.c \
+src/executor/command/builtin/exec_builtin_cmd.c \
 src/executor/command/external/command_path.c \
 src/executor/command/external/exec_external_cmd.c \
 src/executor/command/io_fd.c \
@@ -79,6 +80,6 @@ src/expander/command/split_token.c \
 src/expander/expander.c \
 src/signal/setup_signal_handlers.c \
 src/minishell/prompt.c \
-src/minishell/main.c \
 src/minishell/run_cmd.c \
+src/minishell/main.c \
 src/error.c \
