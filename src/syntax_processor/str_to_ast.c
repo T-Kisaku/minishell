@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_to_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 13:23:51 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/02 10:05:50 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_error	*str_to_ast(char **input_str, t_ast **ast_ptr, t_minishell_state *shell)
 	error = str_to_token(*input_str, &token_list);
 	if (is_error(error))
 		return (error);
-	error = check_syntax(&token_list, shell);
+	error = check_syntax(&token_list, input_str, shell);
 	if (error)
 	{
 		lstclear_token(&token_list);

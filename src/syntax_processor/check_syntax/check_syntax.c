@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 14:19:12 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/02 10:22:40 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 
 static t_error	*check_head(t_list **cur, t_list **prev);
 
-t_error	*check_syntax(t_list **list, t_minishell_state *shell)
+t_error	*check_syntax(t_list **list, char **original_input,
+			t_minishell_state *shell)
 {
 	t_error	*error;
 	t_list	*cur;
@@ -38,7 +39,7 @@ t_error	*check_syntax(t_list **list, t_minishell_state *shell)
 	error = check_body(&cur, &prev);
 	if (is_error(error))
 		return (error);
-	return (check_tail(list, shell));
+	return (check_tail(list, original_input, shell));
 }
 
 static t_error	*check_head(t_list **cur, t_list **prev)

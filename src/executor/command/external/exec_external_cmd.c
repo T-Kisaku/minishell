@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_external_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 10:57:24 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/02 09:46:06 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ static void	exec(t_command *cmd, char **envp, t_minishell_state *shell)
 		execve(cmd->u.simple.argv[0], cmd->u.simple.argv, envp);
 		perror("execve");
 		free_argv_null(&envp);
+		lstclear_and_or(&shell->ast);
+		lstclear_env(&shell->env_list);
+		free(shell->pids);
 		exit(EXIT_INTERNAL_ERR);
 	}
 	else if (cmd->type == CMD_SUBSHELL)

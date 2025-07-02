@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 14:17:20 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/02 09:20:02 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static t_error	*expand_ast_core_loop(t_expansion_context *ctx,
 
 	while (*ctx->cur_pos)
 	{
-		if (!ctx->in_single_quote && *ctx->cur_pos == '$')
+		if (*ctx->type != TOKEN_SINGLE_QUOTED_WORD && *ctx->cur_pos == '$')
 		{
 			set_dollar_type(ctx);
 			error = expand_ast_core_core(ctx, shell, mode);
@@ -102,8 +102,6 @@ static t_error	*expand_ast_core_loop(t_expansion_context *ctx,
 		}
 		else
 		{
-			if (*ctx->cur_pos == '\'')
-				ctx->in_single_quote = (ctx->in_single_quote + 1) % 2;
 			if (mode == MODE_SET_VALUE)
 				ft_memcpy(&ctx->output[ctx->index], ctx->cur_pos, 1);
 			ctx->index++;
