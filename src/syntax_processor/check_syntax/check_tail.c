@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 14:19:21 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/02 11:09:15 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/03 11:53:27 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 #include "syntax_processor.h"
 #include "syntax_processor/check_quote.h"
 #include "token.h"
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 static t_error	*check_control_op_tail(t_list *tail, char **original_input,
@@ -58,7 +58,7 @@ static t_error	*check_control_op_tail(t_list *tail, char **original_input,
 	char	*new_input;
 	t_error	*error;
 
-	if (shell->is_interactive != 0)
+	if (!shell->is_interactive)
 		return (new_error(EXIT_USER_ERR,
 				"syntax error: you need to close last token bro!"));
 	while (1)

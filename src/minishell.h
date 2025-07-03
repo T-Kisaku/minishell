@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:11:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 13:06:22 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/03 14:27:35 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_minishell_state
 	bool						is_interactive;
 }								t_minishell_state;
 
+void							init_shell_state(t_minishell_state *shell);
 void							del_shell_state(t_minishell_state *shell);
 
 extern volatile sig_atomic_t	g_signal_received;
@@ -36,7 +37,11 @@ int								exec_ast(t_ast *ast, t_minishell_state *shell);
 t_error							*expand_ast(t_ast *ast,
 									t_minishell_state *shell);
 
-bool							prompt(t_minishell_state *shell);
-void							run_cmd(char **input, t_minishell_state *shell);
+t_error							*prompt(t_minishell_state *shell);
+t_error							*run_cmd(char **input,
+									t_minishell_state *shell);
+
+void							handle_error(t_error *error,
+									t_minishell_state *shell);
 
 #endif

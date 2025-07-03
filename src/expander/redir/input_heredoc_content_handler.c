@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 12:02:55 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/03 11:53:19 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_error	*input_heredoc_content_handler(t_redir *redir, t_minishell_state *shell)
 	error = NULL;
 	if (redir->type != REDIR_HERE_DOC)
 		return (error);
-	if (shell->is_interactive != 0)
+	if (!shell->is_interactive)
 		return (new_error(EXIT_USER_ERR, MSG));
 	error = init_heredoc_context(redir, &content, &delimiter, &delimiter_len);
 	if (is_error(error))

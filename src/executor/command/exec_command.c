@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:02:18 by saueda            #+#    #+#             */
-/*   Updated: 2025/07/01 16:16:48 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/03 14:28:17 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "executor/pipeline/cmd_list.h"
 #include "exit_status.h"
 #include "minishell.h"
+#include "ft_printf.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <sys/wait.h>
@@ -78,6 +79,7 @@ static void	print_command_not_found_error(t_command *cmd)
 {
 	if (cmd && cmd->type == CMD_SIMPLE && cmd->u.simple.argv[0])
 	{
-		printf("command not found: %s\n", cmd->u.simple.argv[0]);
+		ft_dprintf(STDERR_FILENO, "command not found: %s\n",
+			cmd->u.simple.argv[0]);
 	}
 }

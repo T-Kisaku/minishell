@@ -5,51 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/03 14:25:35 by tkisaku          ###   ########.fr       */
+/*   Created: 2025/07/03 14:26:05 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/07/03 14:26:20 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
-#include "ft_string.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "exit_status.h"
+#include "ft_stdio.h"
+#include "minishell.h"
 #include <unistd.h>
 
-// TODO: think about when malloc is failed
-t_error	*new_error(int exit_code, const char *msg)
-{
-	t_error	*err;
+static void	print_error(t_error *error);
 
-	err = malloc(sizeof(t_error));
-	if (!err)
-		return (NULL);
-	err->exit_code = exit_code;
-	if (msg == NULL)
-	{
-		err->msg = NULL;
-		return (err);
-	}
-	err->msg = ft_strdup(msg);
-	if (!err->msg)
-	{
-		free(err);
-		return (NULL);
-	}
-	return (err);
-}
-
-bool	is_error(t_error *error)
-{
-	return (error != NULL);
-}
-
-void	del_error(t_error *error)
+void	handle_error(t_error *error, t_minishell_state *shell)
 {
 	if (is_error(error))
 	{
-		free(error->msg);
-		free(error);
+		shell->prev_exit_code = error->exit_code;
+		print_error(error);
+		del_error(error);
 	}
+	else
+		shell->prev_exit_code = EXIT_OK;
+}
+
+static void	print_error(t_error *error)
+{
+	if (error == NULL || error->msg == NULL)
+		return ;
+	if (error->exit_code == EXIT_EOF)
+		ft_fputs(error->msg, STDOUT_FILENO);
+	else
+		ft_fputs(error->msg, STDERR_FILENO);
 }

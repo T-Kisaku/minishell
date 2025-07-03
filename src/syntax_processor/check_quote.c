@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:49:25 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/03 11:53:37 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_error	*check_quote(char **input, t_minishell_state *shell)
 	{
 		if (is_quote_closed(*input))
 			return (NULL);
-		if (shell->is_interactive)
+		if (!shell->is_interactive)
 			return (new_error(EXIT_USER_ERR,
 					"syntax error: You need to close quote bro!!"));
 		error = read_and_append_line(input);
