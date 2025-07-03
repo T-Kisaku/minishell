@@ -1,13 +1,13 @@
 SRCS = \
 src/executor/command/builtin/cd/exec_cd.c \
 src/executor/command/builtin/cd/support.c \
+src/executor/command/builtin/echo.c \
 src/executor/command/builtin/env.c \
 src/executor/command/builtin/exec_builtin_cmd.c \
 src/executor/command/builtin/exit.c \
 src/executor/command/builtin/export.c \
 src/executor/command/builtin/pwd.c \
 src/executor/command/builtin/unset.c \
-src/executor/command/builtin/echo.c \
 src/executor/command/external/command_path.c \
 src/executor/command/external/exec_external_cmd.c \
 src/executor/command/io_fd.c \
@@ -18,8 +18,8 @@ src/executor/pipeline/cmd_list/exec_cmd_list.c \
 src/executor/pipeline/cmd_list/redir.c \
 src/executor/pipeline/exec_pipeline.c \
 src/executor/pipeline/pids.c \
-src/executor/redirection/process_redir_list.c \
 src/executor/redirection/process_redir.c \
+src/executor/redirection/process_redir_list.c \
 src/expander/command/expand.c \
 src/expander/command/generate_argv.c \
 src/expander/command/quote_remove.c \
@@ -38,9 +38,9 @@ src/expander/redir/redir_quote_removal_handler.c \
 src/expander/redir/redir_split_handler.c \
 src/expander/redir/input_heredoc_content_handler.c \
 src/minishell/error.c \
+src/minishell/main.c \
 src/minishell/prompt.c \
 src/minishell/run_cmd.c \
-src/minishell/main.c \
 src/signal/child_signal.c \
 src/signal/print_child_signal_message.c \
 src/signal/parent_signal.c \
@@ -51,10 +51,10 @@ src/syntax_processor/check_syntax/check_body.c \
 src/syntax_processor/check_syntax/check_syntax.c \
 src/syntax_processor/check_syntax/check_tail.c \
 src/syntax_processor/tokenizer/process_special_char.c \
-src/syntax_processor/tokenizer/str_to_token.c \
 src/syntax_processor/tokenizer/token_extraction.c \
 src/syntax_processor/tokenizer/tokenize_loop.c \
 src/syntax_processor/tokenizer/type.c \
+src/syntax_processor/tokenizer/str_to_token.c \
 src/syntax_processor/str_to_ast.c \
 src/syntax_processor/check_quote.c \
 src/utils/argv.c \
