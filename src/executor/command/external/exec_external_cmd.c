@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/02 09:46:06 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/03 11:24:27 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include "signal_handler.h"
 
 static void	exec(t_command *cmd, char **envp, t_minishell_state *shell);
 
@@ -52,15 +53,19 @@ pid_t	exec_external_cmd(t_command *cmd, t_minishell_state *shell)
 
 static void	exec(t_command *cmd, char **envp, t_minishell_state *shell)
 {
+	if(setup_child_signals() != EXIT_SUCCESS)
+	{
+		free_argv_null(&envp);
+		del_shell_state(shell);
+		exit(EXIT_INTERNAL_ERR);
+	}
 	process_redir_list(cmd->redir_list);
 	if (cmd->type == CMD_SIMPLE)
 	{
 		execve(cmd->u.simple.argv[0], cmd->u.simple.argv, envp);
 		perror("execve");
 		free_argv_null(&envp);
-		lstclear_and_or(&shell->ast);
-		lstclear_env(&shell->env_list);
-		free(shell->pids);
+		del_shell_state(shell);
 		exit(EXIT_INTERNAL_ERR);
 	}
 	else if (cmd->type == CMD_SUBSHELL)

@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 13:57:18 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/03 11:17:31 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	exit_code = init_shell_state(argc, argv, envp, &shell);
 	if (exit_code != EXIT_OK)
 		return (exit_code);
-	exit_code = setup_signal_handlers();
+	exit_code = setup_parent_signals();
 	if (exit_code != EXIT_OK)
 		return (exit_code);
 	if (is_option_c(argc, argv))
