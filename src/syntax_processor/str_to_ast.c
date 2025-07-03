@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/02 10:05:50 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/03 17:15:56 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "minishell.h"
 #include "syntax_processor.h"
 #include "token.h"
+#include <stdio.h>
 
 t_error	*str_to_ast(char **input_str, t_ast **ast_ptr, t_minishell_state *shell)
 {
@@ -29,6 +30,8 @@ t_error	*str_to_ast(char **input_str, t_ast **ast_ptr, t_minishell_state *shell)
 		return (error);
 	error = str_to_token(*input_str, &token_list);
 	if (is_error(error))
+		return (error);
+	if (token_list == NULL)
 		return (error);
 	error = check_syntax(&token_list, input_str, shell);
 	if (error)

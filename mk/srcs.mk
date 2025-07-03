@@ -39,8 +39,8 @@ src/expander/redir/redir_split_handler.c \
 src/expander/redir/input_heredoc_content_handler.c \
 src/minishell/error.c \
 src/minishell/prompt.c \
-src/minishell/run_cmd.c \
 src/minishell/main.c \
+src/minishell/run_cmd.c \
 src/signal/child_signal.c \
 src/signal/print_child_signal_message.c \
 src/signal/parent_signal.c \
@@ -55,8 +55,8 @@ src/syntax_processor/tokenizer/str_to_token.c \
 src/syntax_processor/tokenizer/token_extraction.c \
 src/syntax_processor/tokenizer/tokenize_loop.c \
 src/syntax_processor/tokenizer/type.c \
-src/syntax_processor/str_to_ast.c \
 src/syntax_processor/check_quote.c \
+src/syntax_processor/str_to_ast.c \
 src/utils/argv.c \
 src/utils/ast/and_or/del.c \
 src/utils/ast/and_or/new.c \

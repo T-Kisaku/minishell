@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/03 11:24:27 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/03 17:20:49 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "executor/command.h"
 #include "exit_status.h"
 #include "minishell.h"
+#include "signal_handler.h"
 #include "utils/argv.h"
 #include "utils/env.h"
 #include <fcntl.h>
@@ -23,7 +24,6 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include "signal_handler.h"
 
 static void	exec(t_command *cmd, char **envp, t_minishell_state *shell);
 
@@ -53,7 +53,7 @@ pid_t	exec_external_cmd(t_command *cmd, t_minishell_state *shell)
 
 static void	exec(t_command *cmd, char **envp, t_minishell_state *shell)
 {
-	if(setup_child_signals() != EXIT_SUCCESS)
+	if (setup_child_signals() != EXIT_SUCCESS)
 	{
 		free_argv_null(&envp);
 		del_shell_state(shell);

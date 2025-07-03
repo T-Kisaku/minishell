@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:59:33 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/03 14:25:24 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/03 17:18:51 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ t_error	*run_cmd(char **input, t_minishell_state *shell)
 	error = set_ast(input, &shell->ast, shell);
 	if (is_error(error))
 		return (error);
+	if (shell->ast == NULL)
+		return (NULL);
 	exit_code = exec_ast(shell->ast, shell);
 	if (exit_code != EXIT_OK)
 		error = new_error(exit_code, NULL);
@@ -49,6 +51,8 @@ static t_error	*set_ast(char **input, t_ast **ast_ptr,
 	error = str_to_ast(input, ast_ptr, shell);
 	if (is_error(error))
 		return (error);
+	if (*ast_ptr == NULL)
+		return (NULL);
 	error = expand_ast(*ast_ptr, shell);
 	if (is_error(error))
 	{
