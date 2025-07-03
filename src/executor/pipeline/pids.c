@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/03 11:41:36 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/04 08:05:56 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	wait_pids(pid_t *pids)
 	while (pids[i] != -1)
 	{
 		waitpid(pids[i], &last_cmd_status, 0);
-		print_child_signal_message(last_cmd_status);
 		i++;
 	}
+	print_child_signal_message(last_cmd_status);
 	if (WIFEXITED(last_cmd_status))
 		last_cmd_status = WEXITSTATUS(last_cmd_status);
 	else
