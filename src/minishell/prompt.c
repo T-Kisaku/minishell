@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:27:14 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/03 14:27:14 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/03 15:17:33 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "exit_status.h"
 
 static char	*get_input_str(t_minishell_state *shell);
 
@@ -30,7 +31,7 @@ t_error	*prompt(t_minishell_state *shell)
 	error = NULL;
 	input_str = get_input_str(shell);
 	if (input_str == NULL)
-		return (error);
+		return (new_error(EXIT_EOF, NULL));
 	error = run_cmd(&input_str, shell);
 	add_history(input_str);
 	free(input_str);
