@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:02:18 by saueda            #+#    #+#             */
-/*   Updated: 2025/07/03 14:28:17 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 09:17:58 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include "executor/pipeline.h"
 #include "executor/pipeline/cmd_list.h"
 #include "exit_status.h"
-#include "minishell.h"
 #include "ft_printf.h"
+#include "minishell.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <sys/wait.h>
@@ -70,7 +70,7 @@ static int	exec_builtin_or_external(t_command *cmd, bool is_in_pipeline,
 	else
 	{
 		print_command_not_found_error(cmd);
-		exit_code = (EXIT_USER_ERR);
+		exit_code = EXIT_NOT_FOUND;
 	}
 	return (exit_code);
 }
