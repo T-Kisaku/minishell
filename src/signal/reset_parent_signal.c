@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_child_signal_message.c                       :+:      :+:    :+:   */
+/*   reset_parent_signal.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/03 17:21:03 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/04 16:39:42 by saueda           ###   ########.fr       */
+/*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
+/*   Updated: 2025/07/04 15:03:06 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "minishell.h"
-#include <signal.h>
+#include "exit_status.h"
 #include <stdio.h>
-#include <sys/wait.h>
-#include <unistd.h>
+#include <signal.h>
+#include <stdlib.h>
+#include "signal_handler.h"
 
-void	print_child_signal_message(int status)
+int	reset_parent_sigint(void)
 {
-	if (g_signal_received != 0)
+	struct sigaction	sa;
+
+	if (set_sigint(&sa) != EXIT_SUCCESS)
 	{
-		if (g_signal_received == SIGINT)
-			write(STDOUT_FILENO, "\n", 1);
-		if (g_signal_received == SIGQUIT)
-		{
-			if (WCOREDUMP(status))
-				ft_dprintf(STDERR_FILENO, "Quit (core dumped)\n");
-			else
-				ft_dprintf(STDERR_FILENO, "Quit\n");
-		}
+		perror("parent process: sigaction SIGINT");
+		return (EXIT_INTERNAL_ERR);
 	}
+	return (EXIT_SUCCESS);
 }
