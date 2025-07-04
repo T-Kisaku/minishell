@@ -6,16 +6,15 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:56 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/03 19:10:26 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 10:29:04 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error.h"
-#include "exit_status.h"
-#include "libft.h"
-#include "utils/argv.h"
+#include "ft_string.h"
 #include "utils/env.h"
 #include <stdlib.h>
+
+static t_env	*allocate_value(t_env *new_env, char *value);
 
 t_env	*new_env(char *key, char *value)
 {
@@ -32,11 +31,16 @@ t_env	*new_env(char *key, char *value)
 		free(new_env);
 		return (NULL);
 	}
-  if(value == NULL)
-  {
-    new_env->value = NULL;
-    return new_env;
-  }
+	return (allocate_value(new_env, value));
+}
+
+static t_env	*allocate_value(t_env *new_env, char *value)
+{
+	if (value == NULL)
+	{
+		new_env->value = NULL;
+		return (new_env);
+	}
 	new_env->value = ft_strdup(value);
 	if (!new_env->value)
 	{
@@ -49,7 +53,7 @@ t_env	*new_env(char *key, char *value)
 
 t_env	*str_to_new_env(char *env_str)
 {
-  t_env *new;
+	t_env	*new;
 	char	*key;
 	char	*value;
 	char	*equal_pos;
@@ -63,11 +67,10 @@ t_env	*str_to_new_env(char *env_str)
 	if (!key)
 		return (NULL);
 	value = equal_pos + 1;
-  new = new_env(key, value);
+	new = new_env(key, value);
 	free(key);
-  return new;
+	return (new);
 }
-// Invalid env string
 
 t_list	*lstnew_env(char *env_str)
 {
@@ -84,24 +87,4 @@ t_list	*lstnew_env(char *env_str)
 		return (NULL);
 	}
 	return (new_list);
-}
-
-t_error	*envp_to_env_list(char **envp, t_list **env_list_ptr)
-{
-	t_list	*new_env_node;
-	size_t	env_i;
-
-	env_i = 0;
-	while (envp[env_i])
-	{
-		new_env_node = lstnew_env(envp[env_i]);
-		if (!new_env_node)
-		{
-			lstclear_env(env_list_ptr);
-			return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERROR"));
-		}
-		ft_lstadd_back(env_list_ptr, new_env_node);
-		env_i++;
-	}
-	return (NULL);
 }

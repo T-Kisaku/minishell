@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/03 19:26:57 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 10:21:28 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	print_env_etry(void *content)
 	t_env	*env;
 
 	env = (t_env *)content;
-  if(!env || !env->key || !env->value)
-    return;
+	if (!env || !env->key || !env->value)
+		return ;
 	printf("%s=%s\n", env->key, env->value);
 }

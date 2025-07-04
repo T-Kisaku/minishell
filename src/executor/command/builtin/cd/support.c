@@ -82,8 +82,8 @@ void	update_environment_variables(t_list **env_list_ptr, const char *new_pwd)
 	env_var = new_env("PWD", (char *)new_pwd);
 	if (env_var)
 	{
-		ft_lstinsert(env_list_ptr, env_var, cmp_env_key, set_env);
-		del_env(env_var);
+		ft_lstunset(env_list_ptr, env_var, cmp_env_key, del_env);
+		ft_lstadd_back(env_list_ptr, ft_lstnew(env_var));
 	}
 	old_pwd = getcwd(NULL, 0);
 	if (old_pwd)
@@ -91,8 +91,8 @@ void	update_environment_variables(t_list **env_list_ptr, const char *new_pwd)
 		env_var = new_env("OLDPWD", old_pwd);
 		if (env_var)
 		{
-			ft_lstinsert(env_list_ptr, env_var, cmp_env_key, set_env);
-			del_env(env_var);
+			ft_lstunset(env_list_ptr, env_var, cmp_env_key, del_env);
+			ft_lstadd_back(env_list_ptr, ft_lstnew(env_var));
 		}
 		free(old_pwd);
 	}

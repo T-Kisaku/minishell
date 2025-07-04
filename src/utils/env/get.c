@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 10:46:37 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/04 10:01:04 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_error	*ms_getenv(char *search_key, char **value_ptr, t_list *env_list)
 	if (!search_env)
 		return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERROR"));
 	found = ft_lstfind(env_list, search_env, cmp_env_key);
-	if (found == NULL)
+	if (found == NULL || found->value == NULL)
 		target = "";
 	else
 		target = found->value;

@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 11:19:44 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/04 10:20:50 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,5 @@ t_error		*ms_getenv(char *search_key, char **value_ptr, t_list *env_list);
 
 void		del_env(void *content);
 void		lstclear_env(t_list **head);
-
-void		set_env(void *content, void *ideal);
 
 #endif // !ENV_H

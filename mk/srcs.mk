@@ -37,9 +37,8 @@ src/expander/redir/redir_expand_handler.c \
 src/expander/redir/redir_quote_removal_handler.c \
 src/expander/redir/redir_split_handler.c \
 src/expander/redir/input_heredoc_content_handler.c \
-src/minishell/main.c \
-src/minishell/prompt.c \
 src/minishell/error.c \
+src/minishell/main.c \
 src/minishell/run_cmd.c \
 src/minishell/prompt.c \
 src/signal/child_signal.c \
@@ -56,7 +55,6 @@ src/syntax_processor/tokenizer/str_to_token.c \
 src/syntax_processor/tokenizer/token_extraction.c \
 src/syntax_processor/tokenizer/tokenize_loop.c \
 src/syntax_processor/tokenizer/type.c \
-src/syntax_processor/tokenizer/str_to_token.c \
 src/syntax_processor/check_quote.c \
 src/syntax_processor/str_to_ast.c \
 src/utils/argv.c \
@@ -75,7 +73,7 @@ src/utils/ast/redirection/new.c \
 src/utils/ast/redirection/other.c \
 src/utils/env/del.c \
 src/utils/env/get.c \
-src/utils/env/set.c \
+src/utils/env/envp_to_env_list.c \
 src/utils/env/new.c \
 src/utils/env/env_list_to_envp.c \
 src/utils/free_and_null.c \
