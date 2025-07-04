@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 13:14:43 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/04 11:59:48 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_error	*split_token(t_list *token, int word_count)
 	}
 	while (--word_count)
 	{
-		error = generate_value(&ctx);
+		error = generate_token(&ctx);
 		if (is_error(error))
 		{
 			free(ctx.original);
