@@ -6,23 +6,24 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:57 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 15:50:27 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 18:03:59 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
+#include "error.h"
 #include "exit_status.h"
 #include "ft_list.h"
 #include "ft_printf.h"
-#include "ft_string.h"
 #include "ft_stdio.h"
+#include "ft_string.h"
 #include "utils/env.h"
 #include "utils/path.h"
 #include <errno.h>
-#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 int	validate_cd_args(t_command *cmd)
 {
@@ -48,6 +49,11 @@ char	*get_target_path(t_command *cmd, t_list *env_list, t_error **error)
 		*error = ms_getenv("HOME", &path, env_list);
 		if (is_error(*error))
 			return (NULL);
+		if (path == NULL || !*path)
+		{
+			free(path);
+			*error = new_error(EXIT_INTERNAL_ERR, "cd: HOME not set");
+		}
 	}
 	else
 	{
