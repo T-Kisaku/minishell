@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 16:57:13 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 11:25:51 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 17:11:04 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ typedef struct s_cmd_fd
 }		t_cmd_fd;
 
 int		exec_command(t_command *cmd, bool is_in_pipeline,
-			t_minishell_state *shell);
+			t_minishell_state *shell, t_cmd_fd *cmd_fd);
 
 void	set_io_redir(t_command *cmd, t_cmd_fd cmd_fd);
 void	close_and_init_fd(int *fd);
 int		init_cmd_fd(t_cmd_fd *cmd_fd);
+void close_and_int_cmd_fd(t_cmd_fd *cmd_fd);
 int		create_pipe_if_needed(t_cmd_fd *cmd_fd, t_list *cmd_list);
 void	cleanup_pipe_fds(t_cmd_fd *cmd_fd);
 

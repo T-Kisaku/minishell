@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 13:15:11 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 16:50:55 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	loop_cmd_list(t_list *cmd_list, t_cmd_fd *cmd_fd,
 			return (EXIT_INTERNAL_ERR);
 		}
 		set_io_redir(cmd, *cmd_fd);
-		builtin_exit_code = exec_command(cmd, cmd_list_size > 1, shell);
+		builtin_exit_code = exec_command(cmd, cmd_list_size > 1, shell, cmd_fd);
 		cleanup_pipe_fds(cmd_fd);
 		cmd_list = cmd_list->next;
 	}

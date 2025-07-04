@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:02:18 by saueda            #+#    #+#             */
-/*   Updated: 2025/07/04 09:17:58 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 17:41:23 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@
 #include "minishell.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
-static int	exec_builtin_or_external(t_command *cmd, bool is_in_pipeline,
-				t_minishell_state *shell);
-static void	print_command_not_found_error(t_command *cmd);
+static pid_t	spawn_command(t_command *cmd, int *exit_code_ptr,
+					t_minishell_state *shell, t_cmd_fd *cmd_fd);
+static void		print_command_not_found_error(t_command *cmd);
 
-int	exec_command(t_command *cmd, bool is_in_pipeline, t_minishell_state *shell)
+int	exec_command(t_command *cmd, bool is_in_pipeline, t_minishell_state *shell,
+		t_cmd_fd *cmd_fd)
 {
 	int		exit_code;
 	t_io_fd	old_io_fd;
@@ -40,39 +42,39 @@ int	exec_command(t_command *cmd, bool is_in_pipeline, t_minishell_state *shell)
 		restore_close_io(old_io_fd);
 		return (exit_code);
 	}
-	exit_code = exec_builtin_or_external(cmd, is_in_pipeline, shell);
+	if (is_in_pipeline == false && is_builtin(cmd))
+		exit_code = exec_builtin_cmd(cmd, shell);
+	else
+		set_last_pid(shell->pids, spawn_command(cmd, &exit_code, shell,
+				cmd_fd));
 	restore_close_io(old_io_fd);
 	return (exit_code);
 }
 
-static int	exec_builtin_or_external(t_command *cmd, bool is_in_pipeline,
-		t_minishell_state *shell)
+static pid_t	spawn_command(t_command *cmd, int *exit_code_ptr,
+		t_minishell_state *shell, t_cmd_fd *cmd_fd)
 {
-	int	exit_code;
-	int	pid;
+	pid_t	pid;
 
-	exit_code = EXIT_OK;
-	if (cmd->type == CMD_SIMPLE && cmd->u.simple.argc == 0)
-		exit_code = EXIT_OK;
-	else if (is_builtin(cmd))
+	if (is_builtin(cmd))
 	{
-		pid = exec_builtin_cmd(cmd, &exit_code, is_in_pipeline, shell);
-		if (exit_code == BUILTIN_NOT_LAST && pid > 0)
-			set_last_pid(shell->pids, pid);
-		else if (exit_code != BUILTIN_NOT_LAST)
-			return (exit_code);
+		pid = fork();
+		if (pid != 0)
+			return (pid);
+		*exit_code_ptr = exec_builtin_cmd(cmd, shell);
+		close_and_int_cmd_fd(cmd_fd);
+		del_shell_state(shell);
+		exit(*exit_code_ptr);
 	}
 	else if (set_cmd_path(cmd, shell->env_list) != NULL)
 	{
-		set_last_pid(shell->pids, exec_external_cmd(cmd, shell));
-		exit_code = (BUILTIN_NOT_LAST);
+		*exit_code_ptr = BUILTIN_NOT_LAST;
+		return (exec_external_cmd(cmd, shell, cmd_fd));
 	}
-	else
-	{
-		print_command_not_found_error(cmd);
-		exit_code = EXIT_NOT_FOUND;
-	}
-	return (exit_code);
+	*exit_code_ptr = BUILTIN_NOT_LAST;
+	print_command_not_found_error(cmd);
+	*exit_code_ptr = EXIT_NOT_FOUND;
+	return (-1);
 }
 
 static void	print_command_not_found_error(t_command *cmd)

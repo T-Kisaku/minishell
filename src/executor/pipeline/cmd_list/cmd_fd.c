@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 16:57:00 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 17:11:36 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 17:13:33 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,11 @@ void	close_and_init_fd(int *fd)
 		close(*fd);
 		*fd = INVALID_FD;
 	}
+}
+
+void	close_and_int_cmd_fd(t_cmd_fd *cmd_fd)
+{
+	close_and_init_fd(&cmd_fd->prev_pipe_read);
+	close_and_init_fd(&cmd_fd->current_pipe[PIPE_READ]);
+	close_and_init_fd(&cmd_fd->current_pipe[PIPE_WRITE]);
 }

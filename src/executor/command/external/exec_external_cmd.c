@@ -6,13 +6,14 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/03 17:20:49 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 17:13:15 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 #include "error.h"
 #include "executor/command.h"
+#include "executor/pipeline/cmd_list.h"
 #include "exit_status.h"
 #include "minishell.h"
 #include "signal_handler.h"
@@ -27,8 +28,8 @@
 
 static void	exec(t_command *cmd, char **envp, t_minishell_state *shell);
 
-// TODO: error handling for execve, when it fails, free all
-pid_t	exec_external_cmd(t_command *cmd, t_minishell_state *shell)
+pid_t	exec_external_cmd(t_command *cmd, t_minishell_state *shell,
+		t_cmd_fd *cmd_fd)
 {
 	t_error	*error;
 	char	**envp_tmp;
@@ -47,7 +48,9 @@ pid_t	exec_external_cmd(t_command *cmd, t_minishell_state *shell)
 		free_argv_null(&envp_tmp);
 		return (pid);
 	}
+	close_and_int_cmd_fd(cmd_fd);
 	exec(cmd, envp_tmp, shell);
+	del_shell_state(shell);
 	exit(EXIT_INTERNAL_ERR);
 }
 
