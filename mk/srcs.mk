@@ -1,13 +1,13 @@
 SRCS = \
 src/executor/command/builtin/cd/exec_cd.c \
 src/executor/command/builtin/cd/support.c \
-src/executor/command/builtin/echo.c \
-src/executor/command/builtin/env.c \
 src/executor/command/builtin/exec_builtin_cmd.c \
 src/executor/command/builtin/exit.c \
-src/executor/command/builtin/export.c \
 src/executor/command/builtin/pwd.c \
 src/executor/command/builtin/unset.c \
+src/executor/command/builtin/echo.c \
+src/executor/command/builtin/export.c \
+src/executor/command/builtin/env.c \
 src/executor/command/external/command_path.c \
 src/executor/command/external/exec_external_cmd.c \
 src/executor/command/io_fd.c \
@@ -18,8 +18,8 @@ src/executor/pipeline/cmd_list/exec_cmd_list.c \
 src/executor/pipeline/cmd_list/redir.c \
 src/executor/pipeline/exec_pipeline.c \
 src/executor/pipeline/pids.c \
-src/executor/redirection/process_redir.c \
 src/executor/redirection/process_redir_list.c \
+src/executor/redirection/process_redir.c \
 src/expander/command/expand.c \
 src/expander/command/generate_argv.c \
 src/expander/command/quote_remove.c \
@@ -41,6 +41,7 @@ src/minishell/main.c \
 src/minishell/prompt.c \
 src/minishell/error.c \
 src/minishell/run_cmd.c \
+src/minishell/prompt.c \
 src/signal/child_signal.c \
 src/signal/parent_signal.c \
 src/signal/print_child_signal_message.c \
@@ -51,6 +52,7 @@ src/syntax_processor/check_syntax/check_body.c \
 src/syntax_processor/check_syntax/check_syntax.c \
 src/syntax_processor/check_syntax/check_tail.c \
 src/syntax_processor/tokenizer/process_special_char.c \
+src/syntax_processor/tokenizer/str_to_token.c \
 src/syntax_processor/tokenizer/token_extraction.c \
 src/syntax_processor/tokenizer/tokenize_loop.c \
 src/syntax_processor/tokenizer/type.c \
@@ -72,10 +74,10 @@ src/utils/ast/redirection/del.c \
 src/utils/ast/redirection/new.c \
 src/utils/ast/redirection/other.c \
 src/utils/env/del.c \
-src/utils/env/env_list_to_envp.c \
 src/utils/env/get.c \
-src/utils/env/new.c \
 src/utils/env/set.c \
+src/utils/env/new.c \
+src/utils/env/env_list_to_envp.c \
 src/utils/free_and_null.c \
 src/utils/ms_list.c \
 src/utils/path.c \

@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/01 11:01:30 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/03 19:25:55 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 #include "minishell.h"
 #include "utils/env.h"
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 static void	set_env_entry(t_list **env_list, char *env_str);
 static void	print_export_entry(void *content);
@@ -53,7 +53,10 @@ static void	print_export_entry(void *content)
 	t_env	*env;
 
 	env = (t_env *)content;
-	printf("declare -x %s=\"%s\"\n", env->key, env->value);
+	if (env->value == NULL)
+		printf("declare -x %s\n", env->key);
+	else
+		printf("declare -x %s=\"%s\"\n", env->key, env->value);
 }
 
 static void	set_env_entry(t_list **env_list, char *env_str)
@@ -71,6 +74,9 @@ static void	set_env_entry(t_list **env_list, char *env_str)
 		return ;
 	}
 	free(found->value);
-	found->value = ft_strdup(ideal_env->value);
+	if (ideal_env->value == NULL)
+		found->value = NULL;
+	else
+		found->value = ft_strdup(ideal_env->value);
 	del_env(ideal_env);
 }

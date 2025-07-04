@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_2.c                                            :+:      :+:    :+:   */
+/*   env_list_to_envp.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:21:01 by saueda            #+#    #+#             */
-/*   Updated: 2025/06/29 11:24:51 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/03 19:25:05 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,21 @@ static t_error	*create_env_string(char **env_str, t_env *env)
 {
 	size_t	env_str_size;
 
-	env_str_size = (ft_strlen(env->key) + ft_strlen(env->value) + 1 + 1)
-		* sizeof(char);
+	env_str_size = ft_strlen(env->key);
+	if (env->value)
+	{
+		env_str_size += ft_strlen(env->value) + 1 + 1;
+		env_str_size *= sizeof(char);
+	}
 	*env_str = malloc(env_str_size);
 	if (!*env_str)
 		return (new_error(EXIT_INTERNAL_ERR, "MALLOC ERROR"));
 	(*env_str)[0] = '\0';
 	ft_strlcat(*env_str, env->key, env_str_size);
-	ft_strlcat(*env_str, "=", env_str_size);
-	ft_strlcat(*env_str, env->value, env_str_size);
+	if (env->value)
+	{
+		ft_strlcat(*env_str, "=", env_str_size);
+		ft_strlcat(*env_str, env->value, env_str_size);
+	}
 	return (NULL);
 }

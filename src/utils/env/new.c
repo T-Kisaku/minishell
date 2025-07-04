@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:56 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 11:21:48 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/03 19:10:26 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_env	*new_env(char *key, char *value)
 {
 	t_env	*new_env;
 
-	if (!key || !value)
+	if (!key)
 		return (NULL);
 	new_env = malloc(sizeof(t_env));
 	if (!new_env)
@@ -32,6 +32,11 @@ t_env	*new_env(char *key, char *value)
 		free(new_env);
 		return (NULL);
 	}
+  if(value == NULL)
+  {
+    new_env->value = NULL;
+    return new_env;
+  }
 	new_env->value = ft_strdup(value);
 	if (!new_env->value)
 	{
@@ -44,7 +49,7 @@ t_env	*new_env(char *key, char *value)
 
 t_env	*str_to_new_env(char *env_str)
 {
-	t_env	*new;
+  t_env *new;
 	char	*key;
 	char	*value;
 	char	*equal_pos;
@@ -53,14 +58,14 @@ t_env	*str_to_new_env(char *env_str)
 		return (NULL);
 	equal_pos = ft_strchr(env_str, '=');
 	if (!equal_pos)
-		return (NULL);
+		return (new_env(env_str, NULL));
 	key = ft_substr(env_str, 0, equal_pos - env_str);
 	if (!key)
 		return (NULL);
 	value = equal_pos + 1;
-	new = new_env(key, value);
+  new = new_env(key, value);
 	free(key);
-	return (new);
+  return new;
 }
 // Invalid env string
 
