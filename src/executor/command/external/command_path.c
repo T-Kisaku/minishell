@@ -6,11 +6,12 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 16:30:15 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 18:11:06 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
+#include "ft_stdlib.h"
 #include "ft_string.h"
 #include "utils/argv.h"
 #include "utils/env.h"
@@ -67,8 +68,15 @@ static char	**get_path_arr(t_list *env_list)
 		del_error(error);
 		return (NULL);
 	}
-	if (!path_env)
-		return (NULL);
+	if (!path_env || !*path_env)
+	{
+		free(path_env);
+		paths = ft_calloc(2, sizeof(char *));
+		if (!paths)
+			return (NULL);
+		*paths = getcwd(NULL, 0);
+		return (paths);
+	}
 	paths = ft_split(path_env, ':');
 	free(path_env);
 	if (!paths)

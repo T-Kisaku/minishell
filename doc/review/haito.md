@@ -23,8 +23,8 @@
 - [ ] 同じくCtrl+\はbash like にする: TODO: なんかできなくなった
 - [s] minishellの中でminishell
 - [x] exportだとvalueがNULLでも表示される
-- [ ] unset PATH されたときカレントディレクトリを参照する
-- [ ] unset HOME のあとhome以外のディレクトリからhomeにcdするときメモリリークとエラー違い
+- [x] unset PATH されたときカレントディレクトリを参照する
+- [x] unset HOME のあとhome以外のディレクトリからhomeにcdするときメモリリークとエラー違い
 - [x] ヒアドク中のCtrl+C
 - [x] エラーメッセージが標準出力になっている
 - [x] ブロッキング関数実行中に改行しても^Mになってしまう。execveするときリダイレクトが標準入力からじゃなくなっている可能性あり

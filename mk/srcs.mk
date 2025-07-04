@@ -8,8 +8,8 @@ src/executor/command/builtin/echo.c \
 src/executor/command/builtin/export.c \
 src/executor/command/builtin/env.c \
 src/executor/command/builtin/exec_builtin_cmd.c \
-src/executor/command/external/command_path.c \
 src/executor/command/external/exec_external_cmd.c \
+src/executor/command/external/command_path.c \
 src/executor/command/io_fd.c \
 src/executor/command/exec_command.c \
 src/executor/exec_ast.c \
@@ -86,7 +86,7 @@ src/utils/token/get.c \
 src/utils/token/new.c \
 src/utils/token/type.c \
 src/utils/write_error.c \
-src/utils/gnl/get_next_line.c \
 src/utils/gnl/get_next_line_utils.c \
+src/utils/gnl/get_next_line.c \
 src/utils/shell_state.c \
 src/error.c \
