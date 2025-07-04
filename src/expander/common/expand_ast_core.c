@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/02 10:23:40 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/04 11:59:09 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ t_error	*expand_ast_core_core_core(t_expansion_context *ctx,
 		ctx->variable = NULL;
 		return (error);
 	}
-	if (mode == MODE_SET_VALUE)
-		*ctx->type = TOKEN_SINGLE_QUOTED_WORD;
 	len = ft_strlen(ctx->variable);
 	if (mode == MODE_SET_VALUE && len > 0)
 		ft_memcpy(&ctx->output[ctx->index], ctx->variable, len);

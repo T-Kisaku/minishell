@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_remove.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:59 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/06/29 08:52:59 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 10:51:37 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ static t_error	*process_simple(t_list *head)
 	while (cur)
 	{
 		cur_token_content = (t_token *)cur->content;
-		error = quote_remove_core(cur_token_content);
-		if (is_error(error))
-			return (error);
+		if (cur_token_content->type == TOKEN_UNQUOTED_WORD)
+		{
+			error = quote_remove_core(cur_token_content);
+			if (is_error(error))
+				return (error);
+		}
 		cur = cur->next;
 	}
 	return (NULL);

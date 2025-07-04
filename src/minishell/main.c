@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:55 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/03 14:30:18 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 17:50:29 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,13 @@ static void	prompt_loop(t_minishell_state *shell)
 	while (1)
 	{
 		handle_error(prompt(shell), shell);
-		if (shell->prev_exit_code == EXIT_EOF || !shell->is_interactive)
+		if (!shell->is_interactive)
 			break ;
+		if (shell->prev_exit_code == EXIT_EOF)
+		{
+			shell->prev_exit_code = EXIT_OK;
+			break ;
+		}
 	}
 }
 

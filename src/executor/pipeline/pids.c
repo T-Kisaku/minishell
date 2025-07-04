@@ -6,17 +6,19 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:52:58 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/04 08:05:56 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/04 16:41:25 by saueda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exit_status.h"
 #include "ft_string.h"
+#include "minishell.h"
+#include "signal_handler.h"
 #include <fcntl.h>
+#include <signal.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include "signal_handler.h"
 
 pid_t	*get_pids(int cmd_count)
 {
@@ -56,6 +58,11 @@ int	wait_pids(pid_t *pids)
 	print_child_signal_message(last_cmd_status);
 	if (WIFEXITED(last_cmd_status))
 		last_cmd_status = WEXITSTATUS(last_cmd_status);
+	else if (WIFSIGNALED(last_cmd_status))
+	{
+		g_signal_received = WTERMSIG(last_cmd_status);
+		last_cmd_status = 128 + g_signal_received;
+	}
 	else
 		last_cmd_status = EXIT_OK;
 	return (last_cmd_status);

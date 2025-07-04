@@ -6,7 +6,7 @@
 /*   By: saueda <saueda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:27:14 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/03 15:17:33 by saueda           ###   ########.fr       */
+/*   Updated: 2025/07/04 17:51:09 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,19 @@ t_error	*prompt(t_minishell_state *shell)
 
 	error = NULL;
 	input_str = get_input_str(shell);
+	if (g_signal_received != 0)
+	{
+		shell->prev_exit_code = 128 + g_signal_received;
+		g_signal_received = 0;
+	}
 	if (input_str == NULL)
 		return (new_error(EXIT_EOF, NULL));
 	error = run_cmd(&input_str, shell);
+	if (g_signal_received != 0)
+	{
+		shell->prev_exit_code = 128 + g_signal_received;
+		g_signal_received = 0;
+	}
 	add_history(input_str);
 	free(input_str);
 	return (error);
@@ -44,13 +54,10 @@ static char	*get_input_str(t_minishell_state *shell)
 
 	while (1)
 	{
-		g_signal_received = 0;
 		if (shell->is_interactive)
 			input_str = readline("minishell$ ");
 		else
 			input_str = get_next_line(STDIN_FILENO);
-		if (g_signal_received != 0)
-			shell->prev_exit_code = 128 + g_signal_received;
 		if (!input_str)
 		{
 			if (shell->is_interactive)

@@ -18,6 +18,7 @@
 #include "exit_status.h"
 #include "ft_printf.h"
 #include "minishell.h"
+#include "ft_printf.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
