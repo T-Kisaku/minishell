@@ -6,11 +6,13 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 12:33:15 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/03 14:17:17 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 18:08:52 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils/get_next_line.h"
+#include "ft_string.h"
+#include "ft_stdlib.h"
 
 char	ft_getchar(int fd)
 {

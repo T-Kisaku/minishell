@@ -6,7 +6,7 @@
 /*   By: tkisaku <tkisaku@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 12:41:52 by tkisaku           #+#    #+#             */
-/*   Updated: 2025/07/03 14:14:24 by tkisaku          ###   ########.fr       */
+/*   Updated: 2025/07/04 18:08:09 by tkisaku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,6 @@ char		ft_getchar(int fd);
 int			ft_putchar(t_string *str, char c);
 
 // get_next_line_utils.c
-size_t		ft_strlcpy(char *dst, const char *src, size_t size);
-void		*ft_calloc(size_t nmemb, size_t size);
-void		*ft_bzero(void *s, size_t n);
 void		reset_t_string(t_string *str);
 
 #endif
