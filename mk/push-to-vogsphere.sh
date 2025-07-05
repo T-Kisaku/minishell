@@ -1,5 +1,5 @@
 #!/bin/bash
-REPO_URL="git@vogsphere-v2.42tokyo.jp:vogsphere/intra-uuid-384626b4-8483-4b76-9918-988b7b2fdb59-6579262-tkisaku"
+REPO_URL="git@vogsphere-v2.42tokyo.jp:vogsphere/intra-uuid-dd82e4af-0d4e-4c9e-85d9-238f0d1b936d-6669984-tkisaku"
 HASH_FILE="git-hash.txt"
 git rev-parse --short HEAD >$HASH_FILE
 WORK_DIR="../minishell-$(cat $HASH_FILE)"
